@@ -93,3 +93,5 @@ city_name = str_extract(city_gdp,"(?<=\\d\\.)[^a-z]+?(?=(\\d){2})")
 
 city_gdp_pdf = extract_tables("D://downloads//gdp_ranking.pdf",encoding = "UTF-8",pages = 2)
 gdp_pic1  <- ocr("D://downloads//gdp_ranking1.jpg")
+
+#We will check if this can work
