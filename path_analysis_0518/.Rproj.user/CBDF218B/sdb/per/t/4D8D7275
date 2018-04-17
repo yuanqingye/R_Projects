@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "behavior05140 = read_xlsx('~/data/behavior05140_copy.xlsx')\npage_view_potential_buyer = read_xlsx('~/data/page_view_potential_buyer.xlsx')\ntemp4 = merge(page_view_potential_buyer,behavior05140,by = 'username')\ntemp4 = data.table(temp4)\ntemp3 = data.table(temp3)\ntemp4[,value:=1]\ntemp5 = temp4[,.(sumvalue = sum(value)),by = 'username']\ntemp6 = temp5[sumvalue<50,username]\ntemp6 = temp5[sumvalue>50,username]\ntemp7 = temp3[!(username %in% temp6),]\ntemp2=data.table(path=temp7$page_name,value=1)\nsunburst(temp2)\n\n# df0514 = read_xlsx('~/data/df0514.xlsx')\n# page_buyer_wide = merge(page_view_potential_buyer,df0514,by.x = 'username',by.y = 'i.u_mid')\n# page_buyer_wide = data.table(page_buyer_wide)\n# page_buyer_wide[,value:=1]\npage_buyer_wide1 = read_xlsx('~/data/page_buyer_wide1.xlsx')\npage_buyer_wide1 = data.table(page_buyer_wide1)\npage_buyer_stat1 = page_buyer_wide1[,.(sumvalue = sum(value)),by = 'username']\npage_buyer_stat1_cut = cut(page_buyer_stat1$sumvalue,breaks = c(1,20,10000))\npage_buyer_stat1_table = table(page_buyer_stat1_cut)\nnames(page_buyer_stat1_table) = c('buyer view page<20','buyer view page>20')\nbarplot(page_buyer_stat1_table,col=c('blue','red'))",
+    "created" : 1495118250196.000,
+    "dirty" : false,
+    "encoding" : "GB2312",
+    "folds" : "",
+    "hash" : "132691219",
+    "id" : "4D8D7275",
+    "lastKnownWriteTime" : 1495158050,
+    "last_content_update" : 0,
+    "path" : "~/R_Projects/path_analysis_0518/Rmarkdown/path_analysis2.R",
+    "project_path" : "Rmarkdown/path_analysis2.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 21,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

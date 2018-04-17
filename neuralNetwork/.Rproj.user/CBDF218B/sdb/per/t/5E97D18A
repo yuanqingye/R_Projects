@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "# 例如动量梯度下降（QuickProp）、Nesterov 加速动量（NAG）梯度下降、\n# 自适应梯度算法（AdaGrad）、弹性反向传播（RProp）和均方根反向传播（RMSProp）\n\n# 这些算法并不能完全解决局部最小值问题，而且在同时优化神经网络的架构和权重时用处也不大。\n# 为了得到所需的全局优化算法。两种流行的全局优化算法是粒子群优化算法（PSO）和遗传算法（GA）。\n# 下面是两者可被用来训练神经网络的方式\n\n# install.packages(\"RSNNS\")\nlibrary(Rcpp)\nlibrary(RSNNS)\nlibrary(data.table)\nload(\"~/data/rentmodel.RData\")\ndata(iris)\niris = iris[sample(1:nrow(iris),length(1:nrow(iris))),1:ncol(iris)]\n#定义网络输入 \nirisValues= iris[,1:4]\n#定义网络输出，并将数据进行格式转换 \nirisTargets = decodeClassLabels(iris[,5])\n#从中划分出训练样本和检验样本 \niris = splitForTrainingAndTest(irisValues, irisTargets, ratio=0.15)\n#数据标准化 \niris = normTrainingAndTestSet(iris)\n#利用mlp命令执行前馈反向传播神经网络算法 \nmodel = mlp(iris$inputsTrain, iris$targetsTrain, size=5, learnFunc=\"Quickprop\", learnFuncParams=c(0.1, 2.0, 0.0001, 0.1),maxit=100, inputsTest=iris$inputsTest, targetsTest=iris$targetsTest) \n#利用上面建立的模型进行预测 \npredictions = predict(model,iris$inputsTest)\n#生成混淆矩阵，观察预测精度 \nconfusionMatrix(iris$targetsTest,predictions)\n\nrent.model = mlp(new_trainset[,-3], new_trainset[,3], size=c(5), learnFunc=\"Quickprop\", \n                maxit=100, \n                inputsTest=new_testset[,-3], targetsTest=new_testset[,3],outputActFunc = 'linear') \nrent.predict = predict(rent.model,new_testset[,-3])\n\ndata(snnsData)\ninputs <- snnsData$laser_1000.pat[,inputColumns(snnsData$laser_1000.pat)]\ninputs <- snnsData$eight_016.pat[,inputColumns(snnsData$eight_016.pat)]\noutputs <- snnsData$eight_016.pat[,outputColumns(snnsData$eight_016.pat)]\n\npar(mfrow=c(1,2))\nmodelElman <- elman(inputs, outputs, size=c(8,9), learnFuncParams=c(0.1), maxit=1000)\nmodelElman\nmodelJordan <- jordan(inputs, outputs, size=8, learnFuncParams=c(0.1), maxit=1000)\nmodelJordan\nplotIterativeError(modelElman)\nplotIterativeError(modelJordan)\n\nrent.model.Elman = elman(new_trainset[,-3],new_trainset[,3],learnFuncParams = c(0.1),size = 8,maxit = 1000)\nrent.predict.Elman = predict(rent.model.Elman,new_testset[,-3])\ne.Elman = crossprod(rent.predict.Elman - unlist(new_testset[,3]))/nrow(new_testset)\nresult_compare.Elman = cbind(rent.predict.Elman,new_general_info[new_general_info$year == 2017,c(\"rent\",\"mall_name\",\"year\")])\nresult_compare.Elman = data.table(result_compare.Elman)\nresult_compare.Elman[,c(\"diff\",\"percent\"):= list(rent.predict-rent,(rent.predict-rent)/rent)]\n",
+    "created" : 1501743997450.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1651806928",
+    "id" : "5E97D18A",
+    "lastKnownWriteTime" : 1502870484,
+    "last_content_update" : 0,
+    "path" : "~/R_Projects/neuralNetwork/Rfile/neural_network.R",
+    "project_path" : "Rfile/neural_network.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

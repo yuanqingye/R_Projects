@@ -1,0 +1,10 @@
+library(readxl) 
+require(graphics) 
+library(forecast) 
+library(timeSeries)
+library (tseries)
+library(ggplot2)
+library(TTR)
+
+TS_Power_Req <- ts(Telangana_Power$Requirement..MU., start = c(2014, 6), frequency = 12)
+head(TS_Power_Req)

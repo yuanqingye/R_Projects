@@ -1,0 +1,196 @@
+---
+title: "User_analysis_1020"
+author: "qingye"
+date: "2017年10月20日"
+output: html_document
+---
+#本报告对10月8日用户至10月19日节后这两周的行为进行了分析
+####包括反映用户数目的UV,反映用户活跃度的：人均PV,用户活跃时长，以及反映用户黏度的次日留存
+####本次报告初步用R语言进行自动化生成报告的框架搭建，今后将在此基础上不断改进优化，下次报告将加入转化方面的分析，加入对于路径方面的分析，引进异常值提醒和分析
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(readxl)
+library(knitr)
+library(xtable)
+dateend = Sys.Date()-1
+datestart = Sys.Date()-14
+datestart.str = format(datestart,'%Y%m%d')
+dateend.str = format(dateend,'%Y%m%d')
+dates = datestart.str:dateend.str
+```
+
+
+##近两周的日活跃度(UV)
+```{r daily_pvuv,echo = FALSE}
+source('~/Rfile/R_impala.R')
+#1daily activity pvuv
+pvuv_sql = paste("select dt,
+count(1) uv,
+sum(pv) pv ,
+sum(pv)/count(1) perpv,
+count(if(isnew='new',1,null)) newuv ,
+sum(if(isnew='new',pv,0)) newpv, 
+sum(if(isnew='new',pv,0))/count(if(isnew='new',1,null)) newperpv,
+count(if(isnew='old',1,null)) olduv ,
+sum(if(isnew='old',pv,0)) oldpv, 
+sum(if(isnew='old',pv,0))/count(if(isnew='old',1,null)) oldperpv
+from 
+dl.umid_pv where dt>=",datestart.str,
+"group by dt")
+
+pvuv = read_data_impala_general(pvuv_sql)
+pvuv = pvuv[order(pvuv$dt),]
+
+#考虑日活动量
+par(bg = 'black')
+colors = rainbow(3)
+plot(pvuv$dt,pvuv$uv,col = colors[[1]],type = 'l',ylim = c(0,70000))
+lines(pvuv$dt,pvuv$newuv,col = colors[[2]],type = 'l')
+lines(pvuv$dt,pvuv$olduv,col = colors[[3]], type = 'l')
+
+legend('topleft',c("uv","newuv","olduv"),cex = 0.7,fill = colors,text.col= 'pink')
+
+#需要加入坐标轴
+title(main = '近两周日活',xlab = 'dates',ylab = '日活',col.main = 'blue',
+      col.lab = 'purple')
+axis(1,col = 'purple')
+at = axTicks(1)
+mtext(side = 1, text = at, at = at, col = "purple", line = 1)
+
+axis(2,col = 'purple')
+at = axTicks(2)
+mtext(side = 2,text = at,at = at,col = 'purple',line = 1)
+```
+
+不出意料的是节日过后，uv马上冷却下来
+
+不过从10月16日开始uv有回暖趋势，并在17日有个小高峰
+
+访问人数上，还是老用户多一些，新老用户的趋势并无大的不同
+
+##近两周人均PV
+```{r pv_perperson,echo = FALSE}
+par(bg = 'black')
+colors = rainbow(3)
+ylarge = max(max(pvuv$perpv),max(pvuv$newperpv),max(pvuv$oldperpv))
+#考虑人均pv
+plot(pvuv$dt,pvuv$perpv,col = colors[[1]],type = 'l',ylim = c(0,ceiling(ylarge)))
+lines(pvuv$dt,pvuv$newperpv,col = colors[[2]],type = 'l')
+lines(pvuv$dt,pvuv$oldperpv,col = colors[[3]], type = 'l')
+
+legend('topright',c("perpv","newperpv","oldperpv"),cex = 0.7,fill = colors,text.col= 'pink')
+
+#需要加入坐标轴
+title(main = '近两周人均pv',xlab = 'dates',ylab = '人均pv',col.main = 'blue',
+      col.lab = 'purple')
+axis(1,col = 'purple')
+at = axTicks(1)
+mtext(side = 1, text = at, at = at, col = "purple", line = 1)
+
+axis(2,col = 'purple')
+at = axTicks(2)
+mtext(side = 2,text = at,at = at,col = 'purple',line = 1)
+```
+
+节后迅速下跌，不过之后就开始回暖，到10月16日有个峰值
+
+新用户峰值出现在15日，老用户峰值出现在16日，有一天的滞后
+
+老用户比新用户在这个指标上要更显著更活跃一些
+
+## 用户活跃时长
+```{r time_span, echo=FALSE}
+time_span = read_xlsx("~/data/uc_analysis/time_span.xlsx")
+par(bg = 'black')
+colors = rainbow(3)
+ylarge = max(time_span[,2:4])
+plot(time_span$dt,time_span$totalavg,col = colors[[1]],type = 'l',ylim = c(0,ceiling(ylarge)))
+lines(time_span$dt,time_span$newavg,col = colors[[2]],type = 'l')
+lines(time_span$dt,time_span$oldavg,col = colors[[3]], type = 'l')
+
+legend('topright',c("totalavg","newavg","oldavg"),cex = 0.7,fill = colors,text.col= 'pink')
+
+#需要加入坐标轴
+title(main = '近两周用户活跃时长',xlab = 'dates',ylab = '',col.main = 'blue',
+      col.lab = 'purple')
+axis(1,col = 'purple')
+at = axTicks(1)
+mtext(side = 1, text = at, at = at, col = "purple", line = 1)
+
+axis(2,col = 'purple')
+at = axTicks(2)
+mtext(side = 2,text = at,at = at,col = 'purple',line = 1)
+```
+
+在平均活跃时长方面，新老用户的峰值有一天的滞后，新用户峰值出现在15日，老用户16日
+
+老用户整体比新用户平均时长更长，但是在15号当天，新用户达到峰值且超过了老用户
+
+## 次日留存
+```{r survival,echo=FALSE}
+survival = read_xlsx("~/data/uc_analysis/survival.xlsx")
+survival = survival[-12,]
+par(bg = 'black')
+colors = rainbow(3)
+
+#考虑survival,!!须注意最后一天
+ylarge = max(max(survival$t1/survival$t),max(survival$newt1/survival$newuv),max(survival$noldt1/survival$olduv))
+plot(survival$a.dt,survival$t1/survival$t,col = colors[[1]],type = 'l',ylim = c(0,ceiling(ylarge)))
+lines(survival$a.dt,survival$newt1/survival$newuv,col = colors[[2]],type = 'l')
+lines(survival$a.dt,survival$noldt1/survival$olduv,col = colors[[3]], type = 'l')
+
+legend('topright',c("survival","newsurvival","oldsurvival"),cex = 0.7,fill = colors,text.col= 'pink')
+
+#需要加入坐标轴
+title(main = '近两周次日留存率',xlab = 'dates',ylab = '留存率',col.main = 'blue',
+      col.lab = 'purple')
+axis(1,col = 'purple')
+at = axTicks(1)
+mtext(side = 1, text = at, at = at, col = "purple", line = 1)
+
+axis(2,col = 'purple')
+at = axTicks(2)
+mtext(side = 2,text = at,at = at,col = 'purple',line = 1)
+
+```
+
+留存率节后缓慢上升，但是在17日有个比较明显的下降，可能需要调查下原因
+
+
+##新用户不同机型分布
+```{r model,echo = FALSE}
+model = read_xlsx("~/data/uc_analysis/model.xlsx")
+kable(model)
+#kable(model,format = "markdown")
+```
+
+iphone 在国庆最后一天有很多新用户，但是节日过后大幅减少，反倒不如一些普通的android,尤其是iphone 5 系列,
+
+iphone 6, iphone 6 plus, 仍然有一定的增加，除了节日，排名前50的手机差别不大，
+
+当然要深入洞察需要对不同机型用户的行为进行分析
+
+
+##新用户不同城市分布
+```{r city,echo = FALSE}
+city = read_xlsx("~/data/uc_analysis/city.xlsx")
+#kable(city)
+kable(city,format = "markdown")
+```
+
+新用户集中在长江三角洲地区，北京，东北地区，成渝地区，华南也有一些
+
+华中西部相对较少
+
+要洞察不同地区用户的特点，需要研究他们的线上和线下的行为
+
+##新用户不同渠道分布
+```{r channel,echo = FALSE}
+channel = read_xlsx("~/data/uc_analysis/channel.xlsx")
+kable(channel)
+#kable(channel,format = "markdown")
+```
+
+从表格上看360手机助手和30015排名前两位且领先优势巨大
+
+然后是二维码和各种应用商店

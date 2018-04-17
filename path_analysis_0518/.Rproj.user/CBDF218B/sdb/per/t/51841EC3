@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(data.table)\nlibrary(D3partitionR)\nlibrary(readr)\nlibrary(readxl)\npage_view_potential_buyer_wide = data.table(page_view_potential_buyer_wide)\npage_view_potential_buyer_wide[,value:=1]\nsource('~/Rfile/time_sign_update.R')\ndt = group_row_with_time_ref(page_view_potential_buyer_wide,c('username','中文名'))\ndt1 = dt[,.(value=1),by=c('username','sign','中文名')]\ndt2 = dt1[,.(sumvalue=sum(value)),by=c('username')]\ndt3 = aggregate(中文名~username,data = dt1,paste,sep=',')\ntb_1 = dt2\ntb_2 = data.table(dt3)\ntb_3 = merge(tb_1,tb_2,by=intersect(names(tb_1),names(tb_2)))\ntb_4 = tb_3[sumvalue<=30,]\ntb_5 = tb_3[sumvalue>30,]\nD3partitionR(data=list(path=tb_4$中文名,value=tb_4$sumvalue),type = 'sunburst')\ntb_6 = tb_5[,.(path=name_ch,value = sumvalue)]\n\ntb_3 = data.table(read_xlsx('~/data/tb3.xlsx'))\n\ntb_4 = tb_3[sumvalue<=30,]\ntb_5 = tb_3[sumvalue>30,]\nD3partitionR(data=list(path=tb_4$page_name,value=1),type = 'sunburst')",
+    "created" : 1495094257391.000,
+    "dirty" : false,
+    "encoding" : "GB2312",
+    "folds" : "",
+    "hash" : "213695905",
+    "id" : "51841EC3",
+    "lastKnownWriteTime" : 1495114804,
+    "last_content_update" : 0,
+    "path" : "~/Rfile/D3partittionAnalysis2.R",
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 12,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#import data\n# 几大插值准则：\n# 1去除缺失太多且上下左右均不靠的数据（无法有效估计）\n# 2使用频率比较高的值或者平均值，中间值进行插值\n# 3使用相关变量进行估计\n# 4使用临近原则进行插值\n# 5其它办法\n\ndata (\"BostonHousing\", package=\"mlbench\")\noriginal <- BostonHousing  # backup original data\n\nset.seed(100)\nBostonHousing[sample(1:nrow(BostonHousing), 40), \"rad\"] <- NA\nBostonHousing[sample(1:nrow(BostonHousing), 40), \"ptratio\"] = NA\n\nlibrary(mice)\n#check missing value pattern\nmd.pattern(BostonHousing)  # pattern or missing values in data.\n\nlm(medv ~ ptratio + rad, data=BostonHousing, na.action=na.omit)\n\n#简单插值\nlibrary(Hmisc)\nimpute(BostonHousing$ptratio, mean)  # replace with mean\nimpute(BostonHousing$ptratio, median)  # median\nimpute(BostonHousing$ptratio, 20)  # replace with specific number\n# or if you want to impute manually\nBostonHousing$ptratio[is.na(BostonHousing$ptratio)] <- mean(BostonHousing$ptratio, na.rm = T)  # not run\n\n#比较插值后的误差\nlibrary(DMwR)\nactuals <- original$ptratio[is.na(BostonHousing$ptratio)]\npredicteds <- rep(mean(BostonHousing$ptratio, na.rm=T), length(actuals))\nregr.eval(actuals, predicteds)\n\n#高阶插值\nknnOutput <- knnImputation(BostonHousing[, !names(BostonHousing) %in% \"medv\"])  # perform knn imputation.\nanyNA(knnOutput)\n#如果值只允许整数,稍后需要进行近似\n\n#Knn插值效果\nactuals <- original$ptratio[is.na(BostonHousing$ptratio)]\npredicteds <- knnOutput[is.na(BostonHousing$ptratio), \"ptratio\"]\nregr.eval(actuals, predicteds)\n\n#使用决策树进行插值\nlibrary(rpart)\nclass_mod <- rpart(rad ~ . - medv, data=BostonHousing[!is.na(BostonHousing$rad), ], method=\"class\", na.action=na.omit)  # since rad is a factor\nanova_mod <- rpart(ptratio ~ . - medv, data=BostonHousing[!is.na(BostonHousing$ptratio), ], method=\"anova\", na.action=na.omit)  # since ptratio is numeric.\nrad_pred <- predict(class_mod, BostonHousing[is.na(BostonHousing$rad),!(colnames(BostonHousing)%in%c(\"rad\"))])\nptratio_pred <- predict(anova_mod, BostonHousing[is.na(BostonHousing$ptratio), ])\n\nlibrary(DMwR)\nactuals <- original$ptratio[is.na(BostonHousing$ptratio)]\npredicteds <- ptratio_pred\nregr.eval(actuals, predicteds)\n\nactuals <- original$rad[is.na(BostonHousing$rad)]\npredicteds <- as.numeric(colnames(rad_pred)[apply(rad_pred, 1, which.max)])\nmean(actuals != predicteds)  # compute misclass error.\n\n#使用随机森林\nlibrary(mice)\nmiceMod <- mice(BostonHousing[, !names(BostonHousing) %in% \"medv\"], method=\"rf\")  # perform mice imputation, based on random forests.\nmiceOutput <- complete(miceMod)  # generate the completed data.\nanyNA(miceOutput)\n\n#线性插值和样条插值\nlibrary(zoo)\na = 1:7\na[4] = NA\ny1 = na.approx(a)\ny2 = na.spline(a)\n",
+    "created" : 1502936641655.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2491853591",
+    "id" : "4986B481",
+    "lastKnownWriteTime" : 1511344998,
+    "last_content_update" : 1511344998415,
+    "path" : "~/R_Projects/missing_data/Rfile/first_try.R",
+    "project_path" : "Rfile/first_try.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

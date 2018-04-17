@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(wordcloud2)\n\nletterCloud(demoFreq, word =\"R\", wordSize = 2,color = 'random-dark')\nwordcloud2(demoFreq, size = 0.15, shape = 'circle',backgroundColor = \"black\",\n           fontFamily = \"微软雅黑\", color = \"random-light\",  \n           figPath = '~/Rimage/good.jpg',\n           minRotation = -pi/6, maxRotation = -pi/6)\n\nwordcloud2(goodluck , size = 0.1, #shape = 'circle',\n            backgroundColor = \"black\",\n           fontFamily = \"微软雅黑\", color = \"random-light\",  \n           figPath = '~/Rimage/man.jpg',\n           minRotation = -pi/6, maxRotation = -pi/6)\n\n",
+    "created" : 1516602576251.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1821512320",
+    "id" : "FDDE3EA8",
+    "lastKnownWriteTime" : 1516266467,
+    "last_content_update" : 1516602653609,
+    "path" : "~/R_Projects/Group_Work/Rfile/kohler.R",
+    "project_path" : "Rfile/kohler.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

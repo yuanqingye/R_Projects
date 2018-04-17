@@ -1,0 +1,20 @@
+* installing *source* package 'abnormTestOnlineFunc' ...
+** R
+** preparing package for lazy loading
+** help
+Warning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/CITY_SQL.Rd:13: unknown macro '\n'
+Warning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/MODEL_SQL.Rd:13: unknown macro '\n'
+Warning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/PAGE_CITY_DT_FIRST_SQL.Rd:13: unknown macro '\n'
+Warning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/PAGE_CITY_FIRST_SQL.Rd:13: unknown macro '\n'
+Warning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/PAGE_UMID_FIRST_SQL.Rd:13: unknown macro '\n'
+Warning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/PV_UMID_UNIT_MIN_SQL.Rd:13: unknown macro '\nselect'
+Warning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/abnormTestOnlineFunc-package.Rd:26: All text must be in a section
+Warning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/abnormTestOnlineFunc-package.Rd:27: All text must be in a section
+Warning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/last_long_umid_sql.Rd:13: unknown macro '\n'
+Warning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/order_umid_sql.Rd:13: unknown macro '\n'
+*** installing help indices
+Error in Rd_info(db[[i]]) : 
+  missing/empty \title field in 'C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/CITY_SQL.Rd'
+Rd files must have a non-empty \title.
+See chapter 'Writing R documentation' in manual 'Writing R Extensions'.
+* removing 'C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc.Rcheck/abnormTestOnlineFunc'

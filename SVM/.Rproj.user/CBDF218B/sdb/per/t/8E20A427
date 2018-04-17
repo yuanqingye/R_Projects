@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1516346647584.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "8E20A427",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1516346647584,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "B89AC136",
+        "caption" : "Glass",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Glass&cache_key=B89AC136",
+        "displayedObservations" : 214,
+        "environment" : "",
+        "object" : "Glass",
+        "preview" : 0,
+        "totalObservations" : 214,
+        "variables" : 10
+    },
+    "relative_order" : 17,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

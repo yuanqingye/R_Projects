@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "#\n# This is a Shiny web application. You can run the application by clicking\n# the 'Run App' button above.\n#\n# Find out more about building applications with Shiny here:\n#\n#    http://shiny.rstudio.com/\n#\n\nlibrary(\"dplyr\")\nlibrary(\"shiny\")\nlibrary(\"DT\")\n\n# create a summary table\nsummary_iris <- group_by(iris, Species) %>%\n  summarise(Count = n())\n\nui <- fluidPage(\n  dataTableOutput(\"summary\")\n  , dataTableOutput(\"drilldown\")\n)\n\n\nserver <- function(input, output){\n  \n  # display the data that is available to be drilled down\n  output$summary <- DT::renderDataTable(summary_iris)\n  \n  # subset the records to the row that was clicked\n  drilldata <- reactive({\n    shiny::validate(\n      need(length(input$summary_rows_selected) > 0, \"Select rows to drill down!\")\n    )    \n    \n    # subset the summary table and extract the column to subset on\n    # if you have more than one column, consider a merge instead\n    # NOTE: the selected row indices will be character type so they\n    #   must be converted to numeric or integer before subsetting\n    selected_species <- summary_iris[as.integer(input$summary_rows_selected), ]$Species\n    iris[iris$Species %in% selected_species, ]\n  })\n  \n  # display the subsetted data\n  output$drilldown <- DT::renderDataTable(drilldata())\n}\n\nshinyApp(ui, server)",
+    "created" : 1506328397576.000,
+    "dirty" : false,
+    "encoding" : "GB2312",
+    "folds" : "",
+    "hash" : "3329638674",
+    "id" : "AF13B9D7",
+    "lastKnownWriteTime" : 1506328536,
+    "last_content_update" : 1506328536527,
+    "path" : "~/R_Projects/shiny_start/drilldown/app.R",
+    "project_path" : "drilldown/app.R",
+    "properties" : {
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

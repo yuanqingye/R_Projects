@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(readxl)\nbooth_data = read_xlsx(\"./data/booth_rental_shanghai.xlsx\")\nbooth_dt = booth_data[,c(\"floor_name\",\"booth_grade\",\"rentable_area\",\"ctg3\",\"brand_score\")]\nbooth_dt$floor_name = as.numeric(as.factor(booth_dt$floor_name))\nbooth_dt$ctg3 = as.numeric(as.factor(booth_dt$ctg3))\npca.out<-prcomp(booth_dt,scale=TRUE)\npca.out\nsummary(pca.out)\nnames(pca.out)\nbiplot(pca.out,scale = 0, cex=0.65)\n",
+    "created" : 1509607085706.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3677470785",
+    "id" : "15EBE5BF",
+    "lastKnownWriteTime" : 1509676800,
+    "last_content_update" : 1509676800776,
+    "path" : "~/R_Projects/rental_model/Rfile/Un_supervised_learning.R",
+    "project_path" : "Rfile/Un_supervised_learning.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 13,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

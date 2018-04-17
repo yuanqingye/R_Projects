@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1512983087653.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "E4C26980",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1512983087653,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "C76556E5",
+        "caption" : "closest_subway",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=closest_subway&cache_key=C76556E5",
+        "displayedObservations" : 1,
+        "environment" : "",
+        "object" : "closest_subway",
+        "preview" : 0,
+        "totalObservations" : 1,
+        "variables" : 2
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

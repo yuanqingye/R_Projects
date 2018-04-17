@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "price = c(101,82,66,35,31,7)\nprice = ts(price,start = c(2005,1),frequency = 12)\n\nprice2 = scan()\n\nyield = c(15.2,16.9,15.3,14.9,15.7,15.1,16.7)\nyield = ts(yield,start = 1884)\nplot(yield)\nplot(yield,type = \"s\")\nplot(yield,type = \"h\")\nplot(yield,type = \"o\",pch = 7,lty = 2,lwd = 2,col = \"purple\",main=\"time series\", sub = \"wheal\")\nabline(v = c(1885,1889), lty = 2)\nabline(h = c(15.5,16.5), lty = 4,col = \"green\")\nacf(yield)\n\nwhitenoise = rnorm(100)\nwhitenoise = ts(whitenoise)\nplot(whitenoise)\nacf(whitenoise)\n\nBox.test(whitenoise,lag = 6)\nBox.test(whitenoise,lag = 12)\n\n##page 55\n\nsha = read.table(\"~/ts_data/file4.csv\",sep = \",\", header = TRUE)\noutput = ts(sha$output,start = 1964)\nplot(output)\nacf(output,lag = 25)\n\na = read.table(\"~/ts_data/file5.csv\",sep = \",\", header = TRUE)\nmilk = ts(a$milk,start = c(1962,1),frequency = 12)\nplot(milk)\nacf(milk)\n\nb = read.table(\"~/ts_data/file6.csv\",sep = \",\", header = TRUE)\ntemp = ts(b$temp,start = 1949)\nplot(temp)\nacf(temp)\nfor(i in 1:2) print(Box.test(temp,lag = 6*i))\n\nc = read.table(\"~/ts_data/file7.csv\",sep = \",\", header = TRUE)\nprop = ts(c$prop,start = 1950)\nplot(prop)\nacf(prop)\nfor(i in 1:2) print(Box.test(prop,lag = 6*i))\n\nexer2.5.1 = ts(1:20)\nacf(exer2.5.1)\n\nmu = mean(exer2.5.1)\nn = length(exer2.5.1)\nxn = exer2.5.1 - mu\n\ngetasc = function(xn,k){\npart = xn[1:(n-k)]*xn[(1+k):n]\nresult = sum(part)/(n-k)\nreturn(result)\n}\n\ngetvar = function(xn){\n  part = xn*xn\n  result = sum(part)/(n-1)\n  return(result)\n}\n\ngetasc(xn,3)\n",
+    "created" : 1506499100878.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1266314642",
+    "id" : "802F3F68",
+    "lastKnownWriteTime" : 1506509598,
+    "last_content_update" : 1506509598067,
+    "path" : "~/R_Projects/time_series/Rfile/book.R",
+    "project_path" : "Rfile/book.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

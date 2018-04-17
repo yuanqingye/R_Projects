@@ -1,0 +1,9 @@
+{
+    "path" : "~/R_Projects/purchasing_relation/data",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

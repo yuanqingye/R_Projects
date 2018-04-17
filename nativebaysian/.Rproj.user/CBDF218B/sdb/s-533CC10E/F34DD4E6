@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(caret)\nhead(iris)\nlibrary(klaR)\n\nx = iris[,-5]\ny = iris$Species\n\nmodel = train(x,y,'nb',trControl=trainControl(method='cv',number=10))\npredict(model$finalModel,x)\n\ntable(predict(model$finalModel,x)$class,y)\n\nnaive_iris <- NaiveBayes(iris$Species ~ ., data = iris)\nplot(naive_iris)\n\nlibrary(naivebayes)\n\n#try svm for one class \nlibrary(e1071)\none_sample_train = iris[iris$Species==\"setosa\",]\nsvm_one_sample_model = svm(Species~.,one_sample_train,type=\"one-classification\",nu=0.5,\n                           scale=TRUE,\n                           kernel=\"radial\")\nresult = predict(svm_one_sample_model,iris[,-5])\nresult = as.numeric(result)\nresult = as.factor(result)\nori_result = ifelse(iris$Species==\"setosa\",1,0)\nori_result = as.factor(ori_result)\nsum(result==ori_result)/length(result)\n\nspecificity(data = result,reference = ori_result)\nsensitivity(data = result,reference = ori_result)\n",
+    "created" : 1500434090363.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3070083641",
+    "id" : "F34DD4E6",
+    "lastKnownWriteTime" : 1512548783,
+    "last_content_update" : 1512548783823,
+    "path" : "~/R_Projects/nativebaysian/Rfile/iriscase.R",
+    "project_path" : "Rfile/iriscase.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1512985182825.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "CE8D94D2",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1512985182825,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "879EC567",
+        "caption" : "shop_commerce",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=shop_commerce&cache_key=879EC567",
+        "displayedObservations" : "147",
+        "environment" : "",
+        "object" : "shop_commerce",
+        "preview" : "0",
+        "totalObservations" : "147",
+        "variables" : "9"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

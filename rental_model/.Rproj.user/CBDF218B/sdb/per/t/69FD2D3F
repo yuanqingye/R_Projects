@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(neuralnet)\n# n <- names(new_trainset)\n# f <- as.formula(paste(\"rent ~\", paste(n[!n %in% \"rent\"], collapse = \" + \")))\n# maxs <- apply(new_trainset, 2, max) \n# mins <- apply(new_trainset, 2, min)\n# train.scaled = as.data.frame(scale(new_trainset, center = mins, scale = maxs - mins))\n# test.scaled = as.data.frame(scale(new_testset,center = mins,scale = maxs - mins))\n# max_rent = maxs[\"rent\"]\n# min_rent = mins[\"rent\"]\n\nneuralnet_para = function(trainset,testset){\n  trainname <- names(trainset)\n  fff <- as.formula(paste(\"rent ~\", paste(trainname[!(trainname %in% \"rent\")], collapse = \" + \")))\n  maxs <- apply(trainset, 2, max) \n  mins <- apply(trainset, 2, min)\n  trainset = as.data.frame(scale(trainset, center = mins, scale = maxs - mins))\n  testset = as.data.frame(scale(testset,center = mins,scale = maxs - mins))\n  max_rent = maxs[\"rent\"]\n  min_rent = mins[\"rent\"]\n  k = 10\n  library(plyr) \n  pbar <- create_progress_bar('text')\n  pbar$init(k)\n  min = Inf\n  v = vector(mode = 'numeric',length = 0)\n  c = vector(mode = 'character',length = 0)\n  dt = data.table(size = v,depth = v,e = v,actfun = c)\n  rentind = which(names(trainset)==\"rent\")\n  for(depth in 1:k){\n    for(size in seq(3,21,by = 3)){\n      # for(actfun in c('logistic','tanh')){\n        for(actfun in c('logistic')){\n        neural.model = neuralnet(fff,data = trainset,hidden = rep(size,depth),act.fct = actfun)\n        neural.pred = compute(neural.model,testset[,-rentind])$net.result\n        neural.pred <- neural.pred*(max_rent-min_rent)+min_rent\n        test.r <- (testset$rent)*(max_rent-min_rent)+min_rent\n        e <- sum((test.r - neural.pred)^2)/length(test.r)\n        temp.dt = data.table(size = size,depth = depth,e = e,actfun = actfun)\n        dt = rbind(dt,temp.dt)\n        if(e<min){\n          bestsize = size\n          bestdepth = depth\n          bestactfun = actfun\n          min = e\n        }\n      }\n    }\n    pbar$step()\n  }\n  min.dt = data.table(size = bestsize,depth = bestdepth,e = min,actfun = bestactfun)\n  dt = rbind(dt,min.dt)\n  return(dt)\n}\n",
+    "created" : 1510802157022.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3252430112",
+    "id" : "69FD2D3F",
+    "lastKnownWriteTime" : 1511949461,
+    "last_content_update" : 1511949461423,
+    "path" : "~/R_Projects/neuralNetwork/Rfile/nn_para.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 11,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

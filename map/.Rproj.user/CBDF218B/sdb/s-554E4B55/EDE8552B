@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(raster)\nr <- raster(\"~/data/PopulationGrid_China2010/cnpop2010.tif\")\n\nlibrary(foreign)\nrat <- read.dbf(\"~/data/PopulationGrid_China2010/cnpop2010.tif.vat.dbf\")\n\ncolnames(rat)[1] <- \"ID\"\nlevels(r) <- rat\n",
+    "created" : 1521599455508.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "323787910",
+    "id" : "EDE8552B",
+    "lastKnownWriteTime" : 1521600876,
+    "last_content_update" : 1521600876010,
+    "path" : "~/R_Projects/map/Rfile/raster.R",
+    "project_path" : "Rfile/raster.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 17,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

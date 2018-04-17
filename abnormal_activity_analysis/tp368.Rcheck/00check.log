@@ -1,0 +1,107 @@
+* using log directory 'C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/tp368.Rcheck'
+* using R version 3.3.3 (2017-03-06)
+* using platform: x86_64-w64-mingw32 (64-bit)
+* using session charset: CP936
+* checking for file 'tp368/DESCRIPTION' ... OK
+* checking extension type ... Package
+* this is package 'tp368' version '1.0'
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking whether package 'tp368' can be installed ... WARNING
+Found the following significant warnings:
+  Warning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/tp368/man/tp368-package.Rd:26: All text must be in a section
+  Warning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/tp368/man/tp368-package.Rd:27: All text must be in a section
+See 'C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/tp368.Rcheck/00install.out' for details.
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking DESCRIPTION meta-information ... NOTE
+Malformed Description field: should contain one or more complete sentences.
+Non-standard license specification:
+  What license is it under?
+Standardizable: FALSE
+Checking should be performed on sources prepared by 'R CMD build'.
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+preprocess_train_data: no visible binding for global variable
+  'pickedColums'
+preprocess_train_data: no visible global function definition for
+  'complete.cases'
+Undefined global functions or variables:
+  complete.cases pickedColums
+Consider adding
+  importFrom("stats", "complete.cases")
+to your NAMESPACE file.
+* checking Rd files ... WARNING
+prepare_Rd: preprocess_train_data.Rd:21-23: Dropping empty section \details
+prepare_Rd: preprocess_train_data.Rd:24-30: Dropping empty section \value
+prepare_Rd: preprocess_train_data.Rd:37-39: Dropping empty section \note
+prepare_Rd: preprocess_train_data.Rd:34-36: Dropping empty section \author
+prepare_Rd: preprocess_train_data.Rd:31-33: Dropping empty section \references
+prepare_Rd: preprocess_train_data.Rd:43-45: Dropping empty section \seealso
+prepare_Rd: tp368-package.Rd:26: All text must be in a section
+prepare_Rd: tp368-package.Rd:27: All text must be in a section
+* checking Rd metadata ... OK
+* checking Rd cross-references ... WARNING
+Unknown package '<pkg>' in Rd xrefs
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... WARNING
+Warning: parse error in file 'tp368-Ex.R':
+50:11: unexpected symbol
+49: 
+50: ~~ simple examples
+              ^
+* checking examples ... ERROR
+Running examples in 'tp368-Ex.R' failed
+The error most likely occurred in:
+
+> ### Name: tp368-package
+> ### Title: What the package does (short line)
+> ### Aliases: tp368-package tp368
+> ### Keywords: package
+> 
+> ### ** Examples
+> 
+> ~~ simple examples of the most important functions ~~
+Error: unexpected symbol in "~~ simple examples"
+Execution halted
+* checking PDF version of manual ... WARNING
+LaTeX errors when creating PDF version.
+This typically indicates Rd problems.
+LaTeX errors found:
+! LaTeX Error: File `inconsolata.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+! Emergency stop.
+<read *> 
+         
+l.276 
+       
+!  ==> Fatal error occurred, no output PDF file produced!
+* checking PDF version of manual without hyperrefs or index ... OK
+* DONE
+Status: 1 ERROR, 5 WARNINGs, 2 NOTEs

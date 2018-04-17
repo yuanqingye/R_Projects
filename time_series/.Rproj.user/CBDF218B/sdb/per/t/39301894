@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "base_data = scan('~/ts.txt')\nts_data = ts(base_data)\nplot(ts_data)\nstl(base_data)\n",
+    "created" : 1502856405161.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "761339896",
+    "id" : "39301894",
+    "lastKnownWriteTime" : 1502856664,
+    "last_content_update" : 0,
+    "path" : "~/R_Projects/time_series/Rfile/time_series.R",
+    "project_path" : "Rfile/time_series.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

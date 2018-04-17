@@ -1,0 +1,18 @@
+{
+    "contents" : "---\ntitle: \"商场购物关联分析\"\nauthor: \"qingye\"\ndate: \"2017年7月5日\"\noutput: html_document\n---\n####采用关联算法，以个人为单位，对商品的关联性进行分析\n####如果商品粒度过细，得到的关联情况非常稀疏，故采用第三大类作为关联分析对象\n\n<table>\n    思路来源：著名的啤酒与尿布相关分析，作为大数据时代的代表作\n    方式：通过分析每个人购买过的商品，来察看哪些商品的购买之间是有联系的\n    目的：通过分析关联，生成报告，对商品的推送，销售的提升起到影响\n</table>\n<table>\n    时间：数据取自5月份\n    地点：dl.fct_ordr\n    所取字段：mobile,prod_name,cont_cat1_name,cont_cat2_name,cont_cat3_name\n    方法：基于apriori算法得出支持度，信任度以及提升率\n</table>\n\n术语解释：\n\n1. support:支持度，即某个商品组合在所有交易中出现的频率，比如10个人中有两个买过沙发，那么沙发支持度为0.2\n\n2. confidence:信任度，即某个商品的条件概率，如果买了B的人中，有1四分之一买了A，那么A对于B的信任度是0.25\n\n3. lift:提升，上面的条件概率除以A在整个交易中出现的频率，是最重要的关联指标\n\n```{r importdata, include=FALSE}\n# source('~/Rfile/toolfunc.R')\n# source2('~/Rfile/R_hive.R',7,17)\nlibrary(data.table)\nlibrary(readxl)\nlibrary(arules)\nlibrary(arulesViz)\n```\n\n```{r caculation,echo = FALSE,include=FALSE}\n# data_hive = read_xlsx(\"~/data/order_data_may.xlsx\")\n# data_hive = data.table(data_hive)\n# order.list.nona = data_hive[!is.na(cont_cat3_name),]\n# order.list.nodup = unique(order.list.nona, by=c(\"mobile\", \"cont_cat3_name\"))\n# prepare.list = aggregate(cont_cat3_name~mobile,data = order.list.nodup,paste)\nload(\"~/R_projects/purchasing_relation/data/order.RData\")\n# frequentsets=eclat(prepare.list$cont_cat3_name,parameter=list(support=0.001,maxlen=20))  #求频繁项集  \n# rules <- apriori(prepare.list$cont_cat3_name, parameter = list(supp=0.0001,confidence=0.1, minlen = 2))\nsubrules2 <- head(sort(rules, by = \"lift\"), 10)\n```\n\n\n出现频率最高的商品品类前30，纵坐标是相对频率\n```{r itemfrequency,echo = F}\nitemFrequencyPlot(items(rules), topN=30, cex.names=.6,col = \"purple\")\n```\n\n我们可以看到按照lift排名前30的相关关系\n{铝合金窗,暖通} => {安全门} lift = 24\n表示购买铝合金窗和暖通的人购买安全门的概率是没有任何信息普通人的24倍\n```{r rulesdata,echo = F,out.width=1000}\ninspect(head(sort(rules, by = \"lift\"), 30),linebreak=TRUE)\n```\n\n这里可以看到三个统计量之间的关系，支持度为横轴，信任度为纵轴，颜色深度为提升率\n```{r scatterplot,echo = FALSE}\nplot(rules)\n```\n\n\n```{r interactive_scatterplot,echo = FALSE}\n# sel <- plot(rules, measure = c(\"support\", \"lift\"), shading = \"confidence\",interactive = TRUE)\n\n```\n\n\n这里是用矩阵来表示关联，横轴为关联左项，纵轴为关联右项，大小为支持度，颜色深度为提升值\n注意：这里采用了k-means聚类方法把类似的物品进行了整合，故显示的不多\n\n```{r grouped,echo = FALSE}\nplot(rules, method = \"grouped\")\n```\n\n这里的横坐标是支持度，纵坐标是信任度，颜色表示项目数，总体来说，项目多则信任度高，项目少则支持度高\n```{r colored_scatterplot,echo = FALSE}\nplot(rules, shading=\"order\", control = list(main = \"Two-key plot\", \n                                            col=rainbow(max(size(rules))-1L)))\n```\n\n这里用图形展示了商品品类的关系，颜色越深，表示关联越强，图形越大，表示支持越高\n```{r graph,echo = F}\nplot(subrules2, method = \"graph\", control = list(type = \"items\",edgeCol = 'red'))\n#reorder\n```\n\n\n```{r matrix,echo = F,include = F}\nplot(subrules2, method=\"matrix\", measure=c(\"lift\", \"confidence\"))\n\n```\n\n\n```{r paracoord,echo=F,include = F}\nplot(subrules2, method=\"paracoord\")\n```\n\n交互图，把鼠标移到图上可以看到相应的关联规则的解释\n```{r plotly,echo=F}\nplotly_arules(rules, method = \"scatterplot\", measure = c(\"support\", \"confidence\"),\n              shading = \"lift\", max = 1000)\n```\n\n字典，我们可以交互的检查各个关系\n```{r}\ninspectDT(rules)\n```\n\n\n\n交互式作图还在编写中\n即根据用户的输入来动态画图\n",
+    "created" : 1499218344124.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "910290199",
+    "id" : "DD079C6F",
+    "lastKnownWriteTime" : 1499239944,
+    "path" : "~/R_Projects/purchasing_relation/Rmarkdown/report_association.Rmd",
+    "project_path" : "Rmarkdown/report_association.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}

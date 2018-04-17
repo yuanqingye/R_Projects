@@ -1,0 +1,31 @@
+---
+title: "notes"
+author: "qingye"
+date: "2017年7月7日"
+output: html_document
+---
+
+###浙江移动
+#####王晓征
+
+一现状与挑战
+网元海量化，组件多样化，调度动态化
+云计算中心的新环境
+私有云运维德特定挑战
+
+二 运维体系
+道法器
+云运维时代，IT运维除了关注系统安全稳定性可靠以外，更加关注用户的体验，业务效率，企业效益
+
+三层连续性保障模型
+1面向业务
+2面向应用
+3面向平台
+应用做得好可以屏蔽平台问题
+各个连续性提升
+
+可视化能力解决故障快速定界，自动化能力提高效率，智能化能力提供智能分析
+最终通过引入机器学习，深度学习等人工智能技术，实现在故障场景下自主决策和自动处理
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

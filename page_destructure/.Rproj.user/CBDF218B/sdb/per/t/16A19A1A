@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# devtools::install_github(\"jrowen/twitteR\", ref = \"oauth_httr_1_0\")\nlibrary(twitteR)\nlibrary(httr)\nlibrary(devtools)\n# install_github(\"Bart6114/scheduleR\")\nlibrary(scheduler)\n# install.packages(\"base64enc\")\nlibrary(base64enc)\nlibrary(openssl)\n# install.packages(\"taskscheduleR\")\nlibrary(taskscheduleR)\nproxy_url <- \"http://127.0.0.1:61387/\"\nSys.setenv(http_proxy = proxy_url, https_proxy = proxy_url, ftp_proxy = proxy_url)\n\napi_key <- \"2PYxocfAcY0CMVgw6LBg6TMQZ\"\napi_secret <- \"0uWl3XONWwpHTpZTJZW8mB5cvw8hF2IGKL6tIfllk9oO9wYP6s\"\naccess_token <- \"74952092-lfKHNCAUFOamMGJ0JCO2KJDRA9LDyWbyK2taS0F0Y\"\naccess_token_secret <- \"ZC6SOH5dx5MPppcSZmcFnkknhbIlUh98HRxFRHpv1GAQL\"\nsetup_twitter_oauth(api_key,api_secret,access_token,access_token_secret)\n\ntrump_tweets = userTimeline(\"realDonaldTrump\",n = 3200)\ntweetdt.df <- twListToDF(trump_tweets)\n\nnadal_tweets <- userTimeline(\"RafaelNadal\", n = 3200)\ntweetrn.df <- twListToDF(nadal_tweets)\ndim(tweetrn.df)\n\ndate<-Sys.Date()\ndate<-as.character(date)\nname<-paste(date,\".RData\")\n#Finally we save the Rdata using as name the date from the download\nsave(tweetrn.df, file =name)\n\ntaskscheduler_create(taskname = \"tasknadal\", rscript = \"~/schedulerR/nadaltweets.R\", \n                     schedule = \"WEEKLY\", starttime = \"10:00\", startdate = format(Sys.Date(), \"%Y/%m/%d\")) \n\n# taskscheduler_delete(taskname = \"tasknadal\")\ntdm = tweetrn.df\nterm.freq <- rowSums(as.matrix(tdm))\nterm.freq = 45\n#we saved the data in a data frame\ndf <- data.frame(term = names(term.freq), freq = term.freq)\nsave(df,file=\"tqfnadal50.RData\")\n#plot with ggplot2\nlibrary(ggplot2)\nggplot(df, aes(x = term, y = freq)) + geom_bar(stat = \"identity\") +\n  xlab(\"Terms\") + ylab(\"Count\") + coord_flip()",
+    "created" : 1506344574000.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2586733678",
+    "id" : "16A19A1A",
+    "lastKnownWriteTime" : 1506344998,
+    "last_content_update" : 1506344998179,
+    "path" : "~/schedulerR/nadaltweets.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 22,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

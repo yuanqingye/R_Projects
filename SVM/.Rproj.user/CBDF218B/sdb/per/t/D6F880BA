@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "# Load the party package. It will automatically load other dependent packages.\nlibrary(party)\n\n# Create the input data frame.\ninput.dat <- trainset\n\n# Create the tree.\noutput.tree <- ctree(\n  rent ~ ., \n  data =  input.dat)\n\noutput.tree.2 = ctree(\n  rent ~ city_level+area+num_ordered_custom+dist_from_highway+dist_from_big_road+position+dist_from_subway+dist_from_business_district+num_business_within_2500,\n  data =  input.dat\n  )\n\noutput.tree.3 = ctree(\n  rent ~ city_level+dist_from_highway+dist_from_big_road+position+dist_from_subway+dist_from_business_district+num_business_within_2500,\n  data =  input.dat\n)\n\n\n# Plot the tree.\nplot(output.tree)\nplot(output.tree.2)\nplot(output.tree.3)\n\nlibrary(rpart)\n\nmodel<-rpart(rent~.,\n             data=input.dat,method=\"class\",control=5,\n             parms=list(split = \"information\"))\n\n\n\nplot(model,margin=0.2)\ntext(model,use.n=T,all=T,cex=0.9)\n\nplot(as.party(model), type=\"simple\")\nplot(as.party(model))\n\nrpart.control(minsplit = 20, minbucket = round(minsplit/3), cp = 0.01, \n              maxcompete = 4, maxsurrogate = 5, usesurrogate = 2, xval = 10,\n              surrogatestyle = 0, maxdepth = 30, ...)\n\ndtm<-rpart(rent~., input.dat, method=\"class\", minsplit=2, minbucket=1)\nprintcp(dtm)\nplot(dtm)\ntext(dtm,use.n=T,all=T,cex=0.9)\n\n# dtm<-rpart(sign~total_amount+province_id+serial_name, modified_order_522, method=\"class\", minsplit=2, minbucket=1)\n\nlibrary(rpart.plot)\nrpart.plot(dtm)\n\npng(filename = '~/Rimage/dtm.png',width = 1100, height = 800)\nprp(dtm)\ndev.off()\n\nlibrary(partykit)\nrpk <- as.party(dtm)\nplot.party(rpk)\n",
+    "created" : 1501488735496.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1414205060",
+    "id" : "D6F880BA",
+    "lastKnownWriteTime" : 1508294928,
+    "last_content_update" : 1508294928936,
+    "path" : "~/R_Projects/SVM/Rfile/var_filter.R",
+    "project_path" : "Rfile/var_filter.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

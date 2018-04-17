@@ -1,0 +1,13 @@
+{
+    "path" : "~/Rfile",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 4
+        },
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

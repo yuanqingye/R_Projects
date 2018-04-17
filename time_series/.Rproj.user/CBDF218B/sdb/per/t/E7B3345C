@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "strs =\"115 145 171 196 204 242 284 315 340 360 417\n126 150 180 196 188 233 277 301 318 342 391\n141 178 193 236 235 267 317 356 362 406 419\n135 163 181 235 227 269 313 348 348 396 461\n125 172 183 229 234 270 318 355 363 420 472\n149 178 218 243 264 315 374 422 435 472 535\n170 199 230 264 302 364 413 465 491 548 622\n170 199 242 272 293 347 405 467 505 559 606\n158 184 209 237 259 312 355 404 404 463 508\n133 162 191 211 229 274 306 347 359 407 461\n114 146 172 180 203 237 271 305 310 362 390\n140 166 194 201 229 278 306 336 337 405 432\"\n\npassengers = read.table(strs)\n",
+    "created" : 1506739459124.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1727966977",
+    "id" : "E7B3345C",
+    "lastKnownWriteTime" : 1517395289,
+    "last_content_update" : 1517395289432,
+    "path" : "~/R_Projects/time_series/Rfile/data_input.R",
+    "project_path" : "Rfile/data_input.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

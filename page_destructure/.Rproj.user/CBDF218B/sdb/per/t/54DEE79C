@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1505901376132.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "54DEE79C",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1505901376132,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "955131CE",
+        "caption" : "tianmao_result",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=tianmao_result&cache_key=955131CE",
+        "displayedObservations" : 60,
+        "environment" : "",
+        "object" : "tianmao_result",
+        "preview" : 0,
+        "totalObservations" : 60,
+        "variables" : 3
+    },
+    "relative_order" : 12,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

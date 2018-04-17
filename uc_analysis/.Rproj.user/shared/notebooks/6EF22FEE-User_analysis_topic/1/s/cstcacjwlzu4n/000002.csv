@@ -1,0 +1,14 @@
+"0","coupon_sql = paste0(""select substr(d.create_time,1,10) dt,count(distinct d.open_id) c_num "
+"0","from (select create_time,open_id from ods.ods_marketing_center_mmc_user_coupon_dt where "
+"0","to_date(create_time)>='"",ldateend,""'"
+"0","and channel_id not in (2,4) and open_id!='') d"
+"0","group by substr(d.create_time,1,10) order by substr(d.create_time,1,10)"")"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","coupon = read_data_impala_general(coupon_sql)"
+"0","barplot(coupon$c_num,names.arg = coupon$dt,xlab = ""month"",ylab = ""领券数"",main = ""每日领券情况"",col = ""blue"")"

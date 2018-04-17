@@ -1,0 +1,18 @@
+{
+    "contents" : "a<-c(1.55, 3.18 ,1.92, 2.83 ,2.84, 2.98 ,4.20, 1.05 ,3.69, 0.74 ,1.84 ,3.22 ,3.77 ,2.91,4.72, 1.90,2.03, 3.70 ,4.10, 4.05, 5.54, 3.18 ,2.89, 4.31, 4.62, 5.45, 1.88 ,2.79,\n     4.14, 1.02, 7.95, 7.22 ,4.68, 2.26, 2.38, 2.12, 4.25, 1.94 ,2.03, 3.70 ,2.01)\n\nb<-rgamma(41,4.472,1.3726)\n\nqqplot(a,b)\n\nnorms = rnorm(1000)\nks.test(norms,'pnorm')\n\nx <- rnorm(50)\ny <- runif(30)\n# Do x and y come from the same distribution?\nks.test(x, y)\n",
+    "created" : 1501126463833.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3644054805",
+    "id" : "5A8D04F2",
+    "lastKnownWriteTime" : 1501137444,
+    "path" : "~/R_Projects/test_project/test/qqplot.R",
+    "project_path" : "test/qqplot.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

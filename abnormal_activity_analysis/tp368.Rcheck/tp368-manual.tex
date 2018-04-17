@@ -1,0 +1,106 @@
+\nonstopmode{}
+\documentclass[a4paper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\usepackage[utf8,latin1]{inputenc}
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `tp368'}}
+\par\bigskip{\large \today}
+\end{center}
+\begin{description}
+\raggedright{}
+\item[Type]\AsIs{Package}
+\item[Title]\AsIs{What the package does (short line)}
+\item[Version]\AsIs{1.0}
+\item[Date]\AsIs{2018-01-29}
+\item[Author]\AsIs{qingye yuan}
+\item[Maintainer]\AsIs{Developer }\email{Developer@some.domain.net}\AsIs{}
+\item[Description]\AsIs{More about what it does (maybe more than one line)}
+\item[License]\AsIs{What license is it under?}
+\end{description}
+\Rdcontents{\R{} topics documented:}
+\inputencoding{utf8}
+\HeaderA{tp368-package}{What the package does (short line)}{tp368.Rdash.package}
+\aliasA{tp368}{tp368-package}{tp368}
+\keyword{package}{tp368-package}
+%
+\begin{Description}\relax
+More about what it does (maybe more than one line)
+\end{Description}
+%
+\begin{Details}\relax
+
+The DESCRIPTION file:
+This package was not yet installed at build time.\\{}
+
+Index:  This package was not yet installed at build time.\\{}
+\textasciitilde{}\textasciitilde{} An overview of how to use the package, including the most important functions \textasciitilde{}\textasciitilde{}
+\end{Details}
+%
+\begin{Author}\relax
+qingye yuan
+
+Maintainer: Developer <Developer@some.domain.net>
+\end{Author}
+%
+\begin{References}\relax
+\textasciitilde{}\textasciitilde{} Literature or other references for background information \textasciitilde{}\textasciitilde{}
+\end{References}
+%
+\begin{SeeAlso}\relax
+\textasciitilde{}\textasciitilde{} Optional links to other man pages, e.g. \textasciitilde{}\textasciitilde{}
+\textasciitilde{}\textasciitilde{} \code{\LinkA{<pkg>}{<pkg>}} \textasciitilde{}\textasciitilde{}
+\end{SeeAlso}
+%
+\begin{Examples}
+\begin{ExampleCode}
+~~ simple examples of the most important functions ~~
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{preprocess\_train\_data}{preprocess\_train\_data}{preprocess.Rul.train.Rul.data}
+\keyword{\textbackslash{}textasciitilde{}kwd1}{preprocess\_train\_data}
+\keyword{\textbackslash{}textasciitilde{}kwd2}{preprocess\_train\_data}
+%
+\begin{Description}\relax
+
+This is a good packages
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+preprocess_train_data(original_set)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{original\_set}] 
+
+
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Examples}
+\begin{ExampleCode}
+##---- Should be DIRECTLY executable !! ----
+##-- ==>  Define data, use random,
+##--	or do  help(data=index)  for the standard data sets.
+
+## The function is currently defined as
+function (original_set) 
+{
+    train_set = original_set[, pickedColums]
+    train_base = train_set[complete.cases(train_set), ]
+    train_base = as.data.frame(train_base)
+    train_base$sign = as.factor(train_base$sign)
+    return(train_base)
+  }
+\end{ExampleCode}
+\end{Examples}
+\printindex{}
+\end{document}

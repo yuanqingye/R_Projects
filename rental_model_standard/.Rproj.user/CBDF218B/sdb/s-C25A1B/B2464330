@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1523264618703.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "B2464330",
+    "lastKnownWriteTime" : 31525678432190511,
+    "last_content_update" : 1523264618703,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "803F1B9C",
+        "caption" : "commerce_distance_df",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=commerce_distance_df&cache_key=803F1B9C",
+        "displayedObservations" : 65,
+        "environment" : "",
+        "object" : "commerce_distance_df",
+        "preview" : 0,
+        "totalObservations" : 65,
+        "variables" : 2
+    },
+    "relative_order" : 25,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

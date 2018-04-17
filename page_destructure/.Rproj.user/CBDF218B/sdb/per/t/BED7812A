@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1506345021594.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "BED7812A",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1506345021594,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "69FDF4B",
+        "caption" : "tweetdt.df",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=tweetdt.df&cache_key=69FDF4B",
+        "displayedObservations" : 193,
+        "environment" : "",
+        "object" : "tweetdt.df",
+        "preview" : 0,
+        "totalObservations" : 193,
+        "variables" : 16
+    },
+    "relative_order" : 23,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

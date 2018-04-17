@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "install.packages('party')\ninstall.packages('randomForest')\nlibrary(party)\nlibrary(randomForest)\nprint(head(readingSkills))\noutput.forest <- randomForest(nativeSpeaker ~ age + shoeSize + score,   data=readingSkills)\n\nprint(output.forest) \n# print(importance(fit,type=2)) \n\n\nn<-length(names(traindata))  \nError<-NULL  \nset.seed(2016)  \nfor(i in 1:(n-1)){  \n  rf<-randomForest(Species~.,data=trainData,mtry=2,proximity=TRUE)  \n  err<-mean(rf$err.rate)  \n  Error[i]<-err  \n}  \nm=which.min(Error)    ##ѡ??ƽ????????С??m  \n\nset.seed(2016)  \nrf<-randomForest(Species~.,data=trainData,mtry=2,proximity=TRUE)    #proximity???Ƿ?????ģ?͵??ٽ?????????Ҫ????MDSplot()????ʹ??\n\niris_rf<-randomForest(Species~.,data=trainData,mtry=2,ntree=150,proximity=TRUE)\nprint(iris_rf)\n\nMDSplot(iris_rf,fac=trainData$Species)\n\ntreesize(iris_rf,terminal = TRUE)\nhist(treesize(iris_rf,terminal = T))\n\n#test case in datascience +\n\nrequire(randomForest)\nrequire(MASS)#Package which contains the Boston housing dataset\nattach(Boston)\nset.seed(101)\ndim(Boston)\n",
+    "created" : 1521467238129.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3002825293",
+    "id" : "878E61F3",
+    "lastKnownWriteTime" : 1521467298,
+    "last_content_update" : 1521467298267,
+    "path" : "~/Rfile/randomForest.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

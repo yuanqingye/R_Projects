@@ -1,0 +1,79 @@
+
+R version 3.3.3 (2017-03-06) -- "Another Canoe"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "tp368"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> options(pager = "console")
+> library('tp368')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("preprocess_train_data")
+> ### * preprocess_train_data
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: preprocess_train_data
+> ### Title: preprocess_train_data
+> ### Aliases: preprocess_train_data
+> ### Keywords: ~kwd1 ~kwd2
+> 
+> ### ** Examples
+> 
+> ##---- Should be DIRECTLY executable !! ----
+> ##-- ==>  Define data, use random,
+> ##--	or do  help(data=index)  for the standard data sets.
+> 
+> ## The function is currently defined as
+> function (original_set) 
++ {
++     train_set = original_set[, pickedColums]
++     train_base = train_set[complete.cases(train_set), ]
++     train_base = as.data.frame(train_base)
++     train_base$sign = as.factor(train_base$sign)
++     return(train_base)
++   }
+function (original_set) 
+{
+    train_set = original_set[, pickedColums]
+    train_base = train_set[complete.cases(train_set), ]
+    train_base = as.data.frame(train_base)
+    train_base$sign = as.factor(train_base$sign)
+    return(train_base)
+}
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tp368-package")
+> ### * tp368-package
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tp368-package
+> ### Title: What the package does (short line)
+> ### Aliases: tp368-package tp368
+> ### Keywords: package
+> 
+> ### ** Examples
+> 
+> ~~ simple examples of the most important functions ~~
+Error: unexpected symbol in "~~ simple examples"
+Execution halted

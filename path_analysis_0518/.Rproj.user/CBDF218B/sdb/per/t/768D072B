@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(data.table)\nlibrary(D3partitionR)\nlibrary(readr)\nlibrary(readxl)\npath_data_1 = read_xlsx(path='~/data/path_analysis.xlsx',1)\n# path_data_1[,value:=1]\npath_data_1 = data.table(path_data_1)\nsource('~/Rfile/time_sign_update.R')\ndt = group_row_with_time_ref(path_data_1)\ndt1 = dt[,.(value=1),by=c('mid','sign','name_ch')]\ndt2 = dt1[,.(sumvalue=sum(value)),by=c('mid')]\ndt3 = aggregate(name_ch~mid,data = dt1,paste,sep=',')\ntb_1 = dt2\ntb_2 = data.table(dt3)\ntb_3 = merge(tb_1,tb_2,by=intersect(names(tb_1),names(tb_2)))\ntb_4 = tb_3[sumvalue<=10,]\ntb_5 = tb_3[sumvalue<=20,]\nD3partitionR(data=list(path=tb_4$name_ch,value=tb_4$sumvalue),type = 'sunburst')\ntb_6 = tb_5[,.(path=name_ch,value = sumvalue)]\n# D3partitionROutput(outputId=1, width = \"100%\", height = \"700px\")\n# expr = quote(D3partitionR(data=list(path=tb_4$name_ch,value=tb_4$sumvalue),type = 'sunburst'))\n# freq = table(path_data_1$name_ch)\n\n# ord = order(freq$N,decreasing = TRUE)\n# freq_sort = freq[ord,]\n\n# ll= lapply(strsplit(mainset[,a_colname[1]],split=''),intersect,unlist(strsplit(testset[i,t_colname[1]],split='')))\n# filteredset = mainset[lapply(ll,length)>0,]\n\n\n# sequences <- read.csv(\n#   system.file(\"examples/visit-sequences.csv\",package=\"sunburstR\")\n#        ,header = FALSE\n#        ,stringsAsFactors = FALSE)\n#  sunburst(sequences)\n\n# library(sunburstR)\n# temp = data_buyer_seperated[(behaviour.u_mid!='3317E659-AB12-403C-86FA-EBD1FBA6FB1B'& behaviour.u_mid!='1A3E6DA9-62C2-4986-AA5C-90224EF44F41'),]\n# temp2=data.table(path=temp$behaviour.behaviour,value=1)\n# sunburst(temp2)\n\n# write.xlsx(temp,'~/data/temp.xlsx')\nlibrary(sunburstR)\ntemp = read_xlsx('~/data/temp.xlsx')\ntemp2=data.table(path=temp$page_name,value=1)\nsunburst(temp2[98:100,])\n\n\ntemp2=data.table(path=behavior0514$behaviour0514.behaviour,value=1)\nsunburst(temp2)",
+    "created" : 1495089290994.000,
+    "dirty" : false,
+    "encoding" : "GB2312",
+    "folds" : "",
+    "hash" : "4253165651",
+    "id" : "768D072B",
+    "lastKnownWriteTime" : 1495117145,
+    "last_content_update" : 0,
+    "path" : "~/Rfile/D3partittionAnalysis.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 11,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

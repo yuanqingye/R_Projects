@@ -1,0 +1,9 @@
+"0","avg_depth_total = depth[,.(avg_depth = sum(depth*expr_0)/sum(expr_0)),by = c(""isnew"")]"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","barplot(t(as.matrix(avg_depth_total[,-1])),beside = TRUE,col = c(""brown4"",""green""),axes = FALSE,xlim=c(0,ymax + 0.6),horiz = TRUE)"

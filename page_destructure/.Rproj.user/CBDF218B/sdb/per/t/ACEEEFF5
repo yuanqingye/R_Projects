@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(rvest)\n\n#login\n# url <- \"https://secure.usnews.com/member/login?ref=https%3A%2F%2Fpremium.usnews.com%2Fbest-graduate-schools%2Ftop-medical-schools%2Fresearch-rankings\"\n# session <- html_session(url)\n# \n# form <- html_form(read_html(url))[[1]]\n# \n# filled_form <- set_values(form,\n#                           username = \"notmyrealemail\",\n#                           password = \"notmyrealpassword\")\n# \n# submit_form(session, filled_form)\n\nlogin_url = \"https://secure.indeed.com/account/login?service=my&hl=zh_CN&co=CN&continue=https%3A%2F%2Fcn.indeed.com%2F\"\nsession = html_session(login_url)\nform = html_form(session)[[1]]\nfilled_form = set_values(form,username = \"memory_717@126.com\",password = \"testscrape\")\nsubmit_form(session,filled_form)\n\nquery = \"data science\"\nloc = \"beijing\"\nsession <- html_session(\"http://cn.indeed.com\")\nform <- html_form(web)[[1]]\nform <- set_values(form, q = query, l = loc)\nsuccess_search = submit_form(session,form)\njob_name = success_search%>%html_nodes(\"a[data-tn-element=jobTitle]\")%>%html_text()\n",
+    "created" : 1506049471180.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "124202794",
+    "id" : "ACEEEFF5",
+    "lastKnownWriteTime" : 1506052779,
+    "last_content_update" : 1506052779174,
+    "path" : "~/R_Projects/page_destructure/Rfile/usnews.R",
+    "project_path" : "Rfile/usnews.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 19,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

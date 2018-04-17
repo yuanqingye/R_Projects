@@ -1,0 +1,45 @@
+"0","knitr::opts_chunk$set(echo = FALSE)"
+"0","library(readxl)"
+"0","library(knitr)"
+"0","library(xtable)"
+"0","library(ggplot2)"
+"2","Want to understand how all the pieces fit together? Buy the ggplot2 book:
+http://ggplot2.org/book/
+"
+"0","library(reshape2)"
+"2","
+Attaching package: ¡®reshape2¡¯
+
+"
+"2","The following objects are masked from ¡®package:data.table¡¯:
+
+    dcast, melt
+
+"
+"0","library(scales)"
+"0","library(plyr)"
+"0","library(treemap)"
+"0","library(grid)"
+"0","library(gridExtra)"
+"0","library(cowplot)"
+"2","
+Attaching package: ¡®cowplot¡¯
+
+"
+"2","The following object is masked from ¡®package:ggplot2¡¯:
+
+    ggsave
+
+"
+"0","source('~/Rfile/R_impala.R')"
+"0","# source('~/Rfile/R_hive.R')"
+"0","datestart = Sys.Date()-14"
+"0","dateend = Sys.Date()-1"
+"0","datestart.str = format(datestart,'%Y%m%d')"
+"0","dateend.str = format(dateend,'%Y%m%d')"
+"0","dates = datestart.str:dateend.str"
+"0","ldateend = Sys.Date()-15"
+"0","ldatestart = Sys.Date()-28"
+"0","ldatestart.str = format(ldatestart,'%Y%m%d')"
+"0","ldateend.str = format(ldateend,'%Y%m%d')"
+"0","options(scipen = 10)"

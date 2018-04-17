@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "rsconnect::setAccountInfo(name='yuanqingye', token='5D0E02F6D731C683FF120382F92621BC', secret='9loJXOopk/JBkT13fD3OAyTvicnJsPA+0uZXBFLm')\n# proxy_url <- \"http://127.0.0.1:16823/proxy_on.pac\"\n# Sys.setenv(http_proxy = proxy_url, https_proxy = proxy_url, ftp_proxy = proxy_url)\nrsconnect::deployApp('./markdown_shiny.Rmd')\nrsconnect::deployApp('./drilldown')\n\n",
+    "created" : 1506419056500.000,
+    "dirty" : false,
+    "encoding" : "GB2312",
+    "folds" : "",
+    "hash" : "2744179574",
+    "id" : "C1EA9C6F",
+    "lastKnownWriteTime" : 1506578922,
+    "last_content_update" : 1506578922750,
+    "path" : "~/R_Projects/shiny_start/Rfile/shiny_connect.R",
+    "project_path" : "Rfile/shiny_connect.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

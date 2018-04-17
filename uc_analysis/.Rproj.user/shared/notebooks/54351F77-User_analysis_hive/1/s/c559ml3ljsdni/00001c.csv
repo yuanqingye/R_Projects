@@ -1,0 +1,11 @@
+"0","depth_p = data.table(depth_p)"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","avg_depth_total = depth_p[,.(avg_depth = sum(avg_depth*p_num)/sum(p_num)),by = c(""isnew"")]"
+"0","ymax = max(depth_p$avg_depth,na.rm = TRUE)"
+"0","barplot(t(as.matrix(avg_depth_total[,-1])),beside = TRUE,col = c(""brown4"",""green""),axes = FALSE,xlim=c(0,ymax + 0.6),horiz = TRUE)"

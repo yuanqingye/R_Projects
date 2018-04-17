@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(rvest)\n\nunited <- html_session(\"http://www.united.com/\")\n\ntmp <- gurl %>% html_session %>% \n  read_html(encoding=\"utf-8\") %>% \n  html_nodes(\"div.f-main-list>div>div\")\n\nbaidu_url = \"https://www.baidu.com/\"             \nbaidu = html_session(\"https://www.baidu.com/\")\nnext_baidu = baidu%>%follow_link(\"新闻\")\nbaidu_page = read_html(baidu_url)\nbaidu_page%>%html_node(\"a.mnav\")%>%html_text()\n\nsearch_form_fill = baidu_page%>%html_node(\"#form\")%>%html_form()%>%set_values(\"nobel prize\")\nsearch_results = baidu%>%submit_form(search_form_fill)\nsearch_results%>%follow_link()\n\nsina_url = \"https://www.sina.com.cn\"\nsina = html_session(sina_url)\nsina_sport = sina%>%follow_link(\"体育\")%>%html_nodes(\"li:nth-child(1) h2\")%>%html_text()\nsina_pl = sina_sport%>%follow_link(\"英超\")\n\nlibrary(httr)\nsina_raw = GET(sina_url,user_agent(\"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0\"))\nsina = html_session(sina_url,user_agent(\"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0\"))\nsina_sport = sina%>%html_nodes(\".nav-w:nth-child(2) ul:nth-child(1) b\")%>%html_text()\n\n\nlogin <- united %>%\n  html_node(\"form[name=LoginForm]\") %>%\n  html_form() %>%\n  set_values(\n    MpNumber = \"GY797363\",\n    Password = password\n  )\n\nlogged_in <- united %>% submit_form(login)\n\nlogged_in %>%\n  follow_link(\"View account\") %>%\n  html_node(\"#ctl00_ContentInfo_AccountSummary_spanEliteMilesNew\") %>%\n  html_text() %>%\n  readr::parse_number()\n\nrm(list=ls())\nlibrary(rvest)\n\n### Trying to sign into a form using email/password \n\nurl       <-\"http://www.perfectgame.org/\"   ## page to spider\npgsession <-html_session(url)               ## create session\npgform    <-html_form(pgsession)[[1]]       ## pull form from session\n\n#the backstroke means the name\nset_values(pgform, `ctl00$Header2$HeaderTop1$tbUsername` = \"myemail@gmail.com\") \nset_values(pgform, `ctl00$Header2$HeaderTop1$tbPassword` = \"mypassword\")\n\nsubmit_form(pgsession,pgform,submit=`ctl00$Header2$HeaderTop1$Button1`)\n\n#corrected cases\nurl       <-\"http://www.perfectgame.org/\"   ## page to spider\npgsession <-html_session(url)               ## create session\npgform    <-html_form(pgsession)[[1]]       ## pull form from session\n\n# Note the new variable assignment \n\n\nfilled_form <- set_values(pgform,\n                          `ctl00$Header2$HeaderTop1$tbUsername` = \"myemail@gmail.com\", \n                          `ctl00$Header2$HeaderTop1$tbPassword` = \"mypassword\")\n\nsubmit_form(pgsession,filled_form)",
+    "created" : 1505904327422.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1013205879",
+    "id" : "B79C4B11",
+    "lastKnownWriteTime" : 1506066499,
+    "last_content_update" : 1506066499751,
+    "path" : "~/R_Projects/page_destructure/Rfile/follow_session.R",
+    "project_path" : "Rfile/follow_session.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 17,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

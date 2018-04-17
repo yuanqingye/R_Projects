@@ -1,0 +1,50 @@
+---
+title: "TEST"
+author: "qingye"
+date: "2017年7月5日"
+runtime: shiny
+output: html_document
+---
+
+```{r echo = FALSE}
+selectInput("n_breaks", label = "Number of bins:",
+              choices = c(10, 20, 35, 50), selected = 20)
+  
+sliderInput("bw_adjust", label = "Bandwidth adjustment:",
+              min = 0.2, max = 2, value = 1, step = 0.2)
+```
+
+```{r echo = FALSE}
+renderPlot({
+  hist(faithful$eruptions, probability = TRUE, 
+       breaks = as.numeric(input$n_breaks),
+       xlab = "Duration (minutes)", 
+       main = "Geyser eruption duration")
+  
+  dens <- density(faithful$eruptions, adjust = input$bw_adjust)
+  lines(dens, col = "blue")
+})
+```
+
+```{r}
+library(data.table)
+library(readxl)
+library(arules)
+library(arulesViz)
+load("~/R_projects/purchasing_relation/data/order.RData")
+# frequentsets=eclat(prepare.list$cont_cat3_name,parameter=list(support=0.001,maxlen=20))  #求频繁项集  
+# rules <- apriori(prepare.list$cont_cat3_name, parameter = list(supp=0.0001,confidence=0.1, minlen = 2))
+# subrules2 <- head(sort(rules, by = "lift"), 10)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+# plot(rules, measure = c("support", "lift"), shading = "confidence",interactive = TRUE)
+inspect(rules)
+inspect(frequentsets)
+```
+
+Two plus two equals `r 2 + 2`.
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

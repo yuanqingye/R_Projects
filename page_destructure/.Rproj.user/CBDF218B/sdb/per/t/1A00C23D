@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "# selenium can record every step you record and you could extract code(java,python) from it\n# could not solve iframe problem sometimes",
+    "created" : 1504861913222.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3254962770",
+    "id" : "1A00C23D",
+    "lastKnownWriteTime" : 1504862106,
+    "last_content_update" : 1504862106606,
+    "path" : "~/R_Projects/page_destructure/Rfile/selenium.R",
+    "project_path" : "Rfile/selenium.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

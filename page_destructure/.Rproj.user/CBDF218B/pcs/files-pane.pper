@@ -1,0 +1,13 @@
+{
+    "path" : "~/R_Projects/page_destructure",
+    "sortOrder" : [
+        {
+            "ascending" : false,
+            "columnIndex" : 4
+        },
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

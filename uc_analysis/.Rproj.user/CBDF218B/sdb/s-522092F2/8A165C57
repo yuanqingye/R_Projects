@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#检查编码情况",
+    "created" : 1497411969960.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4195759603",
+    "id" : "8A165C57",
+    "lastKnownWriteTime" : 1497411999,
+    "last_content_update" : 1497411999,
+    "path" : "~/R_Projects/uc_analysis/checking_coding.R",
+    "project_path" : "checking_coding.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

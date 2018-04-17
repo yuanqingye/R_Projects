@@ -1,0 +1,18 @@
+"0","depth_p_sql = paste0(""select t.isnew,t.dt,sum(cast(u_depth as INT))/count(t.u_mid) avg_depth, count(t.u_mid) p_num from "
+"0","(select a.dt,isnew,max(b.depth) as u_depth,a.u_mid from "
+"0","dm.dm_app_umid_step a  "
+"0","left outer join "
+"0","test.pagelevel b on a.page_name_zh=b.page_name where length(b.depth)=1 and dt > '"",datestart.str,""' group by a.dt,a.isnew,a.u_mid) t group by t.isnew,t.dt"")"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","depth_p = read_data_impala_general(depth_p_sql)"
+"0","depth_p = depth_p[order(depth_p$dt),]"
+"0","depth_p$fdt = factor(str_sub(depth_p$dt,5,8),levels = str_sub(depth_p$dt,5,8))"
+"2","duplicated levels in factors are deprecated"
+"0","p  = ggplot(depth_p,aes(fdt,avg_depth))"
+"0","p + geom_bar(aes(fill = isnew),stat = ""identity"",position = ""dodge"") + labs(x = ""日期"",y = ""平均深度"",title = ""平均访问深度（按用户）"")"

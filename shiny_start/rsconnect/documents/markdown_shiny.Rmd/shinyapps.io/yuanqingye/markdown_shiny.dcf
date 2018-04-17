@@ -1,0 +1,10 @@
+name: markdown_shiny
+title:
+username:
+account: yuanqingye
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 218818
+bundleId: 1001076
+url: https://yuanqingye.shinyapps.io/markdown_shiny/
+when: 1506570104.26864

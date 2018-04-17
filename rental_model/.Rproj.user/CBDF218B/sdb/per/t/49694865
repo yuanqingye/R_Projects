@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1512022063979.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "49694865",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1512022063979,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "B0329734",
+        "caption" : "MSE.gbm.beijing.MALLS",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=MSE.gbm.beijing.MALLS&cache_key=B0329734",
+        "displayedObservations" : 4,
+        "environment" : "",
+        "object" : "MSE.gbm.beijing.MALLS",
+        "preview" : 0,
+        "totalObservations" : 4,
+        "variables" : 5
+    },
+    "relative_order" : 20,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

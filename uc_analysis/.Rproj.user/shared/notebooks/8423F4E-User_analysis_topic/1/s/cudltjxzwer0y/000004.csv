@@ -1,0 +1,2 @@
+"0","channel_sql = paste0(""select * from dl.dl_channel_umid_openid where substr(umid_firstonlinetime,1,10) >= '"",as.character(datestart),""' and dt = "",dateend.str)"
+"0","new_user_channel_unique = read_data_impala_general(channel_sql)"

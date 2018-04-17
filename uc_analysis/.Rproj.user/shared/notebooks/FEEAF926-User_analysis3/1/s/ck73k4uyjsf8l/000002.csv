@@ -1,0 +1,25 @@
+"0","depth_p_sql = paste0(""select t.isnew,t.dt,sum(cast(u_depth as INT))/count(t.u_mid) avg_depth, count(t.u_mid) p_num from "
+"0","(select a.dt,isnew,max(b.depth) as u_depth,a.u_mid from "
+"0","dm.dm_app_umid_step a  "
+"0","left outer join "
+"0","test.pagelevel b on a.page_name_zh=b.page_name where length(b.depth)=1 and dt > '"",datestart.str,""' group by a.dt,a.isnew,a.u_mid) t group by t.isnew,t.dt"")"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","depth_p = read_data_impala_general(depth_p_sql)"
+"2","Error in .verify.JDBC.result(r, ""Unable to retrieve JDBC result set for "",  : 
+  Unable to retrieve JDBC result set for select t.isnew,t.dt,sum(cast(u_depth as INT))/count(t.u_mid) avg_depth, count(t.u_mid) p_num from 
+(select a.dt,isnew,max(b.depth) as u_depth,a.u_mid from 
+dm.dm_app_umid_step a  
+left outer join 
+test.pagelevel b on a.page_name_zh=b.page_name where length(b.depth)=1 and dt > '20180105' group by a.dt,a.isnew,a.u_mid) t group by t.isnew,t.dt ([Simba][ImpalaJDBCDriver](500051) ERROR processing query/statement. Error Code: 0, SQL state: TStatus(statusCode:ERROR_STATUS, sqlState:HY000, errorMessage:AnalysisException: Column/field reference is ambiguous: 'dt'
+), Query: select t.isnew,t.dt,sum(cast(u_depth as INT))/count(t.u_mid) avg_depth, count(t.u_mid) p_num from 
+(select a.dt,isnew,max(b.depth) as u_depth,a.u_mid from 
+dm.dm_app_umid_step a  
+left outer join 
+test.pagelevel b on a.page_name_zh=b.page_name where length(b.depth)=1 and dt > '20180105' group by a.dt,a.isnew,a.u_mid) t group by t.isnew,t.dt.)
+"

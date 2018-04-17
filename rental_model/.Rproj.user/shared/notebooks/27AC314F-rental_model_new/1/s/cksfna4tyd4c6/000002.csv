@@ -1,0 +1,2 @@
+"0","second_result = readxl::read_xlsx(""result_compare2.xlsx"")"
+"0","kable(second_result[c(14,18,19,8),])"

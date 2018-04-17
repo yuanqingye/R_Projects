@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"markdown_shiny\"\nauthor: \"qingye\"\nruntime: shiny\noutput: html_document\n---\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(echo = TRUE)\n```\n\n## R Markdown and shiny\n\n<table>\n<tr><td>1</td><td>2</td></tr>\n<tr><td>3</td><td>4</td></tr>\n</table>\n\n```{r echo = FALSE}\nselectInput(\"n_breaks\", label = \"Number of bins:\",\n              choices = c(10, 20, 35, 50), selected = 20)\n  \nsliderInput(\"bw_adjust\", label = \"Bandwidth adjustment:\",\n              min = 0.2, max = 2, value = 1, step = 0.2)\n```\n\n```{r echo = FALSE}\nrenderPlot({\n  hist(faithful$eruptions, probability = TRUE, \n       breaks = as.numeric(input$n_breaks),\n       xlab = \"Duration (minutes)\", \n       main = \"Geyser eruption duration\")\n  \n  dens <- density(faithful$eruptions, adjust = input$bw_adjust)\n  lines(dens, col = \"blue\")\n})\n```\n",
+    "created" : 1506413257281.000,
+    "dirty" : false,
+    "encoding" : "GB2312",
+    "folds" : "",
+    "hash" : "358992835",
+    "id" : "2F0AD4",
+    "lastKnownWriteTime" : 1509518647,
+    "last_content_update" : 1509518647764,
+    "path" : "~/R_Projects/shiny_start/markdown_shiny.Rmd",
+    "project_path" : "markdown_shiny.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

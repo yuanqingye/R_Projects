@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(readxl)\nlibrary(lattice)\nlibrary(e1071)\nlibrary(data.table)\n\nshanghai2016 = read_xlsx(\"~/data/shanghai.xlsx\",sheet = \"Sheet5\")\nshanghai2015 = read_xlsx(\"~/data/shanghai.xlsx\",sheet = \"Sheet4\")\n\ntrainset.2015 = shanghai2015[,-1]\ntrainset.2015 = na.omit(trainset.2015)\nnames(trainset.2015) = c('area','rent','avg_rent','partial','p_density','avg_gdp','pred_avg_rent','pred_rent','bias')\ntrainset = trainset.2015[,c(1,2,4,5,6)]\nsvm.model.1 <- svm(rent ~ ., data = trainset)\nsvm.model.100 <- svm(rent ~ ., data = trainset, cost = 100, gamma = 1)\nsvm.model.1000 <- svm(rent ~ ., data = trainset, cost = 1000, gamma = 1)\n\ntestset.2016 = shanghai2016[,-1]\ntestset.2016 = na.omit(testset.2016)\nnames(testset.2016) = c('area','rent','avg_rent','partial','p_density','avg_gdp','pred_avg_rent','pred_rent','bias')\ntestset = testset.2016[,c(1,2,4,5,6)]\ntestset = data.table(testset)\nsvm.pred <- predict(svm.model, testset[,-2])\ncbind(svm.pred,testset$rent)\ncrossprod(svm.pred - unlist(testset[,2])) / nrow(testset)\n\nsvm.pred.1 <- predict(svm.model.1, testset[,-2])\nsvm.pred.100 <- predict(svm.model.100, testset[,-2])\nsvm.pred.1000 <- predict(svm.model.1000, testset[,-2])\n\nm_1 = cbind(svm.pred.1,testset$rent)\nm_100 = cbind(svm.pred.100,testset$rent)\nm_1000 = cbind(svm.pred.1000,testset$rent)\n\nerror_1 = crossprod(svm.pred.1 - unlist(testset[,2])) / nrow(testset)\nerror_100 = crossprod(svm.pred.100 - unlist(testset[,2])) / nrow(testset)\nerror_1000 = crossprod(svm.pred.100 - unlist(testset[,2])) / nrow(testset)\n\nplot(svm.model.1,testset,area~p_density)\n\n\nplot(trainset$partial,trainset$rent)\ntext(trainset$partial,trainset$rent-0.025*(range(trainset$rent)[[2]]-range(trainset$rent)[[1]]),labels = paste0(shanghai2015$名字[1:6],'2015'))\n\npoints(testset$partial,testset$rent,pch = '+')\ntext(testset$partial,testset$rent-0.025*(range(testset$rent)[[2]]-range(testset$rent)[[1]]),labels = paste0(shanghai2016$名字[1:7],'2016'))\n\nplot(trainset$p_density,trainset$rent)\ntext(trainset$p_density,trainset$rent-0.025*(range(trainset$rent)[[2]]-range(trainset$rent)[[1]]),labels = paste0(shanghai2015$名字[1:6],'2015'))\n\npersp(trainset$p_density, trainset$partial, trainset$rent, theta = 30, phi = 30, expand = 0.5, col = drapecol(z))\n\nlibrary(scatterplot3d)\nrent3d = scatterplot3d(trainset$partial,trainset$p_density,trainset$rent,pch = \"+\")\nrent3d$points3d(testset$partial,testset$p_density,testset$rent)\n\ntrainset = cbind(trainset,2015)\ncolnames(trainset)[ncol(trainset)] = \"year\"\ntestset = cbind(testset,2016)\ncolnames(testset)[ncol(testset)] = \"year\"\nplot3dset = rbind(trainset,testset)\n\nlibrary(plotly)\nplot_ly(plot3dset, x = ~partial, y = ~p_density, z = ~rent, color = ~year, colors = c('#BF382A', '#0C4B8E')) %>%\n  add_markers() %>%\n  layout(scene = list(xaxis = list(title = 'percentage'),\n                      yaxis = list(title = 'people density'),\n                      zaxis = list(title = 'rent')))\n\nplot_ly(plot3dset, x = ~area, y = ~avg_gdp, z = ~rent, color = ~year, colors = c('#BF382A', '#0C4B8E')) %>%\n  add_markers() %>%\n  layout(scene = list(xaxis = list(title = 'area'),\n                      yaxis = list(title = 'people income'),\n                      zaxis = list(title = 'rent')))\n",
+    "created" : 1499842137549.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3363746101",
+    "id" : "D421EBFE",
+    "lastKnownWriteTime" : 1499856819,
+    "last_content_update" : 0,
+    "path" : "~/R_Projects/SVM/Rfile/rent_svm.R",
+    "project_path" : "Rfile/rent_svm.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,18 @@
+{
+    "contents" : "source('~/Rfile/R_impala.R')\nsource('~/Rfile/toolfunc.R')\nsource2('~/Rfile/R_hive.R',7,17)\nlibrary(data.table)\nlibrary(xlsx)\nif(!require(arules)){\n  install.packages('arules')\n  library(arules)\n}\n\n# order_list = read_data_impala_general(query)\n\ndates = 20170501:20170531\ndates_str = as.character(dates)\ndates = as.Date(dates_str,'%Y%m%d')\ndates_fm = format(dates,'%Y-%m-%d')\n\nassignorderbydates = function(dates){\n  for(date in dates){\n  query_temp = \"select mobile,prod_name,cont_cat1_name,cont_cat2_name,cont_cat3_name,to_date(ordr_date) from dl.fct_ordr d\n  where ((d.ordr_status not in ('1','7','19') and d.sale_type<>'oms') or (d.ordr_status ='Y' and d.sale_type='oms')) and to_date(ordr_date) = '\"\n  query = paste0(query_temp,date,\"'\")\n  result = read_data_impala_general(query)\n  assign(paste0('order',date),result,envir = .GlobalEnv)\n  }}\n\nassignorderbydates(dates_fm)\nll = paste0('order',dates_fm)\nlll = lapply(ll,'as.name')\nln = lapply(lll,'eval')\ndata_hive = rbindlist(ln)\ndata_hive = data.table(data_hive)\nwrite_xlsx(data_hive,\"~/data/order_data_may.xlsx\")\norder.list.nona = data_hive[!is.na(cont_cat3_name),]\norder.list.nodup = unique(order.list.nona, by=c(\"mobile\", \"cont_cat3_name\"))\n\nprepare.list = aggregate(cont_cat3_name~mobile,data = order.list.nodup,paste)\n\n#refer to http://michael.hahsler.net/research/arules_RUG_2015/demo/\nfrequentsets=eclat(prepare.list$cont_cat3_name,parameter=list(support=0.001,maxlen=20))  #求频繁项集  \nrules <- apriori(prepare.list$cont_cat3_name, parameter = list(supp=0.0001,confidence=0.1, minlen = 2))\n\ninspect(head(sort(rules), n=10))\nquality(rules)\n# quality(itemsets)$lift <- interestMeasure(itemsets, measure=\"lift\")\ninspect(head(sort(rules, by = \"lift\"), n=200))\n\nplot(head(sort(rules, by = \"lift\"), n=50), method = \"graph\", control=list(cex=1.2))\n\nplot(rules)\n\nitemFrequencyPlot(items(rules), topN=30, cex.names=.6,col = \"purple\")\n\ninspect(head(sort(rules, by = \"support\"), n=200))\n\ndiaoding = subset(rules, subset = (rhs%pin%\"吊顶\"))\n\nplot(head(sort(diaoding,by = 'lift'),n=30),method = 'graph',control = list(cex=.8))\n\nplot(rules, method=\"grouped\")\nplot(rules, measure = c(\"support\", \"lift\"), shading = \"confidence\")",
+    "created" : 1498639396678.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1942074196",
+    "id" : "A9E617F3",
+    "lastKnownWriteTime" : 1499236680,
+    "path" : "~/R_Projects/purchasing_relation/Rfile/apriori_purchase.R",
+    "project_path" : "Rfile/apriori_purchase.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

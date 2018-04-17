@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "# https://mlr-org.github.io/mlr-tutorial/release/html/\nlibrary(mlr)\niris.task = classif.task = makeClassifTask(id = \"iris-example\", data = iris, target = \"Species\")\nresamp = makeResampleDesc(\"CV\", iters = 10L)\n\nlrn = makeLearner(\"classif.rpart\")\n\ncontrol.grid = makeTuneControlGrid() \n#you can pass resolution = N if you want the algorithm to \n#select N tune params given upper and lower bounds to a NumericParam\n#instead of a discrete one\nps = makeParamSet(\n  makeDiscreteParam(\"cp\", values = seq(0,0.1,0.01)),\n  makeDiscreteParam(\"minsplit\", values = c(10,20))\n)\n\n#you can also check all the tunable params\ngetParamSet(lrn)\n\n#and the actual tuning, with accuracy as evaluation metric\nres = tuneParams(lrn, task = iris.task, resampling = resamp, control = control.grid, par.set = ps, measures = list(acc,timetrain))\nopt.grid = as.data.frame(res$opt.path)\nprint(opt.grid)\n\nlibrary(mlr)\ndata(iris)\n\n## 1) Define the task\n## Specify the type of analysis (e.g. classification) and provide data and response variable\ntask = makeClassifTask(data = iris, target = \"Species\")\n\n## 2) Define the learner\n## Choose a specific algorithm (e.g. linear discriminant analysis)\nlrn = makeLearner(\"classif.lda\")\n\nn = nrow(iris)\ntrain.set = sample(n, size = 2/3*n)\ntest.set = setdiff(1:n, train.set)\n\n## 3) Fit the model\n## Train the learner on the task using a random subset of the data as training set\nmodel = train(lrn, task, subset = train.set)\n\n## 4) Make predictions\n## Predict values of the response variable for new observations by the trained model\n## using the other part of the data as test set\npred = predict(model, task = task, subset = test.set)\n\n## 5) Evaluate the learner\n## Calculate the mean misclassification error and accuracy\nperformance(pred, measures = list(mmce, acc))",
+    "created" : 1512033513298.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1259200306",
+    "id" : "5DEB71DC",
+    "lastKnownWriteTime" : 1517284114,
+    "last_content_update" : 1517284114009,
+    "path" : "~/R_Projects/ensemble_method/Rfile/mlr.R",
+    "project_path" : "Rfile/mlr.R",
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

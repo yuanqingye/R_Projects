@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(ggmap)\nlibrary(baidumap)\noptions(baidumap.key = '4SY3dY8GrhfU5ChOeqFMvhcaf9DWo7dc')\n\n#高德地图API key\ngaode_key = \"de4e66af67591588df24da020bb3d3eb\"\n\n#AIzaSyAQwxqx2skmYVbgffhTfyKixuxAgU9PTbs google map api\n#  \t9792023 \t\t4SY3dY8GrhfU5ChOeqFMvhcaf9DWo7dc \t服务端 \t\t设置 删除\n\nbj_college = getPlace('大学','北京')\npku_map = getBaiduMap('北京大学', width=600, height=600, zoom=18, scale = 2, messaging=FALSE)\nggmap(pku_map)\nhome_coordinate = getCoordinate('上海市普陀区泸定路555号',output='xml',formatted = TRUE)\n\nsh_mcdonald = getPlace('麦当劳', '上海')\nhz_travel = getPlace('旅游景点','杭州')\n\nbusiness_center = getPlace('商业中心','中国')\nbj_business_center = getPlace('商业中心','北京')\nsh_business_center = getPlace('商业中心','上海')\n\nbjMap = getBaiduMap('北京',color = 'bw')\ndf = getRoute('首都国际机场', '北京南苑机场')\nggmap(bjMap) + geom_path(data = df, aes(lon, lat), alpha = 0.5, col = 'red')\n\nbjMap2 = getBaiduMap('北京市区',color = 'color')\ndf2 = getRoute('北京市海淀区北洼路46号','北京市第三十五中学')\nggmap(bjMap2) + geom_path(data = df2,aes(lon,lat),alpha = 0.5,col = 'blue')\n\nls_travel = getPlace('旅游景点','拉萨')\n\nlibrary(maps)\nmap('world', fill = TRUE, col = rainbow(200),ylim = c(-90, 90), mar = c(0, 2, 0, 0))\n\ngetCoordinate('红星·美凯龙',output = 'xml')\ngetLocation(location = c(121.39264,31.24583))\n\nliyangmap = getBaiduMap(\"溧阳市\")\nggmap(liyangmap)\n\nsh_redstar = getPlace('美凯龙 商场', '上海')\n\nchangshamap = getBaiduMap(\"长沙政区\")\nggmap(changshamap)\n\ncoordinate = getCoordinate(result_dt$address)\nlibrary(rjson)\n\nrrcoordinate = sapply(coordinate,fromJSON)\n\nh = basicJSONHandler()\nfromJSON(co, h)\n\ncosample = rcoordinate[1]\nlng = cosample[[1]]$result$location$lng\ncosample[[1]]$result$location$lat\n\nlibrary(data.table)\nrrcoordinate = data.table(lng = vector(mode = 'numeric',length = 0),lat = vector(mode = 'numeric',length = 0))\nfor(i in 1:length(rcoordinate)){\n  cosample = rcoordinate[i]\n  lng = ifelse(is.null(cosample[[1]]$result$location$lng),NaN,cosample[[1]]$result$location$lng)\n  lat = ifelse(is.null(cosample[[1]]$result$location$lat),NaN,cosample[[1]]$result$location$lat)\n  tempdt = data.table(lng = lng,lat = lat)\n  rrcoordinate = rbind(rrcoordinate,tempdt)\n}\nresult = cbind(result_dt,rrcoordinate)\n\nbj_subway = getPlace('地铁',\"北京\")\nsh_subway = getPlace('地铁',\"上海\")\n\nchangsha_shops = read.table(text =\n                            \"NAME\n我\n你\n他\",header = FALSE,fileEncoding = \"GBK\" )\n",
+    "created" : 1498028106831.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1187525870",
+    "id" : "28BDD61E",
+    "lastKnownWriteTime" : 1521449528,
+    "last_content_update" : 1521449528556,
+    "path" : "~/R_Projects/map/Rfile/baidumap.R",
+    "project_path" : "Rfile/baidumap.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

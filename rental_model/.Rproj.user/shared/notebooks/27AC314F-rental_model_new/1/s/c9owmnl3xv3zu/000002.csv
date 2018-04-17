@@ -1,0 +1,4 @@
+"0","library(knitr)"
+"0","library(xtable)"
+"0","first_result = readxl::read_xlsx(""result_compare_delicate.xlsx"")"
+"0","kable(first_result[c(6,7,8,12,13,15,16),1:7],format = ""markdown"")"

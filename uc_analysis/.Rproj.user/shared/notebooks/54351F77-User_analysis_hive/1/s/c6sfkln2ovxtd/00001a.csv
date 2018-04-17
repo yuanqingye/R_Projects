@@ -1,0 +1,23 @@
+"0","#1daily activity depth"
+"0","depth_sql = paste0(""select a.dt,isnew,a.p_channel,b.depth,count(1) from "
+"0","dm.dm_app_umid_step a  "
+"0","left outer join "
+"0","test.pagelevel b on a.page_name_zh=b.page_name where length(b.depth)=1 and a.dt>'"",datestart.str,""' group by a.dt,isnew,b.depth,a.p_channel"")"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","depth = read_data_impala_general(depth_sql)"
+"0","setDT(depth)"
+"0","depth$depth = as.numeric(depth$depth)"
+"0","avg_depth2 = depth[,.(avg_depth = sum(depth*expr_0)/sum(expr_0)),by = c(""isnew"",""dt"")][order(dt,isnew)]"
+"0","avg_depth_dcast = dcast(avg_depth2,dt~isnew)"
+"2","Using avg_depth as value column: use value.var to override.
+"
+"0","ymax = max(max(avg_depth_dcast$new),max(avg_depth_dcast$old),na.rm = TRUE)"
+"0","depth_dates = avg_depth_dcast$dt"
+"0","avg_depth_pic = avg_depth_dcast[,c(2,3)]"
+"0","barplot(t(as.matrix(avg_depth_pic)),beside = TRUE,col = c(""green"",""brown4""),axes = FALSE,ylim=c(0,ymax + 0.6))"

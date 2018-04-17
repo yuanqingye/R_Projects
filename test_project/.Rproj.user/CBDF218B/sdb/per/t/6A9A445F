@@ -1,0 +1,18 @@
+{
+    "contents" : "# extract table from pdf\n\nlibrary(dplyr)\nlibrary(devtools)\n# install_github(\"ropensci/tabulizer\")\nlibrary(curl)\nlibrary(Rcpp)\nlibrary(tabulizer)\n\n# location <- 'http://www.edd.ca.gov/jobs_and_training/warn/WARN-Report-for-7-1-2016-to-10-25-2016.pdf'\nlocation = \"C:/Users/qingye.yuan/Desktop/教程下载/机器学习实战.pdf\"\nsos_url <- \"http://elections.cdn.sos.ca.gov/sov/2016-general/sov/04-historical-voter-reg-participation.pdf\"\nout <- extract_tables(sos_url,method = \"data.frame\")\n\ninstall_github(\"ropensci/tesseract\")\ninstall.packages(\"curl\")\ninstall.packages(\"Rcpp\")\nlibrary(tesseract)\ntext = ocr(\"http://jeroen.github.io/images/testocr.png\")\n# tesseract_download(\"chi_sim\")\nchinese = tesseract(\"chi_sim\")\ntable = ocr(\"D://Downloads/view.jpg\",engine = \"chi_sim\")\n\n# Low quality:\ntext1 <- ocr(\"http://jeroen.github.io/files/dog_lq.png\")\ncat(text1)\n\n# High quality:\ntext2 <- ocr(\"http://jeroen.github.io/files/dog_hq.png\")\ncat(text2)\n\ndigits = ocr(\"D://Downloads/view2.png\")\n\nout <- extract_tables(\"D://Downloads/view2.png\")\n\nzhejiang_mall = extract_tables(\"C://Users/qingye.yuan/Downloads/mall.pdf\",pages = 10)\n\nmalls = extract_tables(\"C://Users/qingye.yuan/Downloads/mall.pdf\",encoding = \"UTF-8\")\n",
+    "created" : 1502074350268.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3826723708",
+    "id" : "6A9A445F",
+    "lastKnownWriteTime" : 1502185630,
+    "path" : "~/R_Projects/test_project/extract_table.R",
+    "project_path" : "extract_table.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

@@ -1,0 +1,10 @@
+{
+    "dialog-state" : {
+        "caseSensitive" : false,
+        "filePatterns" : [
+        ],
+        "path" : "~/R_Projects/map",
+        "query" : "findinmap",
+        "regex" : false
+    }
+}

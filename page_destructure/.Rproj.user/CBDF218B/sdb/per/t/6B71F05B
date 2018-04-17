@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1521181139188.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "6B71F05B",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1521181139188,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "4E7B8CC4",
+        "caption" : "geocode_result",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=geocode_result&cache_key=4E7B8CC4",
+        "displayedObservations" : "4000",
+        "environment" : "",
+        "object" : "geocode_result",
+        "preview" : "0",
+        "totalObservations" : "4000",
+        "variables" : "2"
+    },
+    "relative_order" : 28,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

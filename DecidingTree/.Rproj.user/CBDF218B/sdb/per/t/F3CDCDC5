@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(e1071)\nlibrary(rpart)\ndata(Glass, package=\"mlbench\")\n## split data into a train and test set\nindex     <- 1:nrow(Glass)\ntestindex <- sample(index, trunc(length(index)/3))\ntestset   <- Glass[testindex,]\ntrainset  <- Glass[-testindex,]\n## svm\nbest.svm(x = trainset[, -10], y = trainset[, 10])\nsvm.model <- svm(Type ~ ., data = trainset, cost = 1, gamma = 0.1111111)\nsvm.pred  <- predict(svm.model, testset[,-10])\nsvm.table = table(pred = svm.pred, true = testset[,10])\n## rpart\nrpart.model <- rpart(Type ~ ., data = trainset)\nrpart.pred  <- predict(rpart.model, testset[,-10], type = \"class\")\nrpart.table = table(pred = rpart.pred,true = testset[,10])\n\nclassAgreement(svm.table)\nclassAgreement(rpart.table)\n",
+    "created" : 1503395958564.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3146592396",
+    "id" : "F3CDCDC5",
+    "lastKnownWriteTime" : 1501665132,
+    "last_content_update" : 1501665132,
+    "path" : "~/R_Projects/DecidingTree/Rfile/DecidingTree_and_svm.R",
+    "project_path" : "Rfile/DecidingTree_and_svm.R",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

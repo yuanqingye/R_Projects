@@ -1,0 +1,7 @@
+"2","Warning in gzfile(file, ""wb"") :"
+"2","
+ "
+"2"," cannot open compressed file 'C:/Users/qingye.yuan/Documents/R_Projects/uc_analysis/.Rproj.user/shared/notebooks/18433391-User_analysis4/1/s/c7d8xh3by56ns_t/d892d03fcdf9440bb96fa5eeed7543ca.snapshot', probable reason 'No space left on device'
+"
+"2","Error in gzfile(file, ""wb"") : cannot open the connection
+"

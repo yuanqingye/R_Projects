@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "source('~/Rfile/R_impala.R')\n\nquery = \"select u_mid,path,page,p_item,p_channel,p_type,dt from ods.ods_app_pageview_info where dt between 20170615 and 20170617\nand p_domain = 'mmall.com' and path = 'p' and p_type not in ('page.closedown','page.wakeup','page.activate.main') and \nservice in ('h5.pvuv','ios.pvuv','android.pvuv') and substr(u_mid,1,2)!='a_' and l_city!='测试' and l_ip!='210.13.91.146'\"\npage_view = read_data_impala_general(query)\npage_view = data.table(page_view)\n\ndict_query = \"select * from test.path_dict where path = 'p'\"\ndict2 = read_data_impala_general(dict_query)\ndict2 = data.table(dict2)\n\npage_view_with_dict = merge(page_view,dict2,by.x = c('page','p_channel','p_type'),\n                            by.y = c('page_mark','p_channel','p_type'))\npage_view_raw = page_view_with_dict[,c('p_channel','p_type','u_mid','p_domain','page_name')]\npage_view_count = page_view_raw[,.N,by = c('u_mid','page_name')]\nsetorder(page_view_count,u_mid,page_name)\npage_view_count_group = aggregate(page_name~u_mid,data = page_view_count,paste,sep = '')\npage_view_group_unique = page_view_count_group[!duplicated(page_view_count_group$page_name),]\n\n",
+    "created" : 1498038532923.000,
+    "dirty" : false,
+    "encoding" : "GB2312",
+    "folds" : "",
+    "hash" : "1708268842",
+    "id" : "86B30DD2",
+    "lastKnownWriteTime" : 1498101014,
+    "last_content_update" : 0,
+    "path" : "~/R_Projects/path_analysis_0518/Rfile/relative_analysis.R",
+    "project_path" : "Rfile/relative_analysis.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 18,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

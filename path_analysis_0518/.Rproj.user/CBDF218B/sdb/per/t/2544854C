@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "group_row_with_time_ref = function(dt,colnames_char){\n  compare_id = ''\n  compare_value = ''\n  compare_sign = 0\n  dt[,sign:=0]\n  colnames = lapply(colnames_char,as.name)\n  for(i in 1:nrow(dt)){\n    if(dt[i,eval(colnames[[1]])]!=compare_id || dt[i,eval(colnames[[2]])]!=compare_value){\n      compare_sign = compare_sign+1\n    }\n    dt[i,sign:=compare_sign]\n    compare_id = dt[i,eval(colnames[[1]])]\n    compare_value = dt[i,eval(colnames[[2]])]\n  }\n  return(dt)\n}\n\n# 你知道\n#我不知道",
+    "created" : 1495094320647.000,
+    "dirty" : false,
+    "encoding" : "GB2312",
+    "folds" : "",
+    "hash" : "1700613323",
+    "id" : "2544854C",
+    "lastKnownWriteTime" : 1497410252,
+    "last_content_update" : 0,
+    "path" : "~/Rfile/time_sign_update.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 13,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

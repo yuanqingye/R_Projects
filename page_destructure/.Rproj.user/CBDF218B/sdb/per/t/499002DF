@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(rvest)\nsina_url = \"https://www.sina.com.cn\"\nsina = html_session(sina_url)\nsina_sport = sina%>%follow_link(\"体育\")%>%html_nodes(\"li:nth-child(1) h2\")%>%html_text()\n",
+    "created" : 1506062861907.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4038029375",
+    "id" : "499002DF",
+    "lastKnownWriteTime" : 1506063494,
+    "last_content_update" : 1506063494768,
+    "path" : "~/R_Projects/page_destructure/Rfile/sina.R",
+    "project_path" : "Rfile/sina.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 20,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,3 @@
+"0","ylarge = max(max(pvuv$perpv),max(pvuv$newperpv),max(pvuv$oldperpv))"
+"0","#考虑人均pv"
+"0","plot(pvuv$dt,pvuv$perpv,col = colors[[1]],type = 'l',ylim = c(0,ceiling(ylarge)))"

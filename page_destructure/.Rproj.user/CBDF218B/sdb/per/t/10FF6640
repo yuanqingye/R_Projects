@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1508415962483.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "10FF6640",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1508415962483,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "7145A448",
+        "caption" : "comments.df",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=comments.df&cache_key=7145A448",
+        "displayedObservations" : "200",
+        "environment" : "",
+        "object" : "comments.df",
+        "preview" : "0",
+        "totalObservations" : "200",
+        "variables" : "1"
+    },
+    "relative_order" : 26,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

@@ -1,0 +1,524 @@
+---
+title: "User_analysis"
+author: "qingye"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(readxl)
+library(knitr)
+library(xtable)
+library(ggplot2)
+library(reshape2)
+library(scales)
+library(plyr)
+library(treemap)
+library(grid)
+library(gridExtra)
+library(cowplot)
+
+source('~/Rfile/R_impala.R')
+source('~/Rfile/R_hive.R')
+dateend = Sys.Date()-3
+datestart = Sys.Date()-14
+dateend.str = format(dateend,'%Y%m%d')
+datestart.str = format(datestart,'%Y%m%d')
+dates = datestart.str:dateend.str
+ldateend = Sys.Date()-15
+ldatestart = Sys.Date()-28
+ldatestart.str = format(ldatestart,'%Y%m%d')
+ldateend.str = format(ldateend,'%Y%m%d')
+options(scipen = 10)
+
+```
+#本报告对`r datestart`用户至`r dateend`这两周的行为进行了分析
+####包括反映用户数目的UV,反映用户活跃度的：人均PV,用户活跃时长,以及反映用户黏度的次日留存，本次报告加入了路径深度的分析,加入了转化部分,并采用多种方式作图
+####本次报告用R语言自动化生成报告的框架搭建，今后将在此基础上不断改进优化
+
+
+##近两周的日活跃度(UV)
+```{r daily_pvuv,echo = FALSE}
+#1daily activity pvuv
+pvuv_sql = paste0("select dt,
+                 count(1) uv,
+                 sum(pv) pv ,
+                 sum(pv)/count(1) perpv,
+                 count(if(isnew='new',1,null)) newuv ,
+                 sum(if(isnew='new',pv,0)) newpv, 
+                 sum(if(isnew='new',pv,0))/count(if(isnew='new',1,null)) newperpv,
+                 count(if(isnew='old',1,null)) olduv ,
+                 sum(if(isnew='old',pv,0)) oldpv, 
+                 sum(if(isnew='old',pv,0))/count(if(isnew='old',1,null)) oldperpv
+                 from 
+                 dl.umid_pv where dt>='",ldatestart.str,
+                 "'group by dt")
+mpvuv = read_data_impala_general(pvuv_sql)
+mpvuv = mpvuv[order(mpvuv$dt),]
+xlarge = nrow(mpvuv)
+xmid = floor(xlarge/2+0.5)+1
+pvuv = mpvuv[xmid:xlarge,]
+wpvuv = pvuv
+pvuv$fdt = as.factor(pvuv$dt)
+matrix = as.matrix(cbind(newuv = pvuv$newuv,olduv = pvuv$olduv))
+matrix = t(matrix)
+maxy = max(pvuv$uv)
+maxx = pvuv[which.max(pvuv$uv),"dt"]
+meany = mean(pvuv$uv)
+newbetterthanold = sum(pvuv$newuv>pvuv$olduv)
+abnormalhighdt = pvuv[pvuv$uv>1.3*meany,"dt"]
+abnormallowdt = pvuv[pvuv$uv<0.7*meany,"dt"]
+par(bg = 'white')
+colors <- c("green","red")
+dates <- pvuv$dt
+stacks <- c("Old","New")
+# Create the bar chart.
+# barplot(matrix,main="Every day uv",names.arg=dates,xlab="month",ylab="uv",col=colors)
+# Add the legend to the chart.
+# legend(x = 0,y = maxy, stacks, cex=0.7, fill=colors,xjust = 0, yjust = 1)
+bplot = barplot(matrix,main="Every day uv",names.arg=dates,xlab="month",ylab="uv",col=colors,legend.text = stacks,args.legend = list(x = 0,y = maxy, stacks, cex=0.7, fill=colors,xjust = 0, yjust = 1))
+# df = as.data.frame(matrix)
+# colnames(df) = pvuv$dt
+# tt <- ttheme_default(colhead=list(fg_params = list(parse=TRUE)))
+# tbl <- tableGrob(df, rows=NULL, theme=tt)
+# # Plot chart and table into one object
+# grid.arrange(bplot, tbl,
+#              nrow=2,
+#              as.table=TRUE)
+```
+
+平均UV为`r round(meany)`,
+
+最大UV为`r round(maxy)`,
+
+最大值发生在`r maxx`
+
+有`r newbetterthanold` 天新用户在UV值上超过老用户
+
+`r ifelse(length(abnormalhighdt)==0,"并没有哪天",abnormalhighdt)` 用户UV明显高于平均值
+`r ifelse(length(abnormallowdt)==0,"并没有哪天",abnormallowdt)` 用户UV明显低于平均值
+
+
+##近两周人均PV
+```{r pv_perperson,echo = FALSE}
+par(bg = 'black')
+colors = rainbow(3)
+ylarge = max(max(pvuv$perpv),max(pvuv$newperpv),max(pvuv$oldperpv))
+tmax = max(pvuv$perpv)
+dttmax = pvuv[which.max(pvuv$perpv),"dt"]
+tmin = min(pvuv$perpv)
+dttmin = pvuv[which.min(pvuv$perpv),"dt"]
+tmean = mean(pvuv$perpv)
+
+nmax = max(pvuv$newperpv)
+dtnmax = pvuv[which.max(pvuv$newperpv),"dt"]
+nmin = min(pvuv$newperpv)
+dtnmin = pvuv[which.min(pvuv$newperpv),"dt"]
+nmean = mean(pvuv$newperpv)
+
+omax = max(pvuv$oldperpv)
+dtomax = pvuv[which.max(pvuv$oldperpv),"dt"]
+omin = min(pvuv$oldperpv)
+dtomin = pvuv[which.min(pvuv$oldperpv),"dt"]
+omean = mean(pvuv$oldperpv)
+
+newbetterthanold = sum(pvuv$newperpv>pvuv$oldperpv)
+difftrend = pvuv[!(c(1,sign(diff(pvuv$newperpv)*diff(pvuv$oldperpv)))+1),"dt"]
+
+#考虑人均pv
+plot(as.numeric(pvuv$fdt),pvuv$perpv,col = colors[[1]],type = 'l',ylim = c(0,ceiling(ylarge)))
+lines(as.numeric(pvuv$fdt),pvuv$newperpv,col = colors[[2]],type = 'l')
+lines(as.numeric(pvuv$fdt),pvuv$oldperpv,col = colors[[3]], type = 'l')
+
+legend('bottomright',c("perpv","newperpv","oldperpv"),cex = 0.7,fill = colors,text.col= 'pink')
+
+#需要加入坐标轴
+title(main = '近两周人均pv',xlab = 'dates',ylab = '人均pv',col.main = 'blue',
+      col.lab = 'purple')
+axis(1,col = 'purple')
+at = str_sub(pvuv$dt,5,8)[seq(from = 2,to = 14,by = 2)]
+mtext(side = 1, text = at, at = seq(from = 2,to = 14,by = 2), col = "purple", line = 1)
+
+axis(2,col = 'purple')
+at = axTicks(2)
+mtext(side = 2,text = at,at = at,col = 'purple',line = 1)
+```
+
+总体PV均值为`r tmean` 
+
+总体PV最大值为`r tmax` 最大值发生在 `r dttmax`
+
+总体PV最小值为`r tmin` 最小值发生在 `r dttmin`
+
+新用户PV均值为`r nmean` 
+
+新用户PV最大值为`r nmax` 最大值发生在 `r dtnmax`
+
+新用户PV最小值为`r nmin` 最小值发生在 `r dtnmin`
+
+老用户PV均值为`r omean` 
+
+老用户PV最大值为`r omax` 最大值发生在 `r dtomax`
+
+老用户PV最小值为`r omin` 最小值发生在 `r dtomin`
+
+有`r newbetterthanold` 天新用户在人均PV值上超过老用户
+
+`r difftrend` 新用户和老用户的趋势不一样
+
+```{r pvuv_trend, echo=FALSE}
+pm <- ggplot(wpvuv, aes(as.Date(dt,format = "%Y%m%d"), pv)) + labs(x = "DATE",y = "PV") + ylim(0,max(wpvuv$pv,na.rm = T))
+mainplot <- pm + geom_line(colour = I("purple")) + labs(title = "pv trend compare to last 1 month")
+p = ggplot(mpvuv,aes(as.Date(dt,format = "%Y%m%d"), pv))+labs(x = "DATE",y = "PV") + ylim(min(mpvuv$pv,na.rm = T),max(mpvuv$pv,na.rm = T))
+p1 <- p + geom_rect(aes(xmin = as.Date(mpvuv$dt[xmid],format = "%Y%m%d"), xmax = as.Date(mpvuv$dt[xlarge],format = "%Y%m%d"),
+                        ymin = min(mpvuv$pv, na.rm = TRUE), ymax = max(mpvuv$pv, na.rm = TRUE)),fill = alpha("lightblue", 0.2))
+subplot <- p1 + geom_line(colour = I("grey"),size = 0.8) 
+vp <- viewport(width = 0.4, height = 0.4, x = 1,
+               y = unit(0.7, "lines"), just = c("right","bottom"))
+full <- function() {
+  print(mainplot)
+  print(subplot, vp = vp)
+}
+full()
+```
+
+画中画分析，大图，小图中高亮处均表示示近两周pv趋势，而小图整体表示近一个月的pv情况
+
+12月9日，12月12日出现峰值
+
+12月10日，12月11日出现次峰值
+
+12月8日，12月14日出现谷值
+
+## 用户活跃时长
+```{r time_span, echo=FALSE}
+time_span_sql = paste0("select dt,
+  avg(persvg) totalavg,
+  avg(case when isnew ='new' then persvg else null end) newavg,
+  avg(case when isnew ='old' then persvg else null end) oldavg
+from
+(
+  select a.dt,a.u_mid,
+  sum(CAST(p_stay_time AS INT))/1000/60 persvg,
+  case when regexp_replace(to_date(firstonlinetime),'-','')=CAST(a.dt AS STRING) then 'new' else 'old' end isnew 
+  from 
+  ods.ods_app_pageview_info a 
+  left outer join 
+  dl.umid_firstonlinetime b on a.u_mid=b.u_mid 
+  where a.dt>=",datestart.str," and b.dt='",dateend.str,"' and
+  p_domain='mmall.com' and service like '%staytime%' and substr(a.u_mid,1,2)!='a_' and path='z'  and l_city!='测试'
+  and p_type not in ('page.closedown','page.wakeup','page.activate.main') and length(p_stay_time)<=7
+  group by a.dt,a.u_mid,case when regexp_replace(to_date(firstonlinetime),'-','')=CAST(a.dt AS STRING) then 'new' else 'old' end 
+)a group by dt")
+  time_span = read_data_impala_general(time_span_sql)
+  time_span = time_span[order(time_span$dt),]
+  # write.xlsx(time_span,"~/data/uc_analysis/time_span.xlsx")
+  time_span$fdt = as.factor(time_span$dt)
+  time_span.new = time_span[,-1]
+  timespan.m <- melt(time_span.new)
+  timespan.m <- ddply(timespan.m, .(variable), transform,rescale = rescale(value))
+  timespan.m$dates = str_sub(as.character(timespan.m$fdt),5,8)
+  names(timespan.m) = c("fdt","old_new_user","time_span","rescale","dates")
+# (p <- ggplot(timespan.m, aes(dates,old_new_user)) + geom_tile(aes(fill = time_span),colour = "white") + scale_fill_gradient(low = "white",high = "purple"))
+  p <- ggplot(timespan.m, aes(dates,old_new_user)) + geom_tile(aes(fill = time_span),colour = "white") + scale_fill_gradient(low = "white",high = "purple")
+  df = as.data.frame(t(time_span.new))
+  colnames(df) = time_span.new$fdt
+  df = df[-nrow(df),]
+  tt <- ttheme_default(colhead=list(fg_params = list(parse=TRUE)))
+  tbl1 <- tableGrob(df[,1:round(ncol(df)/2)], rows=rownames(df), theme=tt)
+  tbl2 <- tableGrob(df[,(round(ncol(df)/2)+1):ncol(df)], rows=rownames(df), theme=tt)
+# Plot chart and table into one object
+  grid.arrange(p, tbl1,tbl2,nrow=3,as.table=TRUE
+             # ,heights=c(3,1)
+             )
+  # plot_grid(p, tbl1, tbl2, align = "v", nrow = 3, rel_heights = c(1/2, 1/4, 1/4))
+  # rownames(time_span.new) = time_span.new$fdt
+  # DT::datatable(time_span.new[,-ncol(time_span.new)])
+```
+
+对于用户访问时长作的热力图，
+
+这两周大部分时间新老用户时间差距大，新用户访问时间较短（近乎白色）,尤其是从12月8日到12月12日
+
+但新用户在12月14日到12月19日访问时间较长，几乎超过老用户
+
+老用户在12月9日到12月12日访问时间较长
+
+## 次日留存
+```{r survival,echo=FALSE}
+  survival_sql = paste0("select 
+  a.dt,ndv(a.u_mid) t,
+  ndv(case when datediff(concat(substr(b.dt,1,4),'-',substr(b.dt,5,2),'-',substr(b.dt,7,2)),
+  concat(substr(a.dt,1,4),'-',substr(a.dt,5,2),'-',substr(a.dt,7,2)))=1 then a.u_mid else null end)	t1,
+  ndv(if(a.isnew='new',a.u_mid,null)) newuv ,
+  ndv(case when datediff(concat(substr(b.dt,1,4),'-',substr(b.dt,5,2),'-',substr(b.dt,7,2)),
+  concat(substr(a.dt,1,4),'-',substr(a.dt,5,2),'-',substr(a.dt,7,2)))=1 and a.isnew='new' then a.u_mid else null end) newt1,
+  ndv(if(a.isnew='old',a.u_mid,null)) olduv,
+  ndv(case when  datediff(concat(substr(b.dt,1,4),'-',substr(b.dt,5,2),'-',substr(b.dt,7,2)),
+  concat(substr(a.dt,1,4),'-',substr(a.dt,5,2),'-',substr(a.dt,7,2)))=1  and a.isnew='old' then a.u_mid else null end) noldt1
+  from dl.umid_pv a
+  left outer join
+  dl.umid_pv b on a.u_mid=b.u_mid		
+  where  a.dt>='",datestart.str,"' group by a.dt")
+
+survival = read_data_impala_general(survival_sql)
+survival = survival[order(survival$dt),]
+survival = survival[-nrow(survival),]
+survival$fdt = as.factor(survival$dt)
+par(bg = 'black')
+colors = rainbow(3)
+#考虑survival,!!须注意最后一天
+ylarge = max(max(survival$t1/survival$t),max(survival$newt1/survival$newuv),max(survival$noldt1/survival$olduv))
+plot(as.numeric(survival$fdt),survival$t1/survival$t,col = colors[[1]],type = 'l',ylim = c(0,ceiling(ylarge)))
+lines(as.numeric(survival$fdt),survival$newt1/survival$newuv,col = colors[[2]],type = 'l')
+lines(as.numeric(survival$fdt),survival$noldt1/survival$olduv,col = colors[[3]], type = 'l')
+legend('topright',c("survival","newsurvival","oldsurvival"),cex = 0.7,fill = colors,text.col= 'pink')
+#需要加入坐标轴
+title(main = '近两周次日留存率',xlab = 'dates',ylab = '留存率',col.main = 'blue',
+      col.lab = 'purple')
+axis(1,col = 'purple')
+at = str_sub(survival$dt,5,8)[seq(from = 2,to = 14,by = 2)]
+mtext(side = 1, text = at, at = seq(from = 2,to = 14,by = 2), col = "purple", line = 1)
+
+axis(2,col = 'purple')
+at = axTicks(2)
+mtext(side = 2,text = at,at = at,col = 'purple',line = 1)
+
+```
+
+次日留存率，老用户有明显的波动
+
+12月13日，数据有一定缺失 
+
+
+```{r depth_in_date, eval=FALSE, include=FALSE}
+#1daily activity depth
+depth_sql = paste0("select a.dt,isnew,a.p_channel,b.depth,count(1) from 
+dm.dm_app_umid_step a  
+left outer join 
+test.pagelevel b on a.page_name_zh=b.page_name where length(b.depth)=1 and a.dt>'",datestart.str,"' group by a.dt,isnew,b.depth,a.p_channel")
+depth = read_data_impala_general(depth_sql)
+setDT(depth)
+depth$depth = as.numeric(depth$depth)
+avg_depth2 = depth[,.(avg_depth = sum(depth*expr_0)/sum(expr_0)),by = c("isnew","dt")][order(dt,isnew)]
+avg_depth_dcast = dcast(avg_depth2,dt~isnew)
+ymax = max(max(avg_depth_dcast$new),max(avg_depth_dcast$old),na.rm = TRUE)
+depth_dates = avg_depth_dcast$dt
+avg_depth_pic = avg_depth_dcast[,c(2,3)]
+barplot(t(as.matrix(avg_depth_pic)),beside = TRUE,col = c("green","brown4"),axes = FALSE,ylim=c(0,ymax + 0.6))
+axis(2)
+axis(1,at=seq(from = 2,to = 38,length.out = length(depth_dates)),labels = depth_dates,tick=FALSE)
+legend('topright',c("new user","old user"),cex = 0.7,fill = c("green","brown4"),text.col= 'blue')
+title(main = '近两周新老用户访问平均深度',xlab = 'dates',ylab = '深度',col.main = 'blue',
+      col.lab = 'purple')
+```
+
+
+##新老用户访问平均深度（按用户）
+```{r depth_person_date}
+depth_p_sql = paste0("select t.isnew,t.dt,sum(cast(u_depth as INT))/count(t.u_mid) avg_depth, count(t.u_mid) p_num from 
+(select a.dt,isnew,max(b.depth) as u_depth,a.u_mid from 
+dm.dm_app_umid_step a  
+left outer join 
+test.pagelevel b on a.page_name_zh=b.page_name where length(b.depth)=1 and dt > '",datestart.str,"' group by a.dt,a.isnew,a.u_mid) t group by t.isnew,t.dt")
+depth_p = read_data_impala_general(depth_p_sql)
+depth_p = depth_p[order(depth_p$dt),]
+p  = ggplot(depth_p,aes(str_sub(dt,5,8),avg_depth))
+p + geom_bar(aes(fill = isnew),stat = "identity",position = "dodge") + labs(x = "日期",y = "平均深度",title = "平均访问深度（按用户）")
+depth_p$value = round(depth_p$avg_depth,digits = 2)
+df = dcast(depth_p[,-4],isnew~dt,value.var = "value")
+rownames(df) = df[,1]
+df = df[,-1]
+tt <- ttheme_default(colhead=list(fg_params = list(parse=TRUE)))
+tb1 = tableGrob(df[,1:round(ncol(df)/2)], rows=rownames(df), theme=tt)
+tb2 = tableGrob(df[,(round(ncol(df)/2)+1):ncol(df)], rows=rownames(df), theme=tt)
+grid.arrange(tb1,tb2,nrow = 2)
+```
+
+老用户访问深度几乎总大于2，新用户访问深度大部分小于2
+
+从12月14日之前，新老用户访问深度差距较大
+
+```{r depth_total,echo = FALSE}
+depth_p = data.table(depth_p)
+avg_depth_total = depth_p[,.(avg_depth = sum(avg_depth*p_num)/sum(p_num)),by = c("isnew")]
+ymax = max(depth_p$avg_depth,na.rm = TRUE)
+barplot(t(as.matrix(avg_depth_total[,-1])),beside = TRUE,col = c("brown4","green"),axes = FALSE,xlim=c(0,ymax + 0.6),horiz = TRUE)
+legend('topright',c("new user","old user"),cex = 0.7,fill = c("green","brown4"),text.col= 'blue')
+axis(1)
+axis(2,at=c(1.5,3.5),labels = c("old","new"),tick = TRUE)
+title(main = '近两周新老用户访问平均深度',xlab = '深度',ylab = '新老用户',col.main = 'blue',
+      col.lab = 'purple')
+```
+
+总体来看，新老用户访问深度差异明显
+
+##新用户不同机型分布
+```{r model,echo = FALSE}
+new_user_by_model_date_city_sql = 
+paste0("select count(b.u_mid) numbers,firstdt,d_model,l_city from
+(select f.u_mid,substr(firstonlinetime,1,10) firstdt,a.d_model,a.l_city from dl.umid_firstonlinetime f left join
+  (select * from 
+  (select u_mid,d_model,l_city,ROW_NUMBER() OVER (PARTITION BY u_mid,d_model,l_city ORDER BY dt) 
+       as level from ods.ods_app_pageview_info where dt>=",ldatestart.str,") t where t.level = 1) a
+  using(u_mid) where substr(firstonlinetime,1,10) >= '",as.character(ldatestart),"' 
+  and f.dt = '",dateend.str,"') b group by firstdt,d_model,l_city")
+new_user_by_model_date_city = read_data_impala_general(new_user_by_model_date_city_sql)
+new_user_by_model_date_city = data.table(new_user_by_model_date_city)
+lnew_user_by_model_date_city = new_user_by_model_date_city[firstdt < as.character(datestart),]
+new_user_by_model_date_city = new_user_by_model_date_city[firstdt >= as.character(datestart),]
+new_user_by_model_date = new_user_by_model_date_city[d_model!="null" & str_trim(d_model)!="",.(numbers = sum(numbers)),by = c("d_model","firstdt")]
+new_user_by_model = new_user_by_model_date_city[d_model!="null" & str_trim(d_model)!="",.(numbers = sum(numbers)),by = "d_model"][order(numbers,decreasing = T)]
+model_list = new_user_by_model[1:100,]$d_model
+new_user_by_model_date_top100 = new_user_by_model_date[d_model %in% model_list,]
+new_user_by_model_date_top100$model = factor(new_user_by_model_date_top100$d_model,levels = model_list)
+new_user_by_model_date_top100_ordered = new_user_by_model_date_top100[order(firstdt,model)]
+new_user_by_model_date_ordered_reshape = reshape(new_user_by_model_date_top100_ordered, idvar = "model", timevar = "firstdt", direction = "wide")
+new_user_by_model_date_ordered_reshape = dcast(new_user_by_model_date_top100_ordered, model ~ firstdt, value.var = "numbers")
+new_user_by_model_date_ordered_reshape$sum =rowSums(new_user_by_model_date_ordered_reshape[,-1],na.rm = T)
+# kable(new_user_by_model_date_ordered_reshape)
+melt_df_model_top20 = melt(new_user_by_model_date_ordered_reshape[1:20,-ncol(new_user_by_model_date_ordered_reshape)], id.vars = "model", measure.vars = 2:(ncol(new_user_by_model_date_ordered_reshape)-1), variable.name = "date", value.name = "value")
+lmodel_rank = lnew_user_by_model_date_city[d_model!="null" & str_trim(d_model)!="",.(lsum = sum(numbers)),by = c("d_model")]
+lmodel_rank$lrank = frank(lmodel_rank,-lsum,ties.method = "min")
+new_user_by_model_date_ordered_reshape$rank = seq(new_user_by_model_date_ordered_reshape$sum)
+new_user_by_model_date_ordered_reshape = merge(new_user_by_model_date_ordered_reshape,lmodel_rank,by.x = "model",by.y= "d_model",all.x = TRUE)
+new_user_by_model_date_ordered_reshape = new_user_by_model_date_ordered_reshape[order(new_user_by_model_date_ordered_reshape$rank),]
+rankchange = new_user_by_model_date_ordered_reshape$lrank - new_user_by_model_date_ordered_reshape$rank
+symrankchange = ifelse(is.na(rankchange)|rankchange==0,"",ifelse(rankchange>0,intToUtf8(9650),intToUtf8(9660)))
+sym = paste0(rankchange,symrankchange)
+new_user_by_model_date_ordered_reshape$lsum = NULL
+new_user_by_model_date_ordered_reshape$lrank = NULL
+new_user_by_model_date_ordered_reshape = cbind(sym,new_user_by_model_date_ordered_reshape)
+DT::datatable(new_user_by_model_date_ordered_reshape, options = list(pageLength = 20))
+#kable(model,format = "markdown")
+```
+
+iphone和vivo手机仍然排名前列，前十名全部被iphone系列手机占据
+
+```{r model_treemap}
+treemap(melt_df_model_top20,index = c("date","model"),vSize = "value")
+```
+
+结构矩形树图，大矩形为日期，小矩形为具体机型，按从大到小的顺序，从上到下，从左到右排列
+
+##新用户不同城市分布
+```{r city,echo = FALSE}
+new_user_by_model_date_city$l_city = str_replace(new_user_by_model_date_city$l_city,"市","")
+new_user_by_city_dt = new_user_by_model_date_city[!l_city %in% c("null","局域网","未知"),.(numbers = sum(numbers)),by = c("l_city","firstdt")]
+new_user_by_city = new_user_by_model_date_city[!l_city %in% c("null","局域网","未知"),.(numbers = sum(numbers)),by = "l_city"][order(numbers,decreasing = T),]
+city_list = new_user_by_city[1:101,]$l_city
+new_user_by_city_date_top100 = new_user_by_city_dt[l_city %in% city_list,]
+new_user_by_city_date_top100$city = factor(new_user_by_city_date_top100$l_city,levels = city_list)
+new_user_by_city_date_top100_ordered = new_user_by_city_date_top100[order(firstdt,city)]
+new_user_by_city_date_ordered_reshape = dcast(new_user_by_city_date_top100_ordered, city ~ firstdt, value.var = "numbers")
+new_user_by_city_date_ordered_reshape$sum = rowSums(new_user_by_city_date_ordered_reshape[,c(-1,-14)],na.rm = T)
+melt_df_city_top20 = melt(new_user_by_city_date_ordered_reshape[1:20,-ncol(new_user_by_city_date_ordered_reshape)], id.vars = "city", measure.vars = 2:(ncol(new_user_by_city_date_ordered_reshape)-1), variable.name = "date", value.name = "value")
+lnew_user_by_model_date_city$l_city = str_replace(lnew_user_by_model_date_city$l_city,"市","")
+lcity_rank = lnew_user_by_model_date_city[!l_city %in% c("null","局域网","未知"),.(lsum = sum(numbers)),by = c("l_city")]
+lcity_rank$lrank = frank(lcity_rank,-lsum,ties.method = "min")
+new_user_by_city_date_ordered_reshape$rank = seq(new_user_by_city_date_ordered_reshape$sum)
+new_user_by_city_date_ordered_reshape = merge(new_user_by_city_date_ordered_reshape,lcity_rank,by.x = "city",by.y= "l_city",all.x = TRUE)
+new_user_by_city_date_ordered_reshape = new_user_by_city_date_ordered_reshape[order(new_user_by_city_date_ordered_reshape$rank),]
+rankchange = new_user_by_city_date_ordered_reshape$lrank - new_user_by_city_date_ordered_reshape$rank
+symrankchange = ifelse(is.na(rankchange)|rankchange==0,"",ifelse(rankchange>0,intToUtf8(9650),intToUtf8(9660)))
+sym = paste0(rankchange,symrankchange)
+new_user_by_city_date_ordered_reshape$lsum = NULL
+new_user_by_city_date_ordered_reshape$lrank = NULL
+new_user_by_city_date_ordered_reshape = cbind(sym,new_user_by_city_date_ordered_reshape)
+rownames(new_user_by_city_date_ordered_reshape) = 1:nrow(new_user_by_city_date_ordered_reshape)
+DT::datatable(new_user_by_city_date_ordered_reshape, options = list(pageLength = 20))
+```
+
+湖州，重庆排名出现大幅提升，值得留意
+上海，北京，漯河！？占据前三名
+
+```{r city_treemap}
+treemap(melt_df_city_top20,index=c("date","city"),vSize = "value")
+```
+
+结构矩形树图，大矩形为日期，小矩形为具体城市，按从大到小的顺序，从上到下，从左到右排列
+
+##新用户不同渠道分布
+```{r channel,echo = FALSE}
+channel_sql = paste0("select * from dl.dl_channel_umid_openid where substr(umid_firstonlinetime,1,10) >= '",as.character(datestart),"' and dt = ",dateend.str)
+new_user_channel_unique = read_data_impala_general(channel_sql)
+colnames(new_user_channel_unique) = str_replace(colnames(new_user_channel_unique),"dl_channel_umid_openid.","")
+new_user_channel_unique = data.table(new_user_channel_unique)
+new_user_channel_unique$date = str_sub(new_user_channel_unique$umid_firstonlinetime,1,10)
+new_user_by_channel_date = new_user_channel_unique[,.(numbers = .N),by = c("channel","date")]
+new_user_by_channel = new_user_channel_unique[,.(numbers = .N),by = c("channel")][order(numbers,decreasing = T)]
+channel_list = new_user_by_channel$channel
+new_user_by_channel_date_top = new_user_by_channel_date
+new_user_by_channel_date_top$channels = factor(new_user_by_channel_date_top$channel,levels = channel_list)
+new_user_by_channel_date_top_ordered = new_user_by_channel_date_top[order(date,channels)]
+new_user_by_channel_date_ordered_reshape = dcast(new_user_by_channel_date_top_ordered, channels ~ date, value.var = "numbers")
+new_user_by_channel_date_ordered_reshape$sum = rowSums(new_user_by_channel_date_ordered_reshape[,c(-1)],na.rm = T)
+DT::datatable(new_user_by_channel_date_ordered_reshape, options = list(pageLength = 20))
+#kable(channel,format = "markdown")
+```
+
+扫码加入是主流方式，IOS app store上新用户流量最多，30015并未进入前三
+
+```{r channel_treemap}
+melt_df_channel_top20 = melt(new_user_by_channel_date_ordered_reshape[1:20,-ncol(new_user_by_channel_date_ordered_reshape)], id.vars = "channels", measure.vars = 2:(ncol(new_user_by_channel_date_ordered_reshape)-1), variable.name = "date", value.name = "value")
+treemap(melt_df_channel_top20,index=c("date","channels"),vSize = "value")
+```
+
+结构矩形树图，大矩形为日期，小矩形为具体渠道，按从大到小的顺序，从上到下，从左到右排列
+
+#转化问题
+##每日订单数
+```{r order}
+online_order_sql = paste0("select count(distinct purchaser_id) as o_num,substr(b.create_date,1,10) as dt from
+(select purchaser_id,create_date from ods.ods_tx_order_tx_order_dt o inner join ods.ods_app_pageview_info a on 
+                          o.purchaser_id = a.u_id where substr(o.create_date,1,10)>= '",datestart,"' and o.order_status not in (1,7,19) and o.order_type=1) b
+                          group by substr(b.create_date,1,10) order by substr(b.create_date,1,10)")
+online_order = read_data_impala_general(online_order_sql)
+total_order_sql = paste0("select count(distinct purchaser_id) as t_num,substr(b.create_date,1,10) as dt from
+(select purchaser_id,create_date from ods.ods_tx_order_tx_order_dt o where substr(o.create_date,1,10)>= '",datestart,"' and o.order_status not in (1,7,19) and o.order_type=1) b
+                         group by substr(b.create_date,1,10) order by substr(b.create_date,1,10)")
+total_order = read_data_impala_general(total_order_sql)
+matrix = as.matrix(cbind(online_num = online_order$o_num,total_num = total_order$t_num))
+matrix = t(matrix)
+par(bg = 'white')
+colors <- c("blue","purple")
+dates <- online_order$dt
+stacks <- c("有过APP活动订单数","总订单数")
+# Create the bar chart.
+barplot(matrix,main="每日订单数",names.arg=dates,xlab="month",ylab="订单数",col=colors,beside = TRUE)
+# Add the legend to the chart.
+legend("topright",stacks, cex=0.7, fill=colors,xjust = 0, yjust = 1)
+```
+
+在APP上有过活动的人生成的订单占比较少，12月9日，10日，12日，16日，17日几天订单多，线上比例也多
+
+##家装预约
+```{r book}
+online_book_sql = paste0("select substr(d.create_date,1,10) dt,count(distinct d.openid) b_num from (select b.create_date,c.openid from
+                   ods.ods_jz_business_jz_activity_user_dt b inner join 
+ods.ods_db_user_center_users_dt c on b.user_mobile=c.mobile
+where b.is_del=0 and substr(create_date,1,10)>='",datestart,"') d
+group by substr(d.create_date,1,10) order by substr(d.create_date,1,10)")
+online_book = read_data_impala_general(online_book_sql)
+barplot(online_book$b_num,names.arg = online_book$dt,col = "brown",xlab = "month",ylab = "预约数",main = "每日家装预约")
+```
+
+12月8日到12日的家装预约数比较高，之后明显降低
+
+##领券情况
+```{r coupon}
+coupon_sql = paste0("select substr(d.create_time,1,10) dt,count(distinct d.open_id) c_num 
+from (select create_time,open_id from ods.ods_marketing_center_mmc_user_coupon_dt where 
+to_date(create_time)>='",datestart,"'
+and channel_id not in (2,4) and open_id!='') d
+group by substr(d.create_time,1,10) order by substr(d.create_time,1,10)")
+coupon = read_data_impala_general(coupon_sql)
+barplot(coupon$c_num,names.arg = coupon$dt,xlab = "month",ylab = "领券数",main = "每日领券情况",col = "blue")
+```
+
+12月9日到12月12日，领券数明显较多，之后领券数明显较低
+
+```{r end}
+dbDisconnect(con)
+dbDisconnect(conn)
+```

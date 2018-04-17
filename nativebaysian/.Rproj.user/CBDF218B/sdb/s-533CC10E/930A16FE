@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "# http://www.learnbymarketing.com/tutorials/naive-bayes-in-r/\n# https://www.r-bloggers.com/naive-bayes-classification-in-r-part-2/\nlibrary(e1071)\nmodel <- naiveBayes(Species ~ ., data = iris)\nclass(model)\nsummary(model)\nprint(model)\n\n# The model has class “naiveBayes” and the summary tells us that the model\n# provides a - priori probabilities of no - recurrence and recurrence events as\n# well as conditional probability tables across all attributes. To examine the\n# conditional probability tables just print the model. One of our tasks for this\n# assignment was to create code which would give us the same conditional\n# probabilities as those output by the naiveBayes() function. I went about this\n# in the following way:\n\ntbl_list <- sapply(iris[-5], table, iris[,5])\ntbl_list <- lapply(tbl_list, t)\n\ncond_probs <- sapply(tbl_list, function(x) { \n  apply(x, 1, function(x) { \n    x / sum(x) }) })\n\ncond_probs <- lapply(cond_probs, t)\n\nprint(cond_probs)\n\n# If continuous features do not have normal distribution, we should use\n# transformation or different methods to convert it in normal distribution. \n\n# If test data set has zero frequency issue, apply smoothing techniques “Laplace\n# Correction” to predict the class of test data set. \n\n# Remove correlated features,\n# as the highly correlated features are voted twice in the model and it can lead\n# to over inflating importance. \n\n# Naive Bayes classifiers has limited options for\n# parameter tuning like alpha=1 for smoothing, fit_prior=[True|False] to learn\n# class prior probabilities or not and some other options (look at detail here).\n# I would recommend to focus on your  pre-processing of data and the feature\n# selection. \n\n# You might think to apply some classifier combination technique like\n# ensembling, bagging and boosting but these methods would not help. Actually,\n# “ensembling, boosting, bagging” won’t help since their purpose is to reduce\n# variance. Naive Bayes has no variance to minimize.",
+    "created" : 1517367653154.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3183786008",
+    "id" : "930A16FE",
+    "lastKnownWriteTime" : 1517379503,
+    "last_content_update" : 1517379503884,
+    "path" : "~/R_Projects/nativebaysian/Rfile/inside_naive_bayes.R",
+    "project_path" : "Rfile/inside_naive_bayes.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 13,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

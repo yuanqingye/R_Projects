@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1517898379745.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "AB5D310B",
+    "lastKnownWriteTime" : 27866499440181340,
+    "last_content_update" : 1517898379745,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "B9375F4E",
+        "caption" : "city[city$l_city == \"�Ϸ���\" & city$dt == \"20180204\", ]",
+        "contentUrl" : "grid_resource/gridviewer.html?env=_rs_no_env&obj=&cache_key=B9375F4E",
+        "displayedObservations" : 1,
+        "environment" : "_rs_no_env",
+        "object" : "",
+        "preview" : 0,
+        "totalObservations" : 1,
+        "variables" : 5
+    },
+    "relative_order" : 20,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

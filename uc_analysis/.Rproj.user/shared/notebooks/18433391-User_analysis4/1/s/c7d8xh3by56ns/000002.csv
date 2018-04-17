@@ -1,0 +1,4 @@
+"0","p <- ggplot(timespan.m, aes(dates,old_new_user)) + geom_tile(aes(fill = time_span),colour = ""white"") + scale_fill_gradient(low = ""white"",high = ""purple"")"
+"0","p+scale_x_discrete(breaks = timespan.m$dates[seq(from = 1,to = nrow(time_span.new),by = 2)])"
+"2","Graphics error: Plot rendering error
+"

@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(shiny)\n\n# Define UI for application that draws a histogram\nui <- fluidPage(\n  titlePanel(\"Display datasets in R\"),\n  sidebarPanel(\n    selectInput(\"select\",\"please select a dataset\",choices = c(\"iris\",\"faithful\",\"cars\")),\n    numericInput(\"obs\", \"Number of observations to view:\", 10)\n  ),\n  mainPanel(\n  verbatimTextOutput(\"summary\"),  \n  dataTableOutput(\"table\")\n  )\n)\n\n# Define server logic required to draw a histogram\nserver <- function(input, output) {\n  datasetInput <- reactive({\n    switch(input$select,\n           \"iris\" = iris,\n           \"faithful\" = faithful,\n           \"cars\" = cars)\n  })\n  \n  output$summary = renderPrint({\n    dt_name = datasetInput()\n    summary(dt_name)\n  })\n  \n  output$table <- renderDataTable({\n    dt_name = datasetInput()\n    obs = input$obs\n    dt_name[1:obs,]\n  })\n}\n\n# Run the application \nshinyApp(ui = ui, server = server)\n",
+    "created" : 1506480620689.000,
+    "dirty" : false,
+    "encoding" : "GB2312",
+    "folds" : "",
+    "hash" : "2305664926",
+    "id" : "34D655B2",
+    "lastKnownWriteTime" : 1520476032,
+    "last_content_update" : 1520476032099,
+    "path" : "~/R_Projects/shiny_start/rnorm/app2.R",
+    "project_path" : "rnorm/app2.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

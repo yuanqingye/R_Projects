@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# install.packages(\"rJava\")\n# \n# install.packages(\"DBI\")\n# \n# install.packages(\"RJDBC\")\n\nlibrary(DBI)\n\nlibrary(rJava)\n\nlibrary(RJDBC)\n\ncp = c(list.files(\"~/libs2\",pattern=\"jar$\",full.names=T))\n\n.jinit(classpath<-cp)\n\ndrv <- JDBC(\"com.cloudera.impala.jdbc4.Driver\", \"~/ImpalaJDBC4.jar\")\n\ncon <- dbConnect(drv, \"jdbc:impala://172.16.107.126:21050/ods\", \"\", \"\")\n# data1 = dbGetQuery(con,'select * from ods.ods_app_pageview_info limit 1000')\n# page_view_query = \"select * from (select d.page_name,p.system_time,p.path,p.service,p.ts,p.p_domain,p.p_channel,p.p_type,p.p_item,p.p_title,p.u_id,p.u_mid,p.u_guid,p.l_ip,p.l_city from ods.ods_app_pageview_info p inner join test.path_dict d on p.p_type = d.p_type and p.page = d.page_mark and p.path = d.path and p.p_item = d.p_item and l_ip!='210.13.91.146' and p.service in ('h5.pvuv','ios.pvuv','android.pvuv') and substr(p.u_mid,1,2)!='a_' and p.path='p' and l_city!='????' and p.p_domain='mmall.com' and p.p_type not in ('page.closedown','page.wakeup','page.activate.main') and dt=20170501) t1,(select percentile(cast(ts as bigint),0) quarter0,percentile(cast(ts as bigint),0.25) quarter1,percentile(cast(ts as bigint),0.5) quarter2,percentile(cast(ts as bigint),0.75) quarter3,percentile(cast(ts as bigint),1) quarter4 from ods.ods_app_pageview_info i where i.path='p' and i.dt = 20170502) t2 where cast(t1.ts as bigint)>= quarter0 and cast(t1.ts as bigint)<quarter1\"\n\n# query = \"select * from dm.im_info where stat_date between '20170501' and '20170531'\"\n# # page_view_0502_1 <- dbGetQuery(con, page_view_query)\n# \n# read_data_impala = function(datestr){\n# data_hive_query = \"select d.page_name,p.system_time,p.path,p.service,p.ts,p.p_domain,p.p_channel,p.p_type,p.p_item,p.p_title,p.u_id,p.u_mid,\n#                       p.u_guid,p.l_ip,p.l_city from ods.ods_app_pageview_info p inner join test.path_dict d on p.p_type = d.p_type and \n#                                p.page = d.page_mark and p.path = d.path and p.p_item = d.p_item and l_ip!='210.13.91.146' and p.service in \n#                                ('h5.pvuv','ios.pvuv','android.pvuv') and substr(p.u_mid,1,2)!='a_' and p.path='p' and l_city!='????' and p.p_domain='mmall.com' \n#                                and p.p_type not in ('page.closedown','page.wakeup','page.activate.main') and dt=\"  \n# assign(paste0('data_hive_',substr(datestr,6,8)),dbGetQuery(con, paste0(data_hive_query,datestr)),pos = .GlobalEnv)\n# }\n\nread_data_impala_general = function(sql){\n  data = dbGetQuery(con,sql)\n  return(data)\n}\n\n# read_data_impala_in_group = function(v){\n#   datestr=as.character(v)\n#   for(x in datestr){\n#     read_data_impala(x)\n#   }\n# }\n\n# summary(data)",
+    "created" : 1517970282885.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "451534721",
+    "id" : "7430362",
+    "lastKnownWriteTime" : 1517984444,
+    "last_content_update" : 1517984444760,
+    "path" : "~/Rfile/R_impala.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 29,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

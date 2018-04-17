@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(nnet)\nf = rent~.\nf2 = rent~sale+area\ncities = substring(new_general_info$mall_name,1,2)\ncities_code = as.numeric(factor(cities))\nyear = new_general_info$year\ndata = new_general_info[,c(-1,-24)]\nmaxs <- apply(data, 2, max) \nmins <- apply(data, 2, min)\nscaled <- as.data.frame(scale(data, center = mins, scale = maxs - mins))\nscaled$city = cities_code\nscaled$year = year\nnew_train <- scaled[year!=2017,-ncol(scaled)]\nnew_test <- scaled[year==2017,-ncol(scaled)]\n\n# traindata = scale(new_trainset)\n# traindata = cbind(rent = new_trainset$rent,traindata[,-3])\n# traindata = as.data.frame(traindata)\n# res <- nnet(f2,data=traindata,\n#             size=35, linout=TRUE, skip=TRUE, MaxNWts=1000000, trace=FALSE, maxit=1000000)\n# \n# testdata = scale(new_testset[,c(2,5)])\n# testdata = as.data.frame(testdata)\n# pred.nnet = predict(res,traindata[,c(3,5)])\n# pred.test = predict(res,testdata)\n# compare.train = cbind(pred.nnet,traindata$rent)\n# compare.test = cbind(pred.test,new_testset$rent)\n# e.test = crossprod(pred.test - unlist(new_testset$rent))/nrow(new_testset)\n# checkdata = cbind(testdata[,c(\"sale\",\"area\")],traindata[1:19,c(\"sale\",\"area\")])\n\n#combine scaled train data with actual rent: new_traindata,new_testdata\n#original data: new_trainset,new_testset\n#scaled data new_train,new_test\nlibrary(tibble) # add_column(dataset, d = 4:8, .after = 2)\n\nnew_traindata = cbind(rent = new_trainset$rent,new_train[,-3])\nnew_testdata = cbind(rent = new_testset$rent,new_test[,-3])\ndt_ori = nn_para(new_trainset,new_testset) #try paras with original data \ndt_scale = nn_para(new_traindata,new_testdata) #try paras with scaled data\nnew_res <- nnet(rent~.,data=new_traindata,\n            size=17, linout=TRUE, skip=TRUE, MaxNWts=1000000, trace=FALSE, maxit=10)\npred.nnet.new = predict(new_res,new_train[,c(-3)])\npred.test.new = predict(new_res,new_test[,c(-3)])\ncompare.train.new = cbind(pred.nnet.new,new_trainset$rent)\ncompare.test.new = cbind(pred.test.new,new_testset$rent)\ne.test = crossprod(pred.test.new - unlist(new_testset$rent))/nrow(new_testset)\n\n# checkdata = cbind(testdata[,c(\"sale\",\"area\")],traindata[1:19,c(\"sale\",\"area\")])\n\n\nnn_para = function(traindata,testdata) {\n  min = Inf\n  v = vector(mode = \"numeric\",length = 0)\n  dt = data.table(cost = v,size = v,iter = v)\n  for (size in 5:35) {\n    for (maxit in c(1e+1,1e+2,1e+3,1e+4,1e+5,1e+6,1e+7)) {\n      res <- nnet(\n        f,data = traindata,\n        size = size, linout = TRUE, skip = TRUE, MaxNWts = 100000, trace =\n          FALSE, maxit = maxit\n      )\n      pred.nnet = predict(res,traindata[,-which(names(traindata) %in% c(\"rent\"))])\n      pred.test = predict(res,testdata[,-which(names(testdata) %in% c(\"rent\"))])\n      e.test = crossprod(pred.test - unlist(new_testset$rent)) / nrow(new_testset)\n      temp.dt = data.table(cost = e.test[1,1],size = size,iter = maxit)\n      dt = rbind(dt,temp.dt)\n      if (e.test[1,1] < min) {\n        min = e.test[1,1]\n        bestsize = size\n        bestiter = maxit\n      }\n    }\n  }\n  temp.dt = data.table(cost = min,size = bestsize,iter = bestiter)\n  dt = rbind(dt,temp.dt)\n}\n",
+    "created" : 1501829969717.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2999268349",
+    "id" : "470DEC2B",
+    "lastKnownWriteTime" : 1510219501,
+    "last_content_update" : 1510219501773,
+    "path" : "~/R_Projects/neuralNetwork/Rfile/nnet.R",
+    "project_path" : "Rfile/nnet.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

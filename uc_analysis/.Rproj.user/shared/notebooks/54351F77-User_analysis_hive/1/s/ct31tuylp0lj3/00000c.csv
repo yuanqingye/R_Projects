@@ -1,0 +1,21 @@
+"0","new_user_by_model_date_city_sql = "
+"0","paste0(""select count(b.u_mid) numbers,firstdt,d_model,l_city from"
+"0","(select f.u_mid,substr(firstonlinetime,1,10) firstdt,a.d_model,a.l_city from dl.umid_firstonlinetime f left join"
+"0","  (select * from "
+"0","  (select u_mid,d_model,l_city,ROW_NUMBER() OVER (PARTITION BY u_mid,d_model,l_city ORDER BY dt) "
+"0","       as level from ods.ods_app_pageview_info where dt>="",ldatestart.str,"") t where t.level = 1) a"
+"0","  using(u_mid) where substr(firstonlinetime,1,10) >= '"",as.character(ldatestart),""' "
+"0","  and f.dt = '"",dateend.str,""') b group by firstdt,d_model,l_city"")"
+"0","new_user_by_model_date_city = read_data_impala_general(new_user_by_model_date_city_sql)"
+"2","Error in .verify.JDBC.result(r, ""Unable to retrieve JDBC result set for "",  : 
+  Unable to retrieve JDBC result set for select count(b.u_mid) numbers,firstdt,d_model,l_city from
+(select f.u_mid,substr(firstonlinetime,1,10) firstdt,a.d_model,a.l_city from dl.umid_firstonlinetime f left join
+  (select * from 
+  (select u_mid,d_model,l_city,ROW_NUMBER() OVER (PARTITION BY u_mid,d_model,l_city ORDER BY dt) 
+       as level from ods.ods_app_pageview_info where dt>=20171124) t where t.level = 1) a
+  using(u_mid) where substr(firstonlinetime,1,10) >= '2017-11-24' 
+  and f.dt = '20171219') b group by firstdt,d_model,l_city ([Simba][ImpalaJDBCDriver](500051) ERROR processing query/statement. Error Code: java.net.SocketException: Connection reset by peer: socket write error, SQL state: HY000, Query: select count(b.u_mid) numbers,firstdt,d_model,l_city from
+(select f.u_mid,substr(firstonlinetime,1,10) firstdt,a.d_model,a.l_city from dl.umid_firstonlinetime f left join
+  (select * from 
+  (select u_mid,d_model,l_city,ROW_NUMBER() OVER (PARTITION BY u_mid,d_model,l_ci
+"

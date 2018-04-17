@@ -1,0 +1,17 @@
+"0","new_user_by_model_date_city$l_city = str_replace(new_user_by_model_date_city$l_city,""市"","""")"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","new_user_by_city_dt = new_user_by_model_date_city[!l_city %in% c(""null"",""局域网"",""未知""),.(numbers = sum(numbers)),by = c(""l_city"",""firstdt"")]"
+"0","new_user_by_city = new_user_by_model_date_city[!l_city %in% c(""null"",""局域网"",""未知""),.(numbers = sum(numbers)),by = ""l_city""][order(numbers,decreasing = T),]"
+"0","city_list = new_user_by_city[1:101,]$l_city"
+"0","new_user_by_city_date_top100 = new_user_by_city_dt[l_city %in% city_list,]"
+"0","new_user_by_city_date_top100$city = factor(new_user_by_city_date_top100$l_city,levels = city_list)"
+"0","new_user_by_city_date_top100_ordered = new_user_by_city_date_top100[order(firstdt,city)]"
+"0","new_user_by_city_date_ordered_reshape = dcast(new_user_by_city_date_top100_ordered, city ~ firstdt, value.var = ""numbers"")"
+"0","new_user_by_city_date_ordered_reshape$sum = rowSums(new_user_by_city_date_ordered_reshape[,c(-1,-14)],na.rm = T)"
+"0","DT::datatable(new_user_by_city_date_ordered_reshape, options = list(pageLength = 20))"

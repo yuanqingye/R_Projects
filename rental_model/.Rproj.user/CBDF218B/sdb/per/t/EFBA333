@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1512028498062.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "EFBA333",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1512028498062,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "187087C2",
+        "caption" : "MSE.rf.beijing.MALLS",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=MSE.rf.beijing.MALLS&cache_key=187087C2",
+        "displayedObservations" : 4,
+        "environment" : "",
+        "object" : "MSE.rf.beijing.MALLS",
+        "preview" : 0,
+        "totalObservations" : 4,
+        "variables" : 4
+    },
+    "relative_order" : 19,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

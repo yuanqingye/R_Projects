@@ -1,0 +1,18 @@
+{
+    "contents" : "---\ntitle: \"TEST\"\nauthor: \"qingye\"\ndate: \"2017年7月5日\"\nruntime: shiny\noutput: html_document\n---\n\n```{r echo = FALSE}\nselectInput(\"n_breaks\", label = \"Number of bins:\",\n              choices = c(10, 20, 35, 50), selected = 20)\n  \nsliderInput(\"bw_adjust\", label = \"Bandwidth adjustment:\",\n              min = 0.2, max = 2, value = 1, step = 0.2)\n```\n\n```{r echo = FALSE}\nrenderPlot({\n  hist(faithful$eruptions, probability = TRUE, \n       breaks = as.numeric(input$n_breaks),\n       xlab = \"Duration (minutes)\", \n       main = \"Geyser eruption duration\")\n  \n  dens <- density(faithful$eruptions, adjust = input$bw_adjust)\n  lines(dens, col = \"blue\")\n})\n```\n\n```{r}\nlibrary(data.table)\nlibrary(readxl)\nlibrary(arules)\nlibrary(arulesViz)\nload(\"~/R_projects/purchasing_relation/data/order.RData\")\n# frequentsets=eclat(prepare.list$cont_cat3_name,parameter=list(support=0.001,maxlen=20))  #求频繁项集  \n# rules <- apriori(prepare.list$cont_cat3_name, parameter = list(supp=0.0001,confidence=0.1, minlen = 2))\n# subrules2 <- head(sort(rules, by = \"lift\"), 10)\n```\n\nYou can also embed plots, for example:\n\n```{r, echo=FALSE}\n# plot(rules, measure = c(\"support\", \"lift\"), shading = \"confidence\",interactive = TRUE)\ninspect(rules)\ninspect(frequentsets)\n```\n\nTwo plus two equals `r 2 + 2`.\n\nNote that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.\n",
+    "created" : 1499225440418.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "515077794",
+    "id" : "4CC118DB",
+    "lastKnownWriteTime" : 1499248089,
+    "path" : "~/R_Projects/purchasing_relation/Rmarkdown/test_association.Rmd",
+    "project_path" : "Rmarkdown/test_association.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}

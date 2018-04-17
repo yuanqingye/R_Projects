@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "# Inject outliers into data.\ncars1 <- cars[1:30, ]  # original data\ncars_outliers <- data.frame(speed=c(19,19,20,20,20), dist=c(190, 186, 210, 220, 218))  # introduce outliers.\ncars2 <- rbind(cars1, cars_outliers)  # data with outliers.\n\n# Plot of data with outliers.\npar(mfrow=c(1, 2))\nplot(cars2$speed, cars2$dist, xlim=c(0, 28), ylim=c(0, 230), main=\"With Outliers\", xlab=\"speed\", ylab=\"dist\", pch=\"*\", col=\"red\", cex=2)\nabline(lm(dist ~ speed, data=cars2), col=\"blue\", lwd=3, lty=2)\n\n# Plot of original data without outliers. Note the change in slope (angle) of best fit line.\nplot(cars1$speed, cars1$dist, xlim=c(0, 28), ylim=c(0, 230), main=\"Outliers removed \\n A much better fit!\", xlab=\"speed\", ylab=\"dist\", pch=\"*\", col=\"red\", cex=2)\nabline(lm(dist ~ speed, data=cars1), col=\"blue\", lwd=3, lty=2)\n\nurl <- \"http://rstatistics.net/wp-content/uploads/2015/09/ozone.csv\"  \n# alternate source:  https://raw.githubusercontent.com/selva86/datasets/master/ozone.csv\ninputData <- read.csv(url)  # import data\n\noutlier_values <- boxplot.stats(inputData$pressure_height)$out  # outlier values.\nboxplot(inputData$pressure_height, main=\"Pressure Height\", boxwex=0.1)\nmtext(paste(\"Outliers: \", paste(outlier_values, collapse=\", \")), cex=0.6)\n\n# For categorical variable\nozone = inputData\nboxplot(ozone_reading ~ Month, data=ozone, main=\"Ozone reading across months\")  # clear pattern is noticeable.\nboxplot(ozone_reading ~ Day_of_week, data=ozone, main=\"Ozone reading for days of week\")  # this may not be significant, as day of week variable is a subset of the month var\n\nboxplot(ozone_reading ~ pressure_height, data=ozone, main=\"Boxplot for Pressure height (continuos var) vs Ozone\")\nboxplot(ozone_reading ~ cut(pressure_height, pretty(inputData$pressure_height)), data=ozone, main=\"Boxplot for Pressure height (categorial) vs Ozone\", cex.axis=0.5)\n\nmod <- lm(ozone_reading ~ ., data=ozone)\ncooksd <- cooks.distance(mod)\n\nplot(cooksd, pch=\"*\", cex=2, main=\"Influential Obs by Cooks distance\")  # plot cook's distance\nabline(h = 4*mean(cooksd, na.rm=T), col=\"red\")  # add cutoff line\ntext(x=1:length(cooksd)+1, y=cooksd, labels=ifelse(cooksd>4*mean(cooksd, na.rm=T),names(cooksd),\"\"), col=\"red\")  # add labels\n\ncar::outlierTest(mod)\n\nlibrary(outliers)\nset.seed(1234)\ny=rnorm(100)\noutlier(y)\noutlier(y,opposite=TRUE)\ndim(y) <- c(20,5)  # convert it to a matrix\noutlier(y)\noutlier(y,opposite=TRUE)\n\nset.seed(1234)\nx = rnorm(10)\nscores(x)  # z-scores => (x-mean)/sd\nscores(x, type=\"chisq\")  # chi-sq scores => (x - mean(x))^2/var(x)\nscores(x, type=\"t\")  # t scores\nscores(x, type=\"chisq\", prob=0.9)  # beyond 90th %ile based on chi-sq\nscores(x, type=\"chisq\", prob=0.95)  # beyond 95th %ile\nscores(x, type=\"z\", prob=0.95)  # beyond 95th %ile based on z-scores\nscores(x, type=\"t\", prob=0.95)  # beyond 95th %ile based on t-scores\n\nx <- ozone$pressure_height\nqnt <- quantile(x, probs=c(.25, .75), na.rm = T)\ncaps <- quantile(x, probs=c(.05, .95), na.rm = T)\nH <- 1.5 * IQR(x, na.rm = T)\nx[x < (qnt[1] - H)] = caps[1]\nx[x > (qnt[2] + H)] <- caps[2]",
+    "created" : 1509677059312.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3970430221",
+    "id" : "44EEF6B4",
+    "lastKnownWriteTime" : 1509680367,
+    "last_content_update" : 1509680367038,
+    "path" : "~/R_Projects/special_value/Rfile/outliers.R",
+    "project_path" : "Rfile/outliers.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

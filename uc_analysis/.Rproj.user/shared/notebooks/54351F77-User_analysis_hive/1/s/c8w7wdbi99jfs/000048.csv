@@ -1,0 +1,2 @@
+"0","at = str_sub(survival$dt,5,8)[seq(from = 2,to = 14,by = 2)]"
+"0","mtext(side = 1, text = at, at = seq(from = 2,to = 14,by = 2), col = ""purple"", line = 1)"

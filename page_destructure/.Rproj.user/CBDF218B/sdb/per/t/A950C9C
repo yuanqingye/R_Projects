@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "url = \"https://movie.douban.com/subject/27024903/comments?status=P\"\nlibrary(rvest)\nlibrary(magrittr)\nweb = read_html(url)\ncomments = web %>% html_nodes(\"div#comments p\")%>% html_text()\n\ns <- html_session(url)\ns2 = s %>% follow_link(\"后页\")\n\ncomments2 = s2 %>% html_nodes(\"div#comments p\")%>% html_text()\n\ninits <- html_session(url)\nl=list()\nl[[1]] = inits\ncomments.df = data.frame(comments = vector(mode = \"character\",length = 0))\nfor(i in 1:50){\n  comments = l[[i]] %>% html_nodes(\"div#comments p\")%>% html_text()\n  temp_data_frame = data.frame(comments = comments)\n  comments.df = rbind(comments.df,temp_data_frame)\n  l[[i+1]] =  l[[i]] %>% follow_link(\"后页\")\n}\n\npaste(i,\"\")",
+    "created" : 1508414235368.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2249026382",
+    "id" : "A950C9C",
+    "lastKnownWriteTime" : 1508416615,
+    "last_content_update" : 1508416615531,
+    "path" : "~/R_Projects/page_destructure/Rfile/Genius_cheater.R",
+    "project_path" : "Rfile/Genius_cheater.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 24,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

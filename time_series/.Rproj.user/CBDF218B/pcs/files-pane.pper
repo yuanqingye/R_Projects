@@ -1,0 +1,13 @@
+{
+    "path" : "~/ts_data/案例数据",
+    "sortOrder" : [
+        {
+            "ascending" : false,
+            "columnIndex" : 4
+        },
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

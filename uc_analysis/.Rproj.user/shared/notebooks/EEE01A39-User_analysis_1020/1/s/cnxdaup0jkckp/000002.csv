@@ -1,0 +1,13 @@
+"0","survival = read_xlsx(""~/data/uc_analysis/survival.xlsx"")"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","par(bg = 'black')"
+"0","colors = rainbow(3)"
+"0","#考虑survival,!!须注意最后一天"
+"0","ylarge = max(max(survival$t1/survival$t),max(survival$newt1/survival$newuv),max(survival$noldt1/survival$olduv))"
+"0","plot(survival$a.dt,survival$t1/survival$t,col = colors[[1]],type = 'l',ylim = c(0,ceiling(ylarge)))"

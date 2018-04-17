@@ -1,0 +1,18 @@
+{
+    "contents" : "---\ntitle: \"week report\"\nauthor: \"qingye\"\ndate: Sys.Date()\noutput: html_document\n---\n\n\n```{r}\nlibrary(data.table)\nlibrary(D3partitionR)\nlibrary(readr)\nlibrary(readxl)\ntb_3 = data.table(read_xlsx('~/data/tb3.xlsx'))\ntb_4 = tb_3[sumvalue<=30,]\ntb_5 = tb_3[sumvalue>30,]\n# D3partitionR(data=list(path=tb_4$page_name,value=1),type = 'sunburst')\n```\n上面是部分代码\n\n\n```{r, echo=FALSE}\nlibrary(sunburstR)\n# temp = read_xlsx('~/data/temp.xlsx')\n# temp2=data.table(path=temp$behaviour.behaviour,value=1)\n# sunburst(temp2)\nbehavior05140 = read_xlsx('~/data/behavior05140_copy.xlsx')\npage_view_potential_buyer = read_xlsx('~/data/page_view_potential_buyer.xlsx')\ntemp = read_xlsx('~/data/temp.xlsx')\ntemp3 = merge(temp,page_view_potential_buyer,by = 'username')\ntemp4 = merge(page_view_potential_buyer,behavior05140,by = 'username')\ntemp4 = data.table(temp4)\ntemp3 = data.table(temp3)\ntemp4[,value:=1]\ntemp5 = temp4[,.(sumvalue = sum(value)),by = 'username']\ntemp6 = temp5[sumvalue<50,username]\ntemp6 = temp5[sumvalue>50,username]\ntemp7 = temp3[!(username %in% temp6),]\ntemp2=data.table(path=temp7$page_name,value=1)\nsunburst(temp2)\n```\n以上是购买用户路径图\n从路径图可以看到，有潜在购买欲的用户的行为比较多元化，比较复杂\n很多有购买倾向的用户会在案例列表，案例详情页面来回徘徊数十次\n还有部分用户则非常直接，进入订单确认页，应该是已经得到足够的情报，使用APP来下单\n\n```{r, echo=FALSE}\n# df0514 = read_xlsx('~/data/df0514.xlsx')\n# page_buyer_wide = merge(page_view_potential_buyer,df0514,by.x = 'username',by.y = 'i.u_mid')\n# page_buyer_wide = data.table(page_buyer_wide)\n# page_buyer_wide[,value:=1]\npage_buyer_wide1 = read_xlsx('~/data/page_buyer_wide1.xlsx')\npage_buyer_wide1 = data.table(page_buyer_wide1)\npage_buyer_stat1 = page_buyer_wide1[,.(sumvalue = sum(value)),by = 'username']\npage_buyer_stat1_cut = cut(page_buyer_stat1$sumvalue,breaks = c(1,20,10000))\npage_buyer_stat1_table = table(page_buyer_stat1_cut)\nnames(page_buyer_stat1_table) = c('buyer view page<20','buyer view page>20')\nbarplot(page_buyer_stat1_table,col=c('blue','red'))\n```\n\n\n\n![购物者最常访问的页面](test8.png)\n一共有88个用户，可以看出，除了各大首页以及购物车订单页外，家装图集详情页以及案例列表，案例详情，商场详情，搜索，搜索结果等会被潜在购买者经常关注\n\n<img src=\"test8.png\" width = \"500\" height = \"500\"/>\n\n![购物者最喜欢访问APP的时间段](pie1.png)\n\n可以看出，对于有支付行为的用户而言，其浏览行为大多产生于傍晚时间，其次是中午\n(凌晨：0点到7点，早晨：7点到11点，中午：11点到3点，下午：3点到6点，傍晚：6点到9点，晚上：9点到12点)\n\n",
+    "created" : 1497840873734.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "862631884",
+    "id" : "7E169ECB",
+    "lastKnownWriteTime" : 1497946380,
+    "path" : "~/R_Projects/weekly_report/R_markdown/test.Rmd",
+    "project_path" : "R_markdown/test.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}

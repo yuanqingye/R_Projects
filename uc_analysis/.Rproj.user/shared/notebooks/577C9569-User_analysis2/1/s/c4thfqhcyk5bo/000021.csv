@@ -1,0 +1,12 @@
+"0","df = as.data.frame(matrix)"
+"0","colnames(df) = pvuv$dt"
+"0","tt <- ttheme_default(colhead=list(fg_params = list(parse=TRUE)))"
+"0","tbl <- tableGrob(df, rows=NULL, theme=tt)"
+"0","# Plot chart and table into one object"
+"0","grid.arrange(bplot, tbl,"
+"0","             nrow=2,"
+"0","             as.table=TRUE,"
+"0","             heights=c(3,1))"
+"2","Error in gList(list(0.7, 1.9, 3.1, 4.3, 5.5, 6.7, 7.9, 9.1, 10.3, 11.5,  : 
+  only 'grobs' allowed in ""gList""
+"

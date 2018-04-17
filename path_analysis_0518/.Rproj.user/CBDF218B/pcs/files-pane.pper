@@ -1,0 +1,13 @@
+{
+    "path" : "~/R_Projects/path_analysis_0518",
+    "sortOrder" : [
+        {
+            "ascending" : false,
+            "columnIndex" : 4
+        },
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

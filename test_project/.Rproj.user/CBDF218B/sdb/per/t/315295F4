@@ -1,0 +1,18 @@
+{
+    "contents" : "setClass('employee',representation(name = 'character',salary = 'numeric',union = 'logical'))\n\nsetMethod(\"show\",\"employee\",function(object){\n  inorout = ifelse(object@union,\"is\",\"is not\")\n  cat(object@name,\"has a salary of\",object@salary,\"and\",inorout,\"in the union\",\"\\n\")\n})\n\nj = list(name = \"joe\",salary = 55000,union = T)\nclass(j) = \"employee\"\nattributes(j)\n\nprint.employee = function(wrk){\n  cat(wrk$name,\"\\n\")\n  cat(\"salary\",wrk$salary,\"\\n\")\n  cat(\"union member\",wrk$union,\"\\n\")\n}\n\nk = list(name = \"Kate\",salary = 68000,union = F,hrsthismonth = 2)\nclass(k) = c(\"hrlyemployee\",\"employee\")\n\nls()\n\nls(pattern=\"jo\")\n\nz = rnorm(10000)\nhz = hist(z)\nplot(hz)\n\nsave(hz,'hzfile.RData')\n\nexists('hz')\n\nx = c(1,2,3)\ny = c(1,3,8)\nlmout = lm(y~x)\n\nstu = list(name=\"Lily\", age=20, GPA=3.6)\n\nclass(stu) = \"student\"\n\nprint.student <- function(obj) {\n  cat(obj$name, \"\\n\")\n  cat(obj$age, \"years old\\n\")\n  cat(\"GPA:\", obj$GPA, \"\\n\")\n}\n\ns2<- list(name=\"John\", age=21, GPA=3.5, country=\"France\")\nclass(s2) = c(\"InternationalStudent\",\"student\")\n\nprint.InternationalStudent = function(obj){\n  cat(obj$name, \"is from\", obj$country, \"\\n\")\n}\n",
+    "created" : 1498982730470.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2763907301",
+    "id" : "315295F4",
+    "lastKnownWriteTime" : 1501224910,
+    "path" : "~/R_Projects/test_project/test/S3_S4.R",
+    "project_path" : "test/S3_S4.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

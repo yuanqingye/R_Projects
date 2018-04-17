@@ -1,0 +1,18 @@
+{
+    "contents" : "f = function(){\n  x = 1\n  y = x+1\n  d = 2\n  sum = 0\n  for(i in 1:50){\n    sum = sum+i\n  }\n  return(x/y+d)\n}\n\ng = function(){\n  return(f())\n}\n\nerror = (function () \n{\n  .rs.recordTraceback(TRUE)\n})()\n\ne=function() for(i in 1:length(x)){z[i]=x[i]+y[i]}",
+    "created" : 1498977569083.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2590528568",
+    "id" : "26BFFB25",
+    "lastKnownWriteTime" : 1498982721,
+    "path" : "~/R_Projects/test_project/test/test_file.R",
+    "project_path" : "test/test_file.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

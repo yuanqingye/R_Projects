@@ -1,0 +1,120 @@
+---
+title: "商场购物关联分析"
+author: "qingye"
+date: "2017年7月5日"
+output: html_document
+---
+####采用关联算法，以个人为单位，对商品的关联性进行分析
+####如果商品粒度过细，得到的关联情况非常稀疏，故采用第三大类作为关联分析对象
+
+<table>
+    思路来源：著名的啤酒与尿布相关分析，作为大数据时代的代表作
+    方式：通过分析每个人购买过的商品，来察看哪些商品的购买之间是有联系的
+    目的：通过分析关联，生成报告，对商品的推送，销售的提升起到影响
+</table>
+<table>
+    时间：数据取自5月份
+    地点：dl.fct_ordr
+    所取字段：mobile,prod_name,cont_cat1_name,cont_cat2_name,cont_cat3_name
+    方法：基于apriori算法得出支持度，信任度以及提升率
+</table>
+
+术语解释：
+
+1. support:支持度，即某个商品组合在所有交易中出现的频率，比如10个人中有两个买过沙发，那么沙发支持度为0.2
+
+2. confidence:信任度，即某个商品的条件概率，如果买了B的人中，有1四分之一买了A，那么A对于B的信任度是0.25
+
+3. lift:提升，上面的条件概率除以A在整个交易中出现的频率，是最重要的关联指标
+
+```{r importdata, include=FALSE}
+# source('~/Rfile/toolfunc.R')
+# source2('~/Rfile/R_hive.R',7,17)
+library(data.table)
+library(readxl)
+library(arules)
+library(arulesViz)
+```
+
+```{r caculation,echo = FALSE,include=FALSE}
+# data_hive = read_xlsx("~/data/order_data_may.xlsx")
+# data_hive = data.table(data_hive)
+# order.list.nona = data_hive[!is.na(cont_cat3_name),]
+# order.list.nodup = unique(order.list.nona, by=c("mobile", "cont_cat3_name"))
+# prepare.list = aggregate(cont_cat3_name~mobile,data = order.list.nodup,paste)
+load("~/R_projects/purchasing_relation/data/order.RData")
+# frequentsets=eclat(prepare.list$cont_cat3_name,parameter=list(support=0.001,maxlen=20))  #求频繁项集  
+# rules <- apriori(prepare.list$cont_cat3_name, parameter = list(supp=0.0001,confidence=0.1, minlen = 2))
+subrules2 <- head(sort(rules, by = "lift"), 10)
+```
+
+
+出现频率最高的商品品类前30，纵坐标是相对频率
+```{r itemfrequency,echo = F}
+itemFrequencyPlot(items(rules), topN=30, cex.names=.6,col = "purple")
+```
+
+我们可以看到按照lift排名前30的相关关系
+{铝合金窗,暖通} => {安全门} lift = 24
+表示购买铝合金窗和暖通的人购买安全门的概率是没有任何信息普通人的24倍
+```{r rulesdata,echo = F,out.width=1000}
+inspect(head(sort(rules, by = "lift"), 30),linebreak=TRUE)
+```
+
+这里可以看到三个统计量之间的关系，支持度为横轴，信任度为纵轴，颜色深度为提升率
+```{r scatterplot,echo = FALSE}
+plot(rules)
+```
+
+
+```{r interactive_scatterplot,echo = FALSE}
+# sel <- plot(rules, measure = c("support", "lift"), shading = "confidence",interactive = TRUE)
+
+```
+
+
+这里是用矩阵来表示关联，横轴为关联左项，纵轴为关联右项，大小为支持度，颜色深度为提升值
+注意：这里采用了k-means聚类方法把类似的物品进行了整合，故显示的不多
+
+```{r grouped,echo = FALSE}
+plot(rules, method = "grouped")
+```
+
+这里的横坐标是支持度，纵坐标是信任度，颜色表示项目数，总体来说，项目多则信任度高，项目少则支持度高
+```{r colored_scatterplot,echo = FALSE}
+plot(rules, shading="order", control = list(main = "Two-key plot", 
+                                            col=rainbow(max(size(rules))-1L)))
+```
+
+这里用图形展示了商品品类的关系，颜色越深，表示关联越强，图形越大，表示支持越高
+```{r graph,echo = F}
+plot(subrules2, method = "graph", control = list(type = "items",edgeCol = 'red'))
+#reorder
+```
+
+
+```{r matrix,echo = F,include = F}
+plot(subrules2, method="matrix", measure=c("lift", "confidence"))
+
+```
+
+
+```{r paracoord,echo=F,include = F}
+plot(subrules2, method="paracoord")
+```
+
+交互图，把鼠标移到图上可以看到相应的关联规则的解释
+```{r plotly,echo=F}
+plotly_arules(rules, method = "scatterplot", measure = c("support", "confidence"),
+              shading = "lift", max = 1000)
+```
+
+字典，我们可以交互的检查各个关系
+```{r}
+inspectDT(rules)
+```
+
+
+
+交互式作图还在编写中
+即根据用户的输入来动态画图

@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(rvest)\nurl<-\"https://www.liepin.com/zhaopin/?init=1\"\npage<-read_html(url)\nbaseurl = \"https://www.liepin.com\"\n\nposition<-page%>%html_nodes('h3 a')%>%html_text(trim =TRUE)\nposition  #查看职位\nposition<- position[-41]   #删除第41个\n\nlink<- page %>% html_nodes('h3 a')%>%html_attrs()\n# link<- page %>% html_nodes('ul.sojob_list  div.job-info,h3 a')%>%html_attrs()\n#也可以写成'ul.sojob_list div.sojob-item-main div.job-info,h3 a\nlink[1] #读取数据，规定编码\n# position<-web %>% html_nodes(\"div.pages_content\") %>% html_text()\n\nlink1<-c(1:length(link))  #初始化一个和link长度相等的link1\nfor(i in 1:length(link))\n  link1[i]<-paste0(baseurl,link[[i]][1])\nlink1  #查看link1\nlink2<-link1[-41] #删除最后一行\nlink2    #查看link2\nlink<-link2    #将link2重新赋值给link\n\n#薪水\nsalary <- page %>% html_nodes('span.text-warning') %>% html_text()\nsalary\n\n#工作地点\nplace <- page %>% html_nodes('p .area') %>% html_text()\nplace\n\n#教育学历\nedu<-page %>% html_nodes('span.edu') %>% html_text()\nedu\n\n#个人经历\nexperience = page %>% html_nodes(\"p.condition span:nth-child(4)\") %>% html_text()\nexperience\n\nalldata = cbind(position,salary,place,edu,experience,link)\n\n",
+    "created" : 1505895373120.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "141382062",
+    "id" : "7D579BDA",
+    "lastKnownWriteTime" : 1505899343,
+    "last_content_update" : 1505899343043,
+    "path" : "~/R_Projects/page_destructure/Rfile/liepin.R",
+    "project_path" : "Rfile/liepin.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

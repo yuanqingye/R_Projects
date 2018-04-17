@@ -1,0 +1,19 @@
+"0","grid.arrange(tbl1,tbl2,nrow=2,as.table=TRUE)"
+"2","Error in save(plot, file = filename) : error writing to connection
+"
+"2","Warning in gzfile(file, ""wb"") :"
+"2","
+ "
+"2"," cannot open compressed file 'C:/Users/QINGYE~1.YUA/AppData/Local/Temp/RtmpSsc1sg/rs-graphics-684de964-670b-4106-b56e-45a5f7dfc384/f65ee019-05a7-46ce-87c0-68237922fcbc.snapshot', probable reason 'No space left on device'
+"
+"2","Error in gzfile(file, ""wb"") : cannot open the connection
+"
+"2","Graphics error: Plot rendering error
+"
+"2","Warning in gzfile(file, ""wb"") :"
+"2","
+ "
+"2","Error in gzfile(file, ""wb"") : cannot open the connection
+"
+"2","Graphics error: Plot rendering error
+"

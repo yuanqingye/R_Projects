@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(maps)\nlibrary(mapdata)\n\nmap(\"worldHires\",\"Mexico\",col = 'blue',fill = T)\n\nlibrary(maptools)\nlibrary(classInt)\nlibrary(foreign)\nlibrary(RColorBrewer)\npcontorta = readShapePoly(\"pinucont.shp\")\ntestdbf = read.dbf('~/data/map_data/bou2_4p/bou2_4p.dbf')\nchina = readShapePoly('~/data/map_data/bou2_4p/bou2_4p.shp')\nnames(china)\ncols = brewer.pal(5,\"green\")\nbrks = classIntervals(china$honds4,n=6,style = \"fixed\",fixedBreaks = c(0,5,10,15,20,600))\nplot(china,col = cols[findInterval(china$good,brks,all.inside = T)],axes = F)\n\nlibrary(ggmap)\nsport = readShapePoly(\"~/data/map_data/london_sport/london_sport.shp\")\nnames(sport)\n\np = ggplot(sport@data,aes(Partic_Per,Pop_2001))\np+geom_point()\np+geom_point(aes(colour = Partic_Per,size = Pop_2001))+geom_text(size = 2,aes(label = name))\n\ngpclibPermit()\n\nsport_geom = fortify(sport,region = \"ons_label\")\nsport_geom = merge(sport_geom,sport@data,by.x = 'id',by.y = 'ons_label')\n\nggplot(sport_geom,aes(long,lat,group = group,fill = Partic_Per))+geom_polygon()+coord_equal()\n\nlibrary(ggmap)\nmap = get_map(location = \"china\",zoom = 4)\nggmap(map)\n\nbjmap <- get_map(location = 'Beijing', zoom = 10, maptype = 'roadmap')\nggmap(bjmap)\n\ncqmap = get_map(location = \"chongqing\",zoom = 10,maptype = 'roadmap')\nggmap(cqmap)\nlibrary(raster)\n\nchina_map <- readShapeLines(\"http://www.epsg-registry.org/\", \n                          proj4string=CRS(\"+init=epsg:4030 +proj=longlat +ellps=WGS84 +no_defs\"))\n\nclass(cqmap)\nmode(cqmap)\n\nworldmap = get_map(location = \"world\")\nggmap(worldmap)\n\nlibrary(RCurl)\nlibrary(rjson)\ntrans = function(word) {\n  word = URLencode(word)\n  web = getURL(\n    paste(\n      \"http://fanyi.youdao.com/openapi.do?keyfrom=\", user,\n      \"&key=\", key,\n      \"&type=data&doctype=json&version=1.1&q=\", word,\n      sep = \"\"\n    )\n  )\n  return(fromJSON(web)$translation)\n}\n\nlibrary(ggmap)\nlibrary(ggplot2)\ndd <- data.frame(lat=c(50.659631, 50.607213, 50.608129),\n                lon=c(3.09319, 3.011473, 3.031529))\n\nLille <- get_map(\"Lille,France\", zoom=12)\n#1\np <- ggmap(Lille)\np <- p + geom_point(data=dd, aes(x=lon, y=lat),size=5)\np\n#2\np <- ggmap(Lille)\np + geom_point(data=dd, aes(x=lon, y=lat), color=\"red\", size=30, alpha=0.5)\n\n",
+    "created" : 1500272844828.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "938850634",
+    "id" : "92602FDF",
+    "lastKnownWriteTime" : 1505378405,
+    "last_content_update" : 1505378405900,
+    "path" : "~/R_Projects/map/Rfile/testBasicMap.R",
+    "project_path" : "Rfile/testBasicMap.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

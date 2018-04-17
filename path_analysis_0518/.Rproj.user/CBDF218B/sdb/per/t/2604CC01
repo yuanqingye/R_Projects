@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "if(!require(arules)){\n  install.packages('arules')\n  library(arules)\n}\nfrequentsets=eclat(page_view_group_unique$page_name,parameter=list(support=0.05,maxlen=20))  #求频繁项集  \n# test_freq = apriori(page_view_group_unique$page_name)\ninspect(frequentsets[1:100])    #察看求得的频繁项集  \n# inspect(test_freq[1:30])    #察看求得的测试集\n\ninspect(sort(frequentsets,by=\"support\")[1:100])    #根据支持度对求得的频繁项集排序并察看\nrules=apriori(page_view_group_unique$page_name,parameter=list(support=0.01,confidence=0.01))    #求关联规则  \nsummary(rules)    #察看求得的关联规则之摘要  \n\nx=subset(rules,subset=items%pin%\"订单列表页\"&lift>=1.2)    #求所需要的关联规则子集  \ny = rules\ninspect(sort(y,by=\"support\")[1:30])    #根据支持度对求得的关联规则子集排序并察看  \n\ninstall.packages('arulesViz')\ninstall.packages('arulesCBA')\ninstall.packages('arulesSequences')\nlibrary(arulesViz)\nlibrary(arulesCBA)\nlibrary(arulesSequences)\n\n# library(arulesNBMiner)",
+    "created" : 1498095247500.000,
+    "dirty" : false,
+    "encoding" : "GB2312",
+    "folds" : "",
+    "hash" : "3522697655",
+    "id" : "2604CC01",
+    "lastKnownWriteTime" : 1498707801,
+    "last_content_update" : 1498707801,
+    "path" : "~/Rfile/apriori.R",
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 24,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

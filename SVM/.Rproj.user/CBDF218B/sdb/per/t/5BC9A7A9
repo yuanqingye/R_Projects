@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(magrittr)\nset.seed(12)\nn1 = rnorm(10000)\nn2 = abs(n1)*50\nn3 = matrix(n2,ncol = 100)\nn4 = round(rowMeans(n3))\nhist(n4%%7)\n\nset.seed(12)\nrnorm(10000)%>%abs%>%'*'(50)%>%matrix(ncol = 100)%>%rowMeans%>%round%>%'%%'(7)%>%hist\n\n\n# ensure the results are repeatable\nset.seed(7)\n# load the library\nlibrary(mlbench)\nlibrary(caret)\ndata(PimaIndiansDiabetes)\n# define the control using a random forest selection function\ncontrol <- rfeControl(functions=rfFuncs, method=\"cv\", number=10)\n# run the RFE algorithm\nrfe_results <- rfe(PimaIndiansDiabetes[,1:8], PimaIndiansDiabetes[,9], sizes=c(1:8), rfeControl=control)\nrfe_results <- rfe(new_trainset[,-3], new_trainset[,3]$rent, sizes=c(1:16), rfeControl=control)\n# summarize the results\nprint(rfe_results)\n# list the chosen features\npredictors(rfe_results)\n# plot the results\nplot(rfe_results, type=c(\"g\", \"o\"))\n",
+    "created" : 1502885437399.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3769411751",
+    "id" : "5BC9A7A9",
+    "lastKnownWriteTime" : 1516609518,
+    "last_content_update" : 1516609518013,
+    "path" : "~/R_Projects/SVM/Rfile/test_feature.R",
+    "project_path" : "Rfile/test_feature.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 15,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

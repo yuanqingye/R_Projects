@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(rvest)\nlibrary(magrittr)\nurl = \"http://www.imdb.com/title/tt2250912/\"\nweb = read_html(url)\ncast_star = web%>%html_nodes(\"#titleCast .itemprop span\")%>%html_text()\ncharacters = web%>%html_nodes(\"#titleCast .character div\")%>%html_text()\ncharacters = gsub(\"\\\\s+\",\"\",characters)\ncast_lines = data.frame(actor = cast_star,character = characters)\n# reviews =  web%>%html_nodes(\"table\") %>%.[[3]] %>%html_table()\n",
+    "created" : 1505902030537.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1431113567",
+    "id" : "36A85925",
+    "lastKnownWriteTime" : 1505903666,
+    "last_content_update" : 1505903666665,
+    "path" : "~/R_Projects/page_destructure/Rfile/imdb.R",
+    "project_path" : "Rfile/imdb.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 13,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

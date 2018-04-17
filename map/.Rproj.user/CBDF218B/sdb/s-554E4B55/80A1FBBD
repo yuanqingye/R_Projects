@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1505218261421.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "80A1FBBD",
+    "lastKnownWriteTime" : 31525678432190511,
+    "last_content_update" : 1505218261421,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "26490CF3",
+        "caption" : "bj_college",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=bj_college&cache_key=26490CF3",
+        "displayedObservations" : 390,
+        "environment" : "",
+        "object" : "bj_college",
+        "preview" : 0,
+        "totalObservations" : 390,
+        "variables" : 5
+    },
+    "relative_order" : 13,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

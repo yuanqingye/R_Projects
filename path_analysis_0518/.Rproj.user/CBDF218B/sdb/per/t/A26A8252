@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "source2 <- function(file, start, end, ...) {\n  file.lines <- scan(file, what=character(), skip=start-1, nlines=end-start+1, sep='\\n')\n  file.lines.collapsed <- paste(file.lines, collapse='\\n')\n  source(textConnection(file.lines.collapsed), ...)\n}\n\nsource3 = function(file, start, end, ...){\n  file.lines <- scan(file, what=character(), skip=start-1, nlines=end-start+1, sep='\\n')\n  file.lines.collapsed <- paste(file.lines, collapse='\\n')\n  debugSource(file.lines.collapsed)\n}",
+    "created" : 1498532919322.000,
+    "dirty" : false,
+    "encoding" : "GB2312",
+    "folds" : "",
+    "hash" : "4091020013",
+    "id" : "A26A8252",
+    "lastKnownWriteTime" : 1498534645,
+    "last_content_update" : 0,
+    "path" : "~/Rfile/toolfunc.R",
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 21,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

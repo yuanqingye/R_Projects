@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(readxl) \nrequire(graphics) \nlibrary(forecast) \nlibrary(timeSeries)\nlibrary (tseries)\nlibrary(ggplot2)\nlibrary(TTR)\n\nTS_Power_Req <- ts(Telangana_Power$Requirement..MU., start = c(2014, 6), frequency = 12)\nhead(TS_Power_Req)",
+    "created" : 1520331971401.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1639038779",
+    "id" : "4C0AEBA5",
+    "lastKnownWriteTime" : 1520332222,
+    "last_content_update" : 1520332222494,
+    "path" : "~/R_Projects/time_series/Rfile/eg_datascienceplus.R",
+    "project_path" : "Rfile/eg_datascienceplus.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

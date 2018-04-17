@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "install.packages(\"leafletCN\")\n\n# 数据使用范围\n# From base R:\n#   lng/lat matrix\n# data frame with lng/lat columns\n# From the sp package:\n#   SpatialPoints[DataFrame]\n# Line/Lines\n# SpatialLines[DataFrame]\n# Polygon/Polygons\n# SpatialPolygons[DataFrame]\n# From the maps package:\n#   the data frame from returned from map()\n\nlibrary(XML)\nlibrary(leaflet)\nlibrary(leafletCN)\n# 读取网页的表格\n# Sorry for 爬了你家网站\ntable = readHTMLTable(\"http://www.pm25.in/rank\",  \n                      encoding = \"UTF-8\", stringsAsFactors = F)[[1]]\n\n# 整理数据并命名\ndat = table[ , 2:3]\nnames(dat) = c(\"city\",\"AQI\")\ndat$AQI = as.numeric(dat$AQI)\n\n# 调用geojsonMap进行绘制\ngeojsonMap(dat, \"city\",\n           popup =  paste0(dat$city, \":\", dat$AQI),\n           palette = \"Reds\", legendTitle = \"AQI\")\n\nregionNames(\"重庆\")\ndemomap(\"江苏\")\n\ndat = data.frame(name = regionNames(\"world\"),\n                 value = runif(length(regionNames(\"world\"))))\ngeojsonMap(dat,\"world\")\n\nleaflet() %>%\n  amap() %>%\n  addMarkers(lng = 116.3125774825, lat = 39.9707249401,\n             popup = \"The birthplace of COS\")\n\nif(require(sp)){\n  filePath = system.file(\"geojson/china.json\",package = \"leafletCN\")\n  map = read.geoShape(filePath)\n  plot(map)\n}\n\nif(require(leaflet)){\n  dat = data.frame(regionNames(\"china\"),\n                   runif(34))\n  map = leafletGeo(\"china\", dat)\n  \n  pal = colorNumeric(\n    palette = \"Blues\",\n    domain = map$value)\n  \n  leaflet(map) %>% addTiles() %>%\n    addPolygons(stroke = TRUE,\n                smoothFactor = 1,\n                fillOpacity = 0.7,\n                weight = 1,\n                color = ~pal(value),\n                popup = ~htmltools::htmlEscape(popup)\n    ) %>%\n    addLegend(\"bottomright\", pal = pal, values = ~value,\n              title = \"legendTitle\",\n              labFormat = leaflet::labelFormat(prefix = \"\"),\n              opacity = 1)\n}\n\nlibrary(leaflet)\n\nm <- leaflet() %>%\n  addTiles() %>%  # Add default OpenStreetMap map tiles\n  addMarkers(lng=174.768, lat=-36.852, popup=\"The birthplace of R\")\n\ndf = data.frame(Lat = 1:10, Long = rnorm(10))\nleaflet(df) %>% addCircles()\n\nlibrary(maps)\nmapStates = map(\"state\", fill = TRUE, plot = FALSE)\nleaflet(data = mapStates) %>% addTiles() %>%\n  addPolygons(fillColor = topo.colors(10, alpha = NULL), stroke = FALSE)\n\nhelp(package = 'sp')\n\nlibrary(sp)\nchn_mapdata = readRDS(\"~/data/map_data/CHN_adm0.rds\") \nspplot(chn_mapdata[1])\nchn_mapdata_1 = readRDS(\"~/data/map_data/CHN_adm1.rds\")\nspplot(chn_mapdata_1[1])\nchn_mapdata_2 = readRDS(\"~/data/map_data/CHN_adm2.rds\")\nspplot(chn_mapdata_2[1])\nchn_mapdata_3 = readRDS(\"~/data/map_data/CHN_adm3.rds\")\nspplot(chn_mapdata_3[1])\n\nSr1 = Polygon(cbind(c(2, 4, 4, 1, 2), c(2, 3, 5, 4, 2)))\nSr2 = Polygon(cbind(c(5, 4, 2, 5), c(2, 3, 2, 2)))\nSr3 = Polygon(cbind(c(4, 4, 5, 10, 4), c(5, 3, 2, 5, 5)))\nSr4 = Polygon(cbind(c(5, 6, 6, 5, 5), c(4, 4, 3, 3, 4)), hole = TRUE)\nSrs1 = Polygons(list(Sr1), \"s1\")\nSrs2 = Polygons(list(Sr2), \"s2\")\nSrs3 = Polygons(list(Sr4, Sr3), \"s3/4\")\nSpP = SpatialPolygons(list(Srs1, Srs2, Srs3), 1:3)\nleaflet(height = \"300px\") %>% addPolygons(data = SpP)\n\nm = leaflet() %>% addTiles()\ndf = data.frame(\n  lat = rnorm(100),\n  lng = rnorm(100),\n  size = runif(100, 5, 20),\n  color = sample(colors(), 100)\n)\nm = leaflet(df) %>% addTiles()\nm %>% addCircleMarkers(radius = ~size, color = ~color, fill = FALSE)\nm %>% addCircleMarkers(radius = runif(100, 4, 10), color = c('red'))\n\n# topoData <- readLines(\"json/us-10m.json\") %>% paste(collapse = \"\\n\")\n\n",
+    "created" : 1505202278994.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1908053144",
+    "id" : "5B33E7D4",
+    "lastKnownWriteTime" : 1500272833,
+    "last_content_update" : 1500272833,
+    "path" : "~/R_Projects/map/Rfile/map_leaflet.R",
+    "project_path" : "Rfile/map_leaflet.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 12,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

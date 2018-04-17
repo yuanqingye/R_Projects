@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(rvest)\nlibrary(magrittr)\nurl = \"https://list.tmall.com/search_product.htm?q=%BA%CB%B5%AF&type=p&vmarket=&spm=875.7931836%2FB.a2227oh.d100&from=mallfp..pc_1_searchbutton\"\nweb = read_html(url)\nname = web%>%html_nodes(\"p.productTitle a\")%>%html_attr('title')\nprice = web%>%html_nodes(\"p.productPrice em\")%>%html_attr('title')\nnums = web%>%html_nodes(\"p.productStatus em\")%>%html_text()\n\ntianmao_result = cbind(name,price,nums)\n",
+    "created" : 1505900563833.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3406205843",
+    "id" : "AB68D25E",
+    "lastKnownWriteTime" : 1505901385,
+    "last_content_update" : 1505901385020,
+    "path" : "~/R_Projects/page_destructure/Rfile/tianmao.R",
+    "project_path" : "Rfile/tianmao.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 11,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

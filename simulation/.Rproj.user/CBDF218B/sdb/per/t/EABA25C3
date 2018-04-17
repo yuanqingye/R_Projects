@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "main = function(){\nm = matrix(rnorm(100000*2),ncol = 2)\nmax_v = pmax(m[,1],m[,2])\nresult = mean(max_v)\n}\n\nmain2 = function(){\n  sum = 0\n  for(i in 1:100000){\n    xy = rnorm(2)\n    max = max(xy)\n    sum = sum + max\n  }\n  result = sum/100000\n}\n\nsim1 = function(N){\n  result = 0\n  nblue = 10\n  n1 = 12\n  n2 = 13\n  for(i in 1:N){\n    nblue2 = ifelse((runif(1)>10/18),6,7)\n    result = result + ifelse(runif(1)>nblue2/13,1,0)\n  }\n  result = result/N\n  return(result)\n}\n\nsim2 = function(N){\n  result = 0\n  nblue = 10\n  n1 = 12\n  n2 = 13\n  m = matrix(runif(2*N),ncol = 2)\n  result = m[,1]>10/18 & m[,2]<6/13 | m[,1]<10/18 & m[,2]>6/13\n  sum(result)/N\n}\n\ncreateTimesMatrix = function(x,n){\n  m = matrix(0,nrow = length(x),ncol = n)\n  prod = x\n  m[,1] = prod\n  for(i in 2:n){\n    prod = x*prod\n    m[,i] = prod\n  }\n  return(m)\n}\n\nRprof()\ninvisible(createTimesMatrix(1:10,8))\nRprof(NULL)\nsummaryRprof()\n",
+    "created" : 1504149894560.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4262309335",
+    "id" : "EABA25C3",
+    "lastKnownWriteTime" : 1504231733,
+    "last_content_update" : 1504231733381,
+    "path" : "~/R_Projects/simulation/Rfile/test.R",
+    "project_path" : "Rfile/test.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

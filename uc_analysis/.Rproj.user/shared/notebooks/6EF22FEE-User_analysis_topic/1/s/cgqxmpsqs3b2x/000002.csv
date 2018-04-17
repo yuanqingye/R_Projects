@@ -1,0 +1,14 @@
+"0","online_book_sql = paste0(""select substr(d.create_date,1,10) dt,count(distinct d.openid) b_num from (select b.create_date,c.openid from"
+"0","                   ods.ods_jz_business_jz_activity_user_dt b inner join "
+"0","ods.ods_db_user_center_users_dt c on b.user_mobile=c.mobile"
+"0","where b.is_del=0 and substr(create_date,1,10)>='"",ldateend,""') d"
+"0","group by substr(d.create_date,1,10) order by substr(d.create_date,1,10)"")"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","online_book = read_data_impala_general(online_book_sql)"
+"0","barplot(online_book$b_num,names.arg = online_book$dt,col = ""brown"",xlab = ""month"",ylab = ""预约数"",main = ""每日房产预约"")"

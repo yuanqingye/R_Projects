@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1502941895732.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "460C03DB",
+    "lastKnownWriteTime" : 7011605692497750387,
+    "last_content_update" : 0,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "hgz4b0kj95",
+        "caption" : "rad_pred",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=rad_pred&cache_key=hgz4b0kj95",
+        "displayedObservations" : 40,
+        "environment" : "",
+        "object" : "rad_pred",
+        "totalObservations" : 40,
+        "variables" : 9
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

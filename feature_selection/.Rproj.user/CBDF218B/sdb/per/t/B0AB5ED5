@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(mlbench)\nlibrary(caret)\n\n#For accuracy, you must input a factor, else you use RMSE\nrfe_selection = function(x,y,sizes = 1:8){\n# define the control using a random forest selection function\ncontrol <- rfeControl(functions=rfFuncs, method=\"cv\", number=10)\n# run the RFE algorithm\nrfe_results <- rfe(x, y, sizes=sizes, rfeControl=control)\n# list the chosen features\n# predictors(rfe_results)\n# plot(rfe_results, type=c(\"g\", \"o\"))\nreturn(rfe_results)\n}\n\nimportance_selection = function(testdata,test_formula,test_method_name = \"lvq\"){\n  test_formula = as.formula(test_formula)\n  # prepare training scheme\n  control <- trainControl(method=\"repeatedcv\", number=10, repeats=3)\n  # train the model\n  test_model <- train(test_formula, data=testdata, method=test_method_name, preProcess=\"scale\", trControl=control,\n                      importance = T)\n  # estimate variable importance\n  importance <- varImp(test_model, scale=FALSE)\n  # summarize importance\n  # print(importance)\n  # plot(importance)\n  return(importance)\n}",
+    "created" : 1516608861246.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2758947979",
+    "id" : "B0AB5ED5",
+    "lastKnownWriteTime" : 1516612603,
+    "last_content_update" : 1516612603496,
+    "path" : "~/R_Projects/feature_selection/Rfile/feature_selection_fun.R",
+    "project_path" : "Rfile/feature_selection_fun.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

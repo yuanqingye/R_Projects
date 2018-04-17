@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "* installing *source* package 'abnormTestOnlineFunc' ...\n** R\n** preparing package for lazy loading\n** help\nWarning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/CITY_SQL.Rd:13: unknown macro '\\n'\nWarning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/MODEL_SQL.Rd:13: unknown macro '\\n'\nWarning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/PAGE_CITY_DT_FIRST_SQL.Rd:13: unknown macro '\\n'\nWarning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/PAGE_CITY_FIRST_SQL.Rd:13: unknown macro '\\n'\nWarning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/PAGE_UMID_FIRST_SQL.Rd:13: unknown macro '\\n'\nWarning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/PV_UMID_UNIT_MIN_SQL.Rd:13: unknown macro '\\nselect'\nWarning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/abnormTestOnlineFunc-package.Rd:26: All text must be in a section\nWarning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/abnormTestOnlineFunc-package.Rd:27: All text must be in a section\nWarning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/last_long_umid_sql.Rd:13: unknown macro '\\n'\nWarning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/order_umid_sql.Rd:13: unknown macro '\\n'\n*** installing help indices\nError in Rd_info(db[[i]]) : \n  missing/empty \\title field in 'C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc/man/CITY_SQL.Rd'\nRd files must have a non-empty \\title.\nSee chapter 'Writing R documentation' in manual 'Writing R Extensions'.\n* removing 'C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc.Rcheck/abnormTestOnlineFunc'\n",
+    "created" : 1517909378166.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "631791246",
+    "id" : "DF88A1C1",
+    "lastKnownWriteTime" : 1517909370,
+    "last_content_update" : 1517909370,
+    "path" : "~/R_Projects/abnormal_activity_analysis/package/abnormTestOnlineFunc.Rcheck/00install.out",
+    "project_path" : "package/abnormTestOnlineFunc.Rcheck/00install.out",
+    "properties" : {
+    },
+    "relative_order" : 28,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "text"
+}

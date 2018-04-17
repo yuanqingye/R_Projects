@@ -1,0 +1,7 @@
+library(openxlsx)
+library(readxl)
+train_pn = read_xlsx("~/data/test_abnormal_uv.xlsx")
+trControl = trainControl(method = "none",classProbs = TRUE,summaryFunction = twoClassSummary)
+# svmGrid = data.frame(sigma = 3.90625e-03, C = c(0.1,1,10,1000,10000))
+svmGrid = data.frame(sigma = 3.90625e-03, C = 0.1)
+svm_model = train(sign~., data=train_pn, method="svmRadial", metric="Accuracy", preProc=c("center", "scale"), trControl=trControl, fit=FALSE)

@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1510632516361.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "7B6EFD55",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1510632516361,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "47D53CA9",
+        "caption" : "adadata",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=adadata&cache_key=47D53CA9",
+        "displayedObservations" : 45211,
+        "environment" : "",
+        "object" : "adadata",
+        "preview" : 0,
+        "totalObservations" : 45211,
+        "variables" : 17
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

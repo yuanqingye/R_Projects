@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(googleway)\n# install.packages(\"https://cran.r-project.org/src/contrib/googleway_2.2.0.tar.gz\",repos = NULL,type = \"resource\")\n#key <- 'AIzaSyAQwxqx2skmYVbgffhTfyKixuxAgU9PTbs' map api key\nkey <- \"AIzaSyCW6btatRC9nXwaMI06bgV5iHZbsX4H034\"\n#AIzaSyAQwxqx2skmYVbgffhTfyKixuxAgU9PTbs google map api\n#  \t9792023 \t\t4SY3dY8GrhfU5ChOeqFMvhcaf9DWo7dc \t服务端\n\n#腾讯地图API key\ntencent_key = \"IESBZ-JKIRS-XVTOJ-6A2LQ-F2NAT-OABVW\"\n\n#高德地图API key\ngaode_key = \"de4e66af67591588df24da020bb3d3eb\"\n\nbjloc = geocode(\"beijing\")\n\ndf_places <- google_places(search_string = \"bank\", \n                           location = c(bjloc$lat,bjloc$lon),   ## beijing, China\n                           key = \"AIzaSyAQwxqx2skmYVbgffhTfyKixuxAgU9PTbs\")\n\ndf_restaurant = google_places(search_string = \"cruise\",place_type = \"food\",key = key, location = c(-33.8670,151.1957))\n\nres <- google_places(search_string = \"Restaurants in Melbourne, Australia\",\n                     key = key)\n\ndf_places$results$name\nurl.exists(\"www.google.com\")\n\nproxy_url <- \"http://127.0.0.1:50837/\"\nSys.setenv(http_proxy = proxy_url, https_proxy = proxy_url, ftp_proxy = proxy_url)\n\n# https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670,151.1957&radius=500&types=food&name=cruise&key=AIzaSyCW6btatRC9nXwaMI06bgV5iHZbsX4H034\n\nfind_closest_places = function(search_string,location,types,name,radius){\n  library(RCurl)\n  library(rjson)\n  key = \"AIzaSyCW6btatRC9nXwaMI06bgV5iHZbsX4H034\"\n  location = paste0(location,collapse = \",\")\n  web = getURL(\n    paste(\n      \"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=\", location,\n      \"&key=\", key,\n      \"&types=\",types,\n      \"&name=\",name,\n      \"&radius=\",radius,\n      sep = \"\"\n    )\n  )\n  return(fromJSON(web))\n}\n\nlibrary(RCurl)\nlibrary(rjson)\n\nuser = \"blog125\"\nkey = \"21376174\"\n\ntrans = function(word) {\n  word = URLencode(word)\n  web = getURL(\n    paste(\n      \"http://fanyi.youdao.com/openapi.do?keyfrom=\", user,\n      \"&key=\", key,\n      \"&type=data&doctype=json&version=1.1&q=\", word,\n      sep = \"\"\n    )\n  )\n  return(fromJSON(web)$translation)\n}\n\nlibrary(RJSONIO)\nlibrary(RCurl)\ngetGeoData <- function(location){\n  location <- gsub(' ','+',location)\n  geo_data <- getURL(paste(\"https://maps.googleapis.com/maps/api/geocode/json?address=\",location,\"&key=**[YOUR GOOGLE API KEY HERE]**\", sep=\"\"))\n  raw_data_2 <- fromJSON(geo_data)\n  return(raw_data_2)\n}",
+    "created" : 1504860975278.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1740958566",
+    "id" : "2DE5E571",
+    "lastKnownWriteTime" : 1521543273,
+    "last_content_update" : 1521543273601,
+    "path" : "~/R_Projects/map/Rfile/googlemap.R",
+    "project_path" : "Rfile/googlemap.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 26,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

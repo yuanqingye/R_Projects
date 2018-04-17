@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(rpart)\t\t\t\t        # Popular decision tree algorithm\nlibrary(rattle)\t\t\t\t\t# Fancy tree plot\nlibrary(rpart.plot)\t\t\t\t# Enhanced tree plots\nlibrary(RColorBrewer)\t\t\t\t# Color selection for fancy tree plot\nlibrary(party)\t\t\t\t\t# Alternative decision tree algorithm\nlibrary(partykit)\t\t\t\t# Convert rpart object to BinaryTree\nlibrary(caret)\t\t\t\t\t# Just a data source for this script\n# but probably one of the best R packages ever. \n\n# https://cran.r-project.org/src/contrib/Archive/RGtk2/RGtk2_2.20.31.tar.gz\n# install.packages(\"RGtk2\", depen=T, type=\"source\")\n\n# install.packages(\"https://cran.r-project.org/bin/windows/contrib/3.3/RGtk2_2.20.31.zip\", repo=NULL, type=\"source\")\n\ndata(segmentationData)\t\t\t\t# Get some data\ndata <- segmentationData[,-c(1,2)]\n\n# Make big tree\nform <- as.formula(Class ~ .)\ntree.1 <- rpart(form,data=data,control=rpart.control(minsplit=20,cp=0))\n# \nplot(tree.1)\t\t\t\t\t# Will make a mess of the plot\ntext(tree.1)\n# \nprp(tree.1)\t\t\t\t\t# Will plot the tree\nprp(tree.1,varlen=3)\t\t\t\t# Shorten variable names\n\n# Interatively prune the tree\nnew.tree.1 <- prp(tree.1,snip=TRUE)$obj # interactively trim the tree\nprp(new.tree.1) # display the new tree\n#\n#-------------------------------------------------------------------\ntree.2 <- rpart(form,data)\t\t\t# A more reasonable tree\nprp(tree.2)                                     # A fast plot\t\t\t\t\t\t\t\t\t\t\t\t\t\nfancyRpartPlot(tree.2)\t\t\t\t# A fancy plot from rattle\n#\n#-------------------------------------------------------------------\n# Plot a tree built with RevoScaleR\n# Construct a model formula\nsdNames <- names(segmentationData)\nX <- as.vector(sdNames[-c(1,2,3)])\nform <- as.formula(paste(\"Class\",\"~\", paste(X,collapse=\"+\")))\n# Run the model\nrx.tree <- rxDTree(form, data = segmentationData,maxNumBins = 100,\n                   minBucket = 10,maxDepth = 5,cp = 0.01, xVal = 0)\n# Plot the tree\t\t\t\t\t\t\nprp(rxAddInheritance(rx.tree))\nfancyRpartPlot(rxAddInheritance(rx.tree))",
+    "created" : 1501579303220.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1498033867",
+    "id" : "CC333BDD",
+    "lastKnownWriteTime" : 1501580905,
+    "last_content_update" : 0,
+    "path" : "~/R_Projects/DecidingTree/Rfile/DecidingTree.R",
+    "project_path" : "Rfile/DecidingTree.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

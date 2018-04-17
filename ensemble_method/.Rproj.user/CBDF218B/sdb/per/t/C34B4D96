@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(openxlsx)\nlibrary(readxl)\ntrain_pn = read_xlsx(\"~/data/test_abnormal_uv.xlsx\")\ntrControl = trainControl(method = \"none\",classProbs = TRUE,summaryFunction = twoClassSummary)\n# svmGrid = data.frame(sigma = 3.90625e-03, C = c(0.1,1,10,1000,10000))\nsvmGrid = data.frame(sigma = 3.90625e-03, C = 0.1)\nsvm_model = train(sign~., data=train_pn, method=\"svmRadial\", metric=\"Accuracy\", preProc=c(\"center\", \"scale\"), trControl=trControl, fit=FALSE)\n",
+    "created" : 1516932884333.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "225067988",
+    "id" : "C34B4D96",
+    "lastKnownWriteTime" : 1516937067,
+    "last_content_update" : 1516937067151,
+    "path" : "~/R_Projects/ensemble_method/Rfile/test.R",
+    "project_path" : "Rfile/test.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

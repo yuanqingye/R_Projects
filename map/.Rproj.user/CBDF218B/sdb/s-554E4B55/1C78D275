@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "# this is all about sp package\nxc = round(runif(10), 2)\nyc = round(runif(10), 2)\nxy = cbind(xc, yc)\nxy\n\nxy.sp = SpatialPoints(xy)\nxy.sp\nplot(xy.sp,pch = 2)\n\nxy.cc = coordinates(xy.sp)\nclass(xy.cc)\nbbox(xy.sp)\ndimensions(xy.sp)\nxy.sp[1:2]\n\nxy.df = as.data.frame(xy.sp)\nclass(xy.df)\ndim(xy.df)\nsummary(xy.sp)\n\ndf = data.frame(z1 = round(5+rnorm(10),2),z2 = 20:29)\nxy.spdf = SpatialPointsDataFrame(xy.sp,df)\nxy.spdf\nsummary(xy.spdf)\ndimensions(xy.spdf)\n\nxy.spdf[1]\nxy.spdf[1,2]\nxy.spdf[1:2,\"z2\"]\n\nxy.newdf = as.data.frame(xy.spdf)\nxy.newcc = coordinates(xy.spdf)\nclass(xy.newcc)\n\ndf_1 = data.frame(xy, df)\ncoordinates(df_1) = c(\"xc\",\"yc\")\ndf_1\n\ndf_2 = data.frame(xy,df)\ncoordinates(df_2) = ~xc+yc\ndf_2[1:2,]\nas.data.frame(df_2)[1:2,]\ndf_2[[\"z2\"]]\ndf_2$z2\ndf_2$z2[10] = 20\ndf_2[[\"z3\"]] = 1:10\n\nsummary(df_2)\n\nbubble(df_2, \"z1\", key.space = \"bottom\")\nspplot(df_2,\"z2\",key.space = \"bottom\")\n\ngt = GridTopology(cellcentre.offset = c(1,1,2), cellsize=c(1,1,1), cells.dim = c(3,4,6))\ngrd = SpatialGrid(gt)\nsummary(grd)\n\ngridparameters(grd)\n\npts = expand.grid(x = 1:3, y = 1:4, z=2:7)\ngrd.pts = SpatialPixels(SpatialPoints(pts))\nsummary(grd.pts)\n\ngrd = as(grd.pts, \"SpatialGrid\")\nsummary(grd)\n\nattr = expand.grid(xc = 1:3, yc = 1:3)\ngrd.attr = data.frame(attr, z1 = 1:9, z2 = 9:1)\ncoordinates(grd.attr) = ~xc+yc\ngridded(grd.attr)\n\ngridded(grd.attr) = TRUE #将其加入topology\nsummary(grd.attr)\n\nfullgrid(grd.attr)\nfullgrid(grd.pts)\nfullgrid(grd)\nspplot(grd.attr)\n\ngrd.attr$z1\ngrd.attr[[\"z2\"]]\ncoordinates(grd.attr)\n# as.array(grd.attr)\n\ngrd.attr[1:2, \"z1\"]\n\nfullgrid(grd.attr) = TRUE\ngrd.attr[1:5, 1,c(\"z2\",\"z1\")]\n\n# just 9 points on a grid:\nxxx <- c(1,1,1,2,2,2,3,3,3)\nyyy <- c(1,2,3,1,2,3,1,2,3)\nxy <- cbind(xxx,yyy)\nS <- SpatialPoints(xy)\nclass(S)\nplot(S)\ngridded(S) <- TRUE\ngridded(S)\nclass(S)\nsummary(S)\nplot(S)\ngridded(S) <- FALSE\ngridded(S)\nclass(S)\n\n# data.frame\ndata(meuse.grid)\ncoordinates(meuse.grid) <- ~x+y\ngridded(meuse.grid) <- TRUE\nplot(meuse.grid) # not much good\nsummary(meuse.grid)\n\nl1 = cbind(c(1,2,3),c(3,2,2))\nl1a = cbind(l1[,1]+.05,l1[,2]+.05)\nl2 = cbind(c(1,2,3),c(1,1.5,1))\nSl1 = Line(l1)\nSl1a = Line(l1a)\nSl2 = Line(l2)\nS1 = Lines(list(Sl1, Sl1a), ID=\"a\")\nS2 = Lines(list(Sl2), ID=\"b\")\nSl = SpatialLines(list(S1,S2))\nsummary(Sl)\n\nplot(Sl, col = c(\"red\", \"blue\"))\ndf = data.frame(z = c(1,2), row.names=sapply(slot(Sl, \"lines\"), function(x) slot(x, \"ID\")))\nSldf = SpatialLinesDataFrame(Sl, data = df)\nsummary(Sldf)\n\nSr1 = Polygon(cbind(c(2,4,4,1,2),c(2,3,5,4,2)))\nSr2 = Polygon(cbind(c(5,4,2,5),c(2,3,2,2)))\nSr3 = Polygon(cbind(c(4,4,5,10,4),c(5,3,2,5,5)))\nSr4 = Polygon(cbind(c(5,6,6,5,5),c(4,4,3,3,4)), hole = TRUE)\nSrs1 = Polygons(list(Sr1), \"s1\")\nSrs2 = Polygons(list(Sr2), \"s2\")\nSrs3 = Polygons(list(Sr3, Sr4), \"s3/4\")\nSpP = SpatialPolygons(list(Srs1,Srs2,Srs3), 1:3)\nplot(SpP, col = 1:3, pbg=\"white\")\n# plot(SpP)\n\nattr = data.frame(a=1:3, b=3:1, row.names=c(\"s3/4\", \"s2\", \"s1\"))\nSrDf = SpatialPolygonsDataFrame(SpP, attr)\nas(SrDf, \"data.frame\")\nspplot(SrDf)\nSrDf = attr\npolygons(SrDf) = SpP\n",
+    "created" : 1504580728905.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3471953295",
+    "id" : "1C78D275",
+    "lastKnownWriteTime" : 1504605428,
+    "last_content_update" : 1504605428276,
+    "path" : "~/R_Projects/map/Rfile/sp.R",
+    "project_path" : "Rfile/sp.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 24,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

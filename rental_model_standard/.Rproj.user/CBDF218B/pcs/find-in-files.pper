@@ -1,0 +1,10 @@
+{
+    "dialog-state" : {
+        "caseSensitive" : false,
+        "filePatterns" : [
+        ],
+        "path" : "~/R_Projects",
+        "query" : "place_key",
+        "regex" : false
+    }
+}

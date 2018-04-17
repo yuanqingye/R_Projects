@@ -1,0 +1,2 @@
+"0","# Add the legend to the chart."
+"0","legend(x = 0,y = maxy, stacks, cex=0.7, fill=colors,xjust = 0, yjust = 1)"

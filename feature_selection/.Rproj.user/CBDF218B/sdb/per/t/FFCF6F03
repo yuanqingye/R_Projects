@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "set.seed(7)\n# load the library\nlibrary(mlbench)\nlibrary(caret)\n# load the data\ndata(PimaIndiansDiabetes)\n# calculate correlation matrix\ncorrelationMatrix <- cor(PimaIndiansDiabetes[,1:8])\n# summarize the correlation matrix\nprint(correlationMatrix)\n# find attributes that are highly corrected (ideally >0.75)\nhighlyCorrelated <- findCorrelation(correlationMatrix, cutoff=0.5)\n# print indexes of highly correlated attributes\nprint(highlyCorrelated)\n\n\n# ensure results are repeatable\nset.seed(7)\n# load the library\nlibrary(mlbench)\nlibrary(caret)\n# load the dataset\ndata(PimaIndiansDiabetes)\n# prepare training scheme\ncontrol <- trainControl(method=\"repeatedcv\", number=10, repeats=3)\n# train the model\ntest_model <- train(diabetes~., data=PimaIndiansDiabetes, method=\"lvq\", preProcess=\"scale\", trControl=control,\n               importance = T)\n# estimate variable importance\nimportance <- varImp(test_model, scale=FALSE)\n# summarize importance\nprint(importance)\n# plot importance\nplot(importance)\n\n#k features by importance using the caret r packageR\n\n# In the train() statement, you need to specify the option importance=T. \n# This will get passed to the underlying random forest call. Otherwise, \n# importance is not calculated, giving you that error.\n\n# ensure the results are repeatable\nset.seed(7)\n# load the library\nlibrary(mlbench)\nlibrary(caret)\n# load the data\ndata(PimaIndiansDiabetes)\n# define the control using a random forest selection function\ncontrol <- rfeControl(functions=rfFuncs, method=\"cv\", number=10)\n# run the RFE algorithm\nresults <- rfe(PimaIndiansDiabetes[,1:8], PimaIndiansDiabetes[,9], sizes=c(1:8), rfeControl=control)\n# summarize the results\nprint(results)\n# list the chosen features\npredictors(results)\n# plot the results\nplot(results, type=c(\"g\", \"o\"))\n\n#using gbm to get the para rank\nrent.boost = gbm(rent ~ . ,data = train_rent,distribution = \"gaussian\",n.trees = 100000,interaction.depth = 4)\nrent.boost\npara_rank1 = summary(rent.boost) #Summary gives a table of Variable Importance and a plot of Variable Importance\n\n",
+    "created" : 1503396415750.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3726329471",
+    "id" : "FFCF6F03",
+    "lastKnownWriteTime" : 1520489857,
+    "last_content_update" : 1520489857639,
+    "path" : "~/R_Projects/feature_selection/Rfile/feature_selection.R",
+    "project_path" : "Rfile/feature_selection.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

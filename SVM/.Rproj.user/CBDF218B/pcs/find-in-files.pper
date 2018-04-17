@@ -1,0 +1,10 @@
+{
+    "dialog-state" : {
+        "caseSensitive" : false,
+        "filePatterns" : [
+        ],
+        "path" : "~",
+        "query" : "final_result_2017.xlsx",
+        "regex" : false
+    }
+}

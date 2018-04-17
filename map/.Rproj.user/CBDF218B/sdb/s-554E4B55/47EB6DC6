@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1504710701970.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "47EB6DC6",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1504710701970,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "7BBE6EE4",
+        "caption" : "mdf",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=mdf&cache_key=7BBE6EE4",
+        "displayedObservations" : 69,
+        "environment" : "",
+        "object" : "mdf",
+        "preview" : 0,
+        "totalObservations" : 69,
+        "variables" : 2
+    },
+    "relative_order" : 28,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

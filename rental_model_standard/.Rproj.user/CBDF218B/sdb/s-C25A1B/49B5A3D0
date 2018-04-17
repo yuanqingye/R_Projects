@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1522228186398.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "49B5A3D0",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1522228186398,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "3B7A71C7",
+        "caption" : "redstar_points",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=redstar_points&cache_key=3B7A71C7",
+        "displayedObservations" : "65",
+        "environment" : "",
+        "object" : "redstar_points",
+        "preview" : "0",
+        "totalObservations" : "65",
+        "variables" : "14"
+    },
+    "relative_order" : 23,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

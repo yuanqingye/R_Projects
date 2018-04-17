@@ -1,0 +1,10 @@
+* installing *source* package 'tp368' ...
+** R
+** preparing package for lazy loading
+** help
+Warning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/tp368/man/tp368-package.Rd:26: All text must be in a section
+Warning: C:/Users/qingye.yuan/Documents/R_Projects/abnormal_activity_analysis/tp368/man/tp368-package.Rd:27: All text must be in a section
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded
+* DONE (tp368)

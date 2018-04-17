@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1498637871176.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "E44D2763",
+    "lastKnownWriteTime" : 27866499440181340,
+    "last_content_update" : 0,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "tsq2is909d",
+        "caption" : "bigRuleList",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=bigRuleList&cache_key=tsq2is909d",
+        "displayedObservations" : "18",
+        "environment" : "",
+        "object" : "bigRuleList",
+        "totalObservations" : "18",
+        "variables" : "3"
+    },
+    "relative_order" : 21,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

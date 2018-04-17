@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# install.packages(\"rJava\")\n# install.packages(\"DBI\")\n# install.packages(\"RJDBC\")\n\nlibrary(DBI)\nlibrary(rJava)\nlibrary(RJDBC)\n\ndrv <- JDBC(\"com.sap.db.jdbc.Driver\", \"~/organized_libs/hana/ngdbc.jar\")\n# con = DriverManager.getConnection(\"jdbc:sap://172.16.4.26:30015?reconnect=true/HANABI\", \"HANABI\", \"!QAZ3edc\");  \ncon <- dbConnect(drv, \"jdbc:sap://172.16.4.26:30015?reconnect=true/HANABI\", \"HANABI\", \"Dec16789\")\n# 172.16.3.115\n\n# 小叶子提供的链接\n#con <- dbConnect(drv, \"jdbc:sap://172.16.3.115:30015?reconnect=true/HANABI\", \"HANABI\", \"!QAZ3edc\")\n\nread_data_from_hana = function(sql){\n  data = dbGetQuery(con,sql)\n  return(data)\n}\n\n# query = \"select * from REDSTAR_BI.BI_ORDER_BRAND_AVG\"\n# test_data = dbGetQuery(con,query)",
+    "created" : 1520934771886.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "318184395",
+    "id" : "90DF5C08",
+    "lastKnownWriteTime" : 1520842825,
+    "last_content_update" : 1520842825,
+    "path" : "~/Rfile/R_hana.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 27,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

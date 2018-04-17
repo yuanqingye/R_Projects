@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(XML)\nlibrary(RCurl)\nlibrary(rjson)\n\nurl = 'https://www.timeanddate.com/scripts/cityajax.php?n=china/suzhou&mode=historic&hd=20160302&month=3&year=2016&json=1'\nyear = '2015'\nmonth = '2'\ncrawler = function(year,month){\n  url = paste0('https://www.timeanddate.com/weather/china/suzhou/historic?month=',month,'&year=',year)\n  page = readLines(url,encoding = 'utf-8')\n  tables = readHTMLTable(page, as.data.frame = TRUE, stringsAsFactors = FALSE)\n  weather_table = tables[[2]]\n  weather_table = data.table(weather_table)\n  weather_table[,Temp:=gsub('\\\\s','',Temp)]\n  weather_table[,Visibility:=gsub('\\\\s','',Visibility)]\n  return(weather_table)\n}\n\ncrawler_json = function(){\n  web_url = 'https://www.timeanddate.com/scripts/cityajax.php?n=china/suzhou&mode=historic&hd=20160302&month=3&year=2016&json=1'\n  content = getURL(web_url)\n  str_content = fromJSON(content)\n  }\n# readHTMLTable(page, as.data.frame = TRUE, stringsAsFactors = FALSE)",
+    "created" : 1498011445200.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1949968615",
+    "id" : "54FEFFDF",
+    "lastKnownWriteTime" : 1497922657,
+    "last_content_update" : 0,
+    "path" : "~/R_Projects/page_destructure/Rfile/craw_page_origin.R",
+    "project_path" : "Rfile/craw_page_origin.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

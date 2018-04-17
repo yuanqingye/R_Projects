@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1503396486172.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "8274B141",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1503396486172,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "325C8777",
+        "caption" : "PimaIndiansDiabetes",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=PimaIndiansDiabetes&cache_key=325C8777",
+        "displayedObservations" : "768",
+        "environment" : "",
+        "object" : "PimaIndiansDiabetes",
+        "preview" : "0",
+        "totalObservations" : "768",
+        "variables" : "9"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

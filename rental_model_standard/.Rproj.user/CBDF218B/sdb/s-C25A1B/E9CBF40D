@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1523439964738.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "E9CBF40D",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1523439964738,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "EE15B9ED",
+        "caption" : "rent_original[, c(\"MALL_NAME\", \"avg_price\")]",
+        "contentUrl" : "grid_resource/gridviewer.html?env=_rs_no_env&obj=&cache_key=EE15B9ED",
+        "displayedObservations" : 2793,
+        "environment" : "_rs_no_env",
+        "object" : "",
+        "preview" : 0,
+        "totalObservations" : 2793,
+        "variables" : 2
+    },
+    "relative_order" : 24,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

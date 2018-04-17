@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(rpart.plot)\ndata(\"bodyfat\", package = \"TH.data\")\n\ndim(bodyfat)\nattributes(bodyfat)\nbodyfat[1:5,]\n\nset.seed(1234)\nind <- sample(2, nrow(bodyfat), replace=TRUE, prob=c(0.7, 0.3))\nbodyfat.train <- bodyfat[ind==1,]\nbodyfat.test <- bodyfat[ind==2,]\n\nlibrary(rpart)\nmyFormula <- DEXfat ~ age + waistcirc + hipcirc + elbowbreadth + kneebreadth\nbodyfat_rpart <- rpart(myFormula, data = bodyfat.train,control = rpart.control(minsplit = 10))\n\nplot(bodyfat_rpart)\ntext(bodyfat_rpart, use.n=T)\nprp(bodyfat_rpart)\n\nopt <- which.min(bodyfat_rpart$cptable[,\"xerror\"])\ncp <- bodyfat_rpart$cptable[opt, \"CP\"]\nbodyfat_prune <- prune(bodyfat_rpart, cp = cp)\nprp(bodyfat_rpart)\nprintcp(bodyfat_rpart)\n\nDEXfat_pred <- predict(bodyfat_prune, newdata=bodyfat.test)\nxlim <- range(bodyfat$DEXfat)\nplot(DEXfat_pred ~ DEXfat, data=bodyfat.test, xlab=\"Observed\",ylab=\"Predicted\", ylim=xlim, xlim=xlim)\nabline(a=0, b=1)\n\nset.seed(4321)\nind <- sample(2, nrow(iris), replace=TRUE, prob=c(0.7, 0.3))\ntrainData <- iris[ind==1,]\ntestData <- iris[ind==2,]\n\nlibrary(party)\nct = ctree(Species~.,data=trainData)\ntable(predict(ct,testData),testData$Species)\n\nlibrary(randomForest)\n# Species ~ .指的是Species与其他所有属性之间的等式\nrf <- randomForest(Species ~ ., data=trainData, ntree=100, proximity=TRUE)\ntable(predict(rf,testData), testData$Species)",
+    "created" : 1503395949709.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2482915519",
+    "id" : "3C809B01",
+    "lastKnownWriteTime" : 1501663460,
+    "last_content_update" : 1501663460,
+    "path" : "~/R_Projects/DecidingTree/Rfile/DecidingTreeTest.R",
+    "project_path" : "Rfile/DecidingTreeTest.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

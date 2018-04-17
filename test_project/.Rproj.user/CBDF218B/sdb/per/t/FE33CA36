@@ -1,0 +1,25 @@
+{
+    "contents" : "",
+    "created" : 1502088951570.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "FE33CA36",
+    "lastKnownWriteTime" : 7011605692497750387,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "ziau2xlvt0",
+        "caption" : "installed_packages",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=installed_packages&cache_key=ziau2xlvt0",
+        "displayedObservations" : 257,
+        "environment" : "",
+        "object" : "installed_packages",
+        "totalObservations" : 257,
+        "variables" : 16
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "type" : "r_dataframe"
+}

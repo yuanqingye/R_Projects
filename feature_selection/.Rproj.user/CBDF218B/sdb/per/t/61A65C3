@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "dim(USArrests)\ndimnames(USArrests)\napply(USArrests,2,mean)\napply(USArrests,2,var)\npca.out<-prcomp(USArrests,scale=TRUE)\npca.out\nsummary(pca.out)\nnames(pca.out)\nbiplot(pca.out,scale = 0, cex=0.65)\n",
+    "created" : 1509606350941.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1532449893",
+    "id" : "61A65C3",
+    "lastKnownWriteTime" : 1509606824,
+    "last_content_update" : 1509606824441,
+    "path" : "~/R_Projects/feature_selection/Rfile/PCA.R",
+    "project_path" : "Rfile/PCA.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

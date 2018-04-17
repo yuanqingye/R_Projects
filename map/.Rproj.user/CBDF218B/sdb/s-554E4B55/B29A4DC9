@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(baidumap)\noptions(baidumap.key = '4SY3dY8GrhfU5ChOeqFMvhcaf9DWo7dc')\n\nbj_trip = getPlace('旅游景点','北京')\nbj_trip = iconv(bj_trip,'utf-8','gbk')\n\nlibrary(ggmap)\nggmap(bj_trip)\n\nlibrary(readxl)\nlibrary(data.table)\nredstar_points = read_xlsx(\"~/data/selfmanaged_business.xlsx\",sheet = '商场总名单')\nredstar_points = data.table(redstar_points)\nredstar_points = redstar_points[商场类型=='自营',]\nredstar_location = redstar_points[,c('商场名称','longitude','latitude')]\n\nlibrary(maptools)\nx=readShapePoly('~/data/map_data/bou2_4p/bou2_4p.shp')#下文中会继续用到x这个变量，\n#如果你用的是其它的名称，\n#请在下文的程序中也进行相应的改动。\npar(mar=rep(0,4))\n# plot(x)\nplot(x,col=rainbow(924))\nprovincename = \"江苏省\"\n\nplot(x, recs = getID(x, provincename), col = \"green\", ol = \"white\", xlab = \"\",\n     ylab = \"\")\n\nplot(x, col = getColor(x, provincename, rep(\"green\", 6),\n                       \"white\"), border = \"white\", xlab = \"\", ylab = \"\")\n\ncqmap = get_map(location = \"chongqing\",zoom = 10,maptype = 'hybrid')\n\nggmap(cqmap)\n\nchongqingmap = getBaiduMap(\"重庆江北区\")\nggmap(chongqingmap)\n\n\nggmap(cqmap, extent = \"normal\") +\n  geom_point(aes(x = lng, y = lat), data = result[city=='chongqing'], alpha = .5)\n\n\nx[[1]]\n\npoints(redstar_location[,c(2,3)],pch = '+')\n\nlibrary(OasisR)\ndistance(x)\n\ncal_object = result[,.(midlon = median(lng,na.rm = TRUE),midlat = median(lat,na.rm = TRUE)),by = c('city','region')]\n\nlibrary(rvest)\nresultxml = getCoordinate('中关村',output = 'xml')\nresultxml2 = read_xml(resultxml)\nlongitude = resultxml2%>%xml_node('lng')%>%xml_text()\nlatitude = resultxml2%>%xml_node('lat')%>%xml_text()\n\nload('~/data/result_dt3.RData')\nresult_dt2 = result_dt3\nlibrary(stringr)\nlibrary(baidumap)\nshops = malls[,.(city=str_sub(商场名称,1,2),name = 商场名称,lon = longitude,lat=latitude)]\nresult_dt3[,location := paste(city,region)]\nresult_dt3[,coordinates := getCoordinate(location,output = 'xml')]\nxmls = lapply(result_dt3$coordinates,read_xml)\nlonpart = lapply(xmls,xml_node,'lng')\nlatpart = lapply(xmls,xml_node,'lat')\nxml_text_v = Vectorize(xml_text)\nlongitude1 = xml_text_v(lonpart)\nlatitude1 = sapply(latpart,xml_text)\nresult_dt3[,c('longitude','latitude'):=.(longitude1,latitude1)]\nresult_dt3[,c('longitude','latitude'):=.(as.numeric(longitude),as.numeric(latitude))]\ndf1 = data.frame(shops)\ndf2 = data.frame(result_dt3)\nshop_business_conn = merge(df1,df2,by.x = 'city',by.y = 'city',allow.cartesian=TRUE)\nshop_business_conn = data.table(shop_business_conn)\nlibrary(geosphere)\nshop_business_conn = result_dt4[shops, on=\"city\"]\n# obj_distance = shop_business_conn[,distHaversine(lon,lat,longitude,latitude)]\nobj_distance = distHaversine(shop_business_conn[,c('lon','lat')],shop_business_conn[,c('longitude','latitude')])\nshop_business_conn[,distance := obj_distance]",
+    "created" : 1499935820708.000,
+    "dirty" : false,
+    "encoding" : "GB18030",
+    "folds" : "",
+    "hash" : "1376286502",
+    "id" : "B29A4DC9",
+    "lastKnownWriteTime" : 1503890405,
+    "last_content_update" : 1503890405600,
+    "path" : "~/R_Projects/map/Rfile/shopping_location.R",
+    "project_path" : "Rfile/shopping_location.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
