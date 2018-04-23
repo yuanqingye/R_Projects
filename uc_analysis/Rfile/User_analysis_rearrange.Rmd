@@ -80,7 +80,7 @@ mtext(side = 2,text = at,at = at,col = 'purple',line = 1)
 
 ```
 
-次日留存率，老用户波动不明显，老用户整体明显高于新用户,新用户在4月8日有个小高峰
+次日留存率，老用户波动不明显，老用户整体明显高于新用户,新用户在4月14日有个小高峰
 
 #用户活跃
 ##近两周的日活跃度(UV)
@@ -130,8 +130,9 @@ bplot = barplot(matrix,main="Every day uv",names.arg=dates,xlab="month",ylab="uv
 
 有`r newbetterthanold` 天新用户在UV值上超过老用户
 
-`r if(length(abnormalhighdt)==0){"并没有哪天"} else{abnormalhighdt}` 用户UV明显高于平均值
-`r if(length(abnormallowdt)==0){"并没有哪天"} else{abnormallowdt}` 用户UV明显低于平均值
+`r if(length(abnormalhighdt)==0){"并没有哪天"} else{abnormalhighdt}` 用户UV明显高于平均值    
+`r if(length(abnormallowdt)==0){"并没有哪天"} else{abnormallowdt}` 用户UV明显低于平均值    
+整体uv值呈现不断上升的趋势
 <!-- `r ifelse(length(abnormallowdt)==0,"并没有哪天",abnormallowdt)` 用户UV明显低于平均值 -->
 
 ##近两周人均PV
@@ -223,7 +224,7 @@ full()
 ```
 
 画中画分析，*大图全图*和*小图中高亮处*均表示近两周pv趋势，而小图整体表示近一个月的pv情况    
-近两周整体pv相对前两周明显偏低，但是在最后关头出现抬头上升情形，**4月5日（周四）出现峰值**
+近两周整体pv出现缓慢不断上升情形，**4月22日（周日）达到顶峰**
 
 ## 用户活跃时长
 ```{r time_span,echo=FALSE,warning=FALSE,results="hide",message=FALSE}
@@ -275,7 +276,7 @@ from
 
 对于用户访问时长作的热力图    
 在本报告所覆盖的两周，新用户访问时长明显长过老用户    
-新用户访问时长在4月5日，4月7日，4月11日和4月12日达到最大值
+新用户访问时长在4月13日前较高，在4月18日，19日也出现平均访问时长的高峰，其背后原因，值得深入挖掘
 
 ##新老用户访问平均深度（按用户）
 ```{r depth_person_date,echo=FALSE,warning = FALSE}
@@ -300,7 +301,7 @@ tb2 = tableGrob(df[,(round(ncol(df)/2)+1):ncol(df)], rows=rownames(df), theme=tt
 grid.arrange(tb1,tb2,nrow = 2)
 ```
 
-新用户访问深度基本高于老用户，新老用户访问深度差距明显    
+新用户访问深度基本高于老用户，新老用户访问深度差距明显，老用户访问深度几乎没有波动，比较令人奇怪    
 
 #新用户注册渠道城市机型数量分析
 ##新用户不同机型分布
