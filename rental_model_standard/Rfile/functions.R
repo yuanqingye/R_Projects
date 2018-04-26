@@ -41,7 +41,7 @@ getGeoData <- function(location,key = place_key){
   #fromJSON get back a not so friendly result, seperate the longitude and latitude
   return(raw_data_2)
 }
-
+# get geocode from google_geocode, some may have more than one geocode
 getSimplifiedGeoData = function(location,key = place_key){
   v = vector(mode = "numeric",length = 0L)
   raw_data = google_geocode(location,key = place_key)

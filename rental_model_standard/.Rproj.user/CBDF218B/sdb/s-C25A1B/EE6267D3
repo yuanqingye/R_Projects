@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1524734477290.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "EE6267D3",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1524734477290,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "9161FA8F",
+        "caption" : "redstar_community_5km_roomavailable",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=redstar_community_5km_roomavailable&cache_key=9161FA8F",
+        "displayedObservations" : 65,
+        "environment" : "",
+        "object" : "redstar_community_5km_roomavailable",
+        "preview" : 0,
+        "totalObservations" : 65,
+        "variables" : 4
+    },
+    "relative_order" : 24,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

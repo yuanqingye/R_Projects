@@ -22,7 +22,7 @@
         "totalObservations" : "280",
         "variables" : "6"
     },
-    "relative_order" : 25,
+    "relative_order" : 20,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_dataframe"

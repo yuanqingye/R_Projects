@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1514256320543.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "D5100135",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1514256320543,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "A595BF6",
+        "caption" : "melt_df_model_top20",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=melt_df_model_top20&cache_key=A595BF6",
+        "displayedObservations" : 300,
+        "environment" : "",
+        "object" : "melt_df_model_top20",
+        "preview" : 0,
+        "totalObservations" : 300,
+        "variables" : 3
+    },
+    "relative_order" : 24,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"User_analysis\"\nauthor: \"qingye\"\ndate: \"2017年10月20日\"\nruntime: shiny\noutput: html_document\n---\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(echo = FALSE)\nlibrary(readxl)\nlibrary(knitr)\nlibrary(xtable)\nlibrary(ggplot2)\nlibrary(reshape2)\nlibrary(scales)\nlibrary(plyr)\nlibrary(treemap)\n\nsource('~/Rfile/R_impala.R')\ndateend = Sys.Date()-1\ndatestart = Sys.Date()-14\ndatestart.str = format(datestart,'%Y%m%d')\ndateend.str = format(dateend,'%Y%m%d')\ndates = datestart.str:dateend.str\noptions(scipen = 10)\n\n```\n#本报告对`r datestart`用户至`r dateend`这两周的行为进行了分析\n####包括反映用户数目的UV,反映用户活跃度的：人均PV,用户活跃时长,以及反映用户黏度的次日留存，本次报告加入了路径深度的分析，并采用多种方式作图\n####本次报告用R语言自动化生成报告的框架搭建，今后将在此基础上不断改进优化，下次报告将加入转化方面的分析，加深对于路径方面的分析，引进异常值提醒和分析，考虑加入排名变动\n\n\n```{r model,echo = FALSE}\nnew_user_by_model_date_city_sql = \npaste0(\"select count(b.u_mid) numbers,firstdt,d_model,l_city from\n(select f.u_mid,substr(firstonlinetime,1,10) firstdt,a.d_model,a.l_city from dl.umid_firstonlinetime f left join\n  (select distinct u_mid,d_model,l_city from ods.ods_app_pageview_info where dt>= \",datestart.str,\") a\n  using(u_mid) where substr(firstonlinetime,1,10) >= '\",as.character(datestart),\"' \n  and f.dt = '\",dateend.str,\"') b group by firstdt,d_model,l_city\")\nnew_user_by_model_date_city = read_data_impala_general(new_user_by_model_date_city_sql)\nnew_user_by_model_date_city = data.table(new_user_by_model_date_city)\nnew_user_by_model_date = new_user_by_model_date_city[d_model!=\"null\" & str_trim(d_model)!=\"\",.(numbers = sum(numbers)),by = c(\"d_model\",\"firstdt\")]\nnew_user_by_model = new_user_by_model_date_city[d_model!=\"null\" & str_trim(d_model)!=\"\",.(numbers = sum(numbers)),by = \"d_model\"][order(numbers,decreasing = T)]\nmodel_list = new_user_by_model[1:100,]$d_model\nnew_user_by_model_date_top100 = new_user_by_model_date[d_model %in% model_list,]\nnew_user_by_model_date_top100$model = factor(new_user_by_model_date_top100$d_model,levels = model_list)\nnew_user_by_model_date_top100_ordered = new_user_by_model_date_top100[order(firstdt,model)]\nnew_user_by_model_date_ordered_reshape = reshape(new_user_by_model_date_top100_ordered, idvar = \"model\", timevar = \"firstdt\", direction = \"wide\")\nnew_user_by_model_date_ordered_reshape = dcast(new_user_by_model_date_top100_ordered, model ~ firstdt, value.var = \"numbers\")\nnew_user_by_model_date_ordered_reshape$sum =rowSums(new_user_by_model_date_ordered_reshape[,-1],na.rm = T)\nkable(new_user_by_model_date_ordered_reshape)\nDT::datatable(mtcars, options = list(pageLength = 20))\n#kable(model,format = \"markdown\")\n```\n\n\n```{r}\n  sidebarPanel(\n    selectInput(\"select\",\"please select a dataset\",choices = c(\"channel\",\"model\",\"city\")),\n    numericInput(\"obs\", \"Number of observations to view:\", 10)\n  )\n  mainPanel(\n  verbatimTextOutput(\"summary\"),  \n  dataTableOutput(\"table\")\n  )\n```\n\n```{r}\n  datasetInput <- reactive({\n    switch(input$select,\n           \"channel\" = new_user_by_channel_date_ordered_reshape,\n           \"model\" = new_user_by_model_date_ordered_reshape,\n           \"city\" = new_user_by_city_date_ordered_reshape)\n  })\n  \nrenderDataTable({\n    dt_name = datasetInput()\n    obs = input$obs\n    dt_name[1:obs,]\n  })\n```\n\n",
+    "created" : 1509417813495.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2640532546",
+    "id" : "D13261ED",
+    "lastKnownWriteTime" : 1509523716,
+    "last_content_update" : 1509523716356,
+    "path" : "~/R_Projects/uc_analysis/Rfile/test_report.rmd",
+    "project_path" : "Rfile/test_report.rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 26,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

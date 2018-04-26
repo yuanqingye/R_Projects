@@ -95,3 +95,23 @@ city_gdp_pdf = extract_tables("D://downloads//gdp_ranking.pdf",encoding = "UTF-8
 gdp_pic1  <- ocr("D://downloads//gdp_ranking1.jpg")
 
 #We will check if this can work
+shop_tables_self_manage = shop_tables[shop_tables$MALL_TYPE=="自营",c("MALL_NAME","MALL_CODE","GPS","COUNTRY_NAME","OPEN_DATE")]
+shop_tables_self_manage[,c("lon","lat")] = str_split_fixed(shop_tables_self_manage$GPS,n = 2,";")
+shop_tables_self_manage = shop_tables_self_manage[-1,]
+shop_tables_self_manage$OPEN_DATE = str_sub(shop_tables_self_manage$OPEN_DATE,1,10)
+m_check_lon_lat = merge(redstar_points,shop_tables_self_manage,by.x = "商场代码",by.y = "MALL_CODE",all.x = TRUE)
+m = m_check_lon_lat[abs(m_check_lon_lat$longitude-m_check_lon_lat$lon)>0.02|(m_check_lon_lat$latitude-m_check_lon_lat$lat)>0.02,]
+m2 = m_check_lon_lat[abs(m_check_lon_lat$longitude-m_check_lon_lat$lon)>0.01|(m_check_lon_lat$latitude-m_check_lon_lat$lat)>0.01,]
+
+# 39.4906288049,116.7004895210  廊坊龙河商场
+# 28.1052031549,113.0133533478  长沙韶山商场
+# 30.6197434307,114.1717457771  武汉额头湾竹叶海商场
+# 22.5782826444,113.3909332752  中山港口商场
+# 41.8920150908,123.4138655663  沈阳沈北欧丽洛雅
+# 24.5086557356,118.0921548692  厦门宝象商场
+# 29.5295259289,106.5633380413  重庆南坪商场
+# 37.4649700000,121.3573100000  烟台建材商场
+# 45.7203500000,126.5728900000  哈尔滨哈西商场
+
+
+redstar_points[redstar_points$商场代码==10130,c("latitude","longitude","address")] = c(39.4906288049,116.7004895210,"廊坊市安次区南龙道33号")
