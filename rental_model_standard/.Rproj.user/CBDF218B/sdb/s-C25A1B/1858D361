@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1524732841980.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "1858D361",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1524732841980,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "74E47788",
+        "caption" : "district_location_df",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=district_location_df&cache_key=74E47788",
+        "displayedObservations" : 453,
+        "environment" : "",
+        "object" : "district_location_df",
+        "preview" : 0,
+        "totalObservations" : 453,
+        "variables" : 5
+    },
+    "relative_order" : 24,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
