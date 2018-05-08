@@ -159,3 +159,8 @@ colors = c('green','purple')
 usage2= c('未兑换','已兑换')
 barplot(Values2,main="积分兑换礼物",names.arg=gifts_name,xlab="礼物名称",ylab="数量",col=colors)
 legend("topleft", usage2, cex=1.3, fill=colors)
+
+replace_n = function(string){
+  result = str_replace_all(string,"\\n"," ")
+  return(result)
+}

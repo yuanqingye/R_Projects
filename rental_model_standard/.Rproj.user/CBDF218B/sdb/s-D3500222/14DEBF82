@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1525661135868.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "14DEBF82",
+    "lastKnownWriteTime" : 31525678432190511,
+    "last_content_update" : 1525661135868,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "7B7B2C81",
+        "caption" : "redstar_community_50km_roominfo",
+        "contentUrl" : "grid_resource/gridviewer.html?env=_rs_no_env&obj=redstar_community_50km_roominfo&cache_key=7B7B2C81",
+        "displayedObservations" : 6,
+        "environment" : "_rs_no_env",
+        "object" : "redstar_community_50km_roominfo",
+        "preview" : 0,
+        "totalObservations" : 6,
+        "variables" : 3
+    },
+    "relative_order" : 21,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

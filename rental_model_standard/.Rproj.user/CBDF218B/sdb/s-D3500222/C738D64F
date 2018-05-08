@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1525242469483.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "C738D64F",
+    "lastKnownWriteTime" : 31525678432190511,
+    "last_content_update" : 1525242469483,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "78EC67E7",
+        "caption" : "business_region_final",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=business_region_final&cache_key=78EC67E7",
+        "displayedObservations" : 5575,
+        "environment" : "",
+        "object" : "business_region_final",
+        "preview" : 0,
+        "totalObservations" : 5575,
+        "variables" : 4
+    },
+    "relative_order" : 13,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

@@ -80,7 +80,7 @@ mtext(side = 2,text = at,at = at,col = 'purple',line = 1)
 
 ```
 
-次日留存率，老用户波动不明显，老用户整体明显高于新用户,新用户在4月14日有个小高峰
+次日留存率，老用户在5月1日有个小低谷
 
 #用户活跃
 ##近两周的日活跃度(UV)
@@ -132,7 +132,7 @@ bplot = barplot(matrix,main="Every day uv",names.arg=dates,xlab="month",ylab="uv
 
 `r if(length(abnormalhighdt)==0){"并没有哪天"} else{abnormalhighdt}` 用户UV明显高于平均值    
 `r if(length(abnormallowdt)==0){"并没有哪天"} else{abnormallowdt}` 用户UV明显低于平均值    
-整体uv值呈现不断上升的趋势
+整体uv值呈现先上升再下降的趋势
 <!-- `r ifelse(length(abnormallowdt)==0,"并没有哪天",abnormallowdt)` 用户UV明显低于平均值 -->
 
 ##近两周人均PV
@@ -224,7 +224,7 @@ full()
 ```
 
 画中画分析，*大图全图*和*小图中高亮处*均表示近两周pv趋势，而小图整体表示近一个月的pv情况    
-近两周整体pv出现缓慢不断上升情形，**4月22日（周日）达到顶峰**
+近两周整体pv出现先上升后下降的情形，**在4月29日，4月30日，4月31日达到顶峰**
 
 ## 用户活跃时长
 ```{r time_span,echo=FALSE,warning=FALSE,results="hide",message=FALSE}
@@ -275,11 +275,11 @@ from
 ```
 
 对于用户访问时长作的热力图    
-在本报告所覆盖的两周，新用户访问时长明显长过老用户    
-新用户访问时长在4月13日前较高，在4月18日，19日也出现平均访问时长的高峰，其背后原因，值得深入挖掘
+在本报告所覆盖的两周，老用户访问时长明显长过新用户    
+新用户访问时长在4月26日前较高，高于老用户，之后变低，低于老用户，其背后原因，值得深入挖掘
 
 ##新老用户访问平均深度（按用户）
-```{r depth_person_date,echo=FALSE,warning = FALSE}
+```{r depth_person_date,echo=FALSE,warning = FALSE,eval=FALSE}
 depth_p_sql = paste0("select t.isnew,t.dt,sum(cast(u_depth as INT))/count(t.u_mid) avg_depth, count(t.u_mid) p_num from 
 (select a.dt,isnew,max(b.depth) as u_depth,a.u_mid from 
 dm.dm_app_umid_step a  
@@ -301,8 +301,6 @@ tb2 = tableGrob(df[,(round(ncol(df)/2)+1):ncol(df)], rows=rownames(df), theme=tt
 tb_1_2 = arrangeGrob(grobs = list(tb1,tb2),nrow = 2,ncol = 1)
 grid.arrange(p,tb_1_2,nrow = 2)
 ```
-
-新用户访问深度基本高于老用户，新老用户访问深度差距明显，老用户访问深度几乎没有波动，比较令人奇怪    
 
 #新用户注册渠道城市机型数量分析
 ##新用户不同机型分布
@@ -353,8 +351,8 @@ rownames(new_user_by_model_date_ordered_reshape) = 1:nrow(new_user_by_model_date
 DT::datatable(new_user_by_model_date_ordered_reshape, options = list(pageLength = 20))
 ```
 
-iphone手机排名前列，前十名完全被iphone系列手机占据,MI6 排名第11,上升18位,Redmi Note 4X,排名第15,上升11位,OPPO A33,排名第16,上升184位,Mi Note 3,排名第20,上升43位
-整体流量相对以往大促偏低，而数据也显得更为可信
+iphone手机排名前列，前十名绝大部分被iphone系列手机占据,OPPO R9m 排名第9,上升15位,OPPO R9s,排名第11,Redmi Note 3,排名第12,上升6位,MI 6,排名第14
+大促期间流量高，平时流量低
 
 ```{r model_treemap}
 treemap(melt_df_model_top20,index = c("date","model"),vSize = "value")
@@ -390,12 +388,12 @@ rownames(new_user_by_city_date_ordered_reshape) = 1:nrow(new_user_by_city_date_o
 DT::datatable(new_user_by_city_date_ordered_reshape, options = list(pageLength = 20))
 ```
 
-上海，北京，南京占据前三名，**[回忆]半个月前重庆首次进入前三甲**    
+漯河，上海，徐州，北京，苏州占据前五名    
 
-**重庆，北京，郑州，石家庄，武汉，天津，成都，西安，广州，深圳，青岛，厦门，大连名次上升较多**    
-**徐州，扬州，绍兴，漯河等城市下降较多**
+**漯河，徐州，台州，常州，温州，湖州，南昌，丽水，金华，衢州，赣州，泉州，淮北名次上升较多**    
+**宁波，郑州，无锡，天津，沈阳，成都，深圳等城市名次下降较多**
 
-这两周，流量整体较少，暴增流量不明显
+这两周，流量整体较大，漯河等城市出现非常明显的暴增流量
 
 ```{r city_treemap}
 treemap(melt_df_city_top20,index=c("date","city"),vSize = "value")
@@ -422,7 +420,7 @@ DT::datatable(new_user_by_channel_date_ordered_reshape, options = list(pageLengt
 #kable(channel,format = "markdown")
 ```
 
-二维码-IOS第一,百度助手第二，iphone appstore排第三，然后是小米,360助手,华为,oppo推广,二维码-Android
+二维码-ANDROID第一,二维码-IOS第二，小米排第三，然后是百度助手,oppo推广,30015，Appstore
 
 ```{r channel_treemap}
 melt_df_channel_top20 = melt(new_user_by_channel_date_ordered_reshape[1:20,-ncol(new_user_by_channel_date_ordered_reshape)], id.vars = "channels", measure.vars = 2:(ncol(new_user_by_channel_date_ordered_reshape)-1), variable.name = "date", value.name = "value")
@@ -455,7 +453,7 @@ barplot(matrix,main="每日订单数",names.arg=dates,xlab="month",ylab="订单�
 legend("topright",stacks, cex=0.7, fill=colors,xjust = 0, yjust = 1)
 ```
 
-在APP上有过活动的人生成的订单占比较少，订单次高峰发生在4月14日和4月15日，峰值有8000单左右，主高峰发生在4月21日和4月22日，峰值有10000但左右，峰值基本上是周末，平时订单很少，基本在3000单以下，周一到周日有上升趋势
+在APP上有过活动的人生成的订单占比较少，订单高峰发生在4月29日到5月1日，峰值有30000单左右，平时订单很少，基本在5000单以下，周一到周日有上升趋势
 
 ##家装预约
 ```{r book}
@@ -468,8 +466,8 @@ online_book = read_data_impala_general(online_book_sql)
 barplot(online_book$b_num,names.arg = online_book$dt,col = "brown",xlab = "month",ylab = "预约数",main = "每日家装预约")
 ```
 
-**整体预约出现逐渐上升趋势**，峰值出现在4月20日，4月21日，4月22日三天，峰值预约高达150-250，4月16日至4月19日也有50以上    
-相比上周 *4月4日预约数最多，最高预约数100出头，平时预约数在50以下* 有了明显的改善
+**整体预约出现逐渐下降趋势**，5月1日前预约较多，预约高达150-250，但之后预约数降到50以下，    
+相比上月 *4月4日预约数最多，最高预约数100出头，平时预约数在50以下* 有了明显的改善
 
 ##领券情况
 ```{r coupon}
@@ -482,10 +480,11 @@ coupon = read_data_impala_general(coupon_sql)
 barplot(coupon$c_num,names.arg = coupon$dt,xlab = "month",ylab = "领券数",main = "每日领券情况",col = "blue")
 ```
 
-领券情况呈现一定周期性，每到周末都会出现峰值，且从周一到周末逐渐上升     
-这两周的趋势总体一直在上升，在4月13日，4月14日，4月15日达到小峰值，4月17日至4月22日达到大峰值，在峰值期4月19日偏低    
+领券情况呈现一定周期性，每到周末都会出现峰值，且从周一到周末逐渐上升，大促期间极高     
+这两周的趋势总体先上升后下降，在4月28日到5月1日达到峰值
 
 ```{r end,echo=FALSE,results="hide"}
 dbDisconnect(con)
 # dbDisconnect(conn)
 ```
+

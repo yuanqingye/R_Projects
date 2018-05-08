@@ -1,0 +1,2 @@
+"0","melt_df_channel_top20 = melt(new_user_by_channel_date_ordered_reshape[1:20,-ncol(new_user_by_channel_date_ordered_reshape)], id.vars = ""channels"", measure.vars = 2:(ncol(new_user_by_channel_date_ordered_reshape)-1), variable.name = ""date"", value.name = ""value"")"
+"0","treemap(melt_df_channel_top20,index=c(""date"",""channels""),vSize = ""value"")"

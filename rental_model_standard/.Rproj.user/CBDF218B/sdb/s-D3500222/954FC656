@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1525403265073.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "954FC656",
+    "lastKnownWriteTime" : 7160567695433491557,
+    "last_content_update" : 1525403265073,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "9227934C",
+        "caption" : "redstar_community_distance",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=redstar_community_distance&cache_key=9227934C",
+        "displayedObservations" : 399780,
+        "environment" : "",
+        "object" : "redstar_community_distance",
+        "preview" : 0,
+        "totalObservations" : 399780,
+        "variables" : 10
+    },
+    "relative_order" : 21,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

@@ -6,8 +6,9 @@ library(geosphere)
 redstar_points = read_xlsx("~/data/selfmanaged_business.xlsx",sheet = '商场总名单')
 redstar_points = data.table(redstar_points)
 redstar_points = redstar_points[商场类型=='自营',]
-redstar_location = redstar_points[,c('商场名称','city','longitude','latitude')]
-colnames(redstar_location)[[1]] = 'mall_name'
+redstar_location = redstar_points[,c('商场名称','商场代码','city','longitude','latitude')]
+colnames(redstar_location)[[which(colnames(redstar_location)=='商场名称')]] = 'mall_name'
+colnames(redstar_location)[[which(colnames(redstar_location)=='商场代码')]] = 'mall_code'
 redstar_result = redstar_location #redstar_result don't have an order
 city = unique(redstar_location$city)
 city = paste0(city,"市")
@@ -33,7 +34,7 @@ Sys.unsetenv("http_proxy")
 Sys.unsetenv("https_proxy")
 Sys.unsetenv("ftp_proxy")
 #get the unique city list about the mall
-city_list = unique(redstar_points$city)
+city_list = unique(redstar_location$city)
 #convert word to its pinyin form
 city_list_pinyin = lapply(city_list,pinyin,method = "toneless", sep = "")
 #some pinyin not correct, need correct them by man force 
@@ -149,7 +150,7 @@ redstar_direction_final_df = rbindlist(redstar_direction_df)
 redstar_direction_final_df = redstar_direction_final_df[1:835,]
 # get coordinate for the four direction from shopping mall about 0.5 degree diff in lon or lat
 redstar_four_direction_df = makeFourDirectionFromDF(redstar_location)
-redstar_four_direction_mixed_df = merge(redstar_location,redstar_direction_df,by = "mall_name",allow.cartesian=TRUE)
+redstar_four_direction_mixed_df = merge(redstar_location,redstar_four_direction_df,by = "mall_name",allow.cartesian=TRUE)
 redstar_four_direction_mixed_df = as.data.frame(redstar_four_direction_mixed_df)
 # get distance from shopping mall and its four direction expand(mainly for the highway access info)
 redstar_four_direction_df = list()
@@ -197,4 +198,5 @@ rent_original[] = lapply(rent_original,as.numeric)
 rent_original$MALL_NAME = mall_name
 rent_original$avg_price = rent_original$ZX_PRICE/rent_original$RENT_AREA_WA
 
+save(redstar_result,file = "redstar_result.RData")
 #沈阳沈北商场,地址需要改为 : 沈北新区道义北大街57号 

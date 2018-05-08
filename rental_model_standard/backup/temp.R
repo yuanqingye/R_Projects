@@ -95,10 +95,15 @@ city_gdp_pdf = extract_tables("D://downloads//gdp_ranking.pdf",encoding = "UTF-8
 gdp_pic1  <- ocr("D://downloads//gdp_ranking1.jpg")
 
 #We will check if this can work
+source('~/Rfile/R_hana.R', encoding = 'UTF-8')
+shop_tables = read_data_from_hana("select * from BIGBI.DIM_ALL_MALL_V2")
 shop_tables_self_manage = shop_tables[shop_tables$MALL_TYPE=="自营",c("MALL_NAME","MALL_CODE","GPS","COUNTRY_NAME","OPEN_DATE")]
 shop_tables_self_manage[,c("lon","lat")] = str_split_fixed(shop_tables_self_manage$GPS,n = 2,";")
 shop_tables_self_manage = shop_tables_self_manage[-1,]
 shop_tables_self_manage$OPEN_DATE = str_sub(shop_tables_self_manage$OPEN_DATE,1,10)
+shop_tables_self_manage$MALL_CODE = as.numeric(shop_tables_self_manage$MALL_CODE)
+shop_tables_self_manage$lon = as.numeric(shop_tables_self_manage$lon)
+shop_tables_self_manage$lat = as.numeric(shop_tables_self_manage$lat)
 m_check_lon_lat = merge(redstar_points,shop_tables_self_manage,by.x = "商场代码",by.y = "MALL_CODE",all.x = TRUE)
 m = m_check_lon_lat[abs(m_check_lon_lat$longitude-m_check_lon_lat$lon)>0.02|(m_check_lon_lat$latitude-m_check_lon_lat$lat)>0.02,]
 m2 = m_check_lon_lat[abs(m_check_lon_lat$longitude-m_check_lon_lat$lon)>0.01|(m_check_lon_lat$latitude-m_check_lon_lat$lat)>0.01,]
@@ -115,3 +120,43 @@ m2 = m_check_lon_lat[abs(m_check_lon_lat$longitude-m_check_lon_lat$lon)>0.01|(m_
 
 
 redstar_points[redstar_points$商场代码==10130,c("latitude","longitude","address")] = c(39.4906288049,116.7004895210,"廊坊市安次区南龙道33号")
+
+city_rank = read.table("~/data/city_rank.txt",sep = " ",fileEncoding = "utf-8")
+special_city_rank = read.table("~/data/city_rank2.txt",sep = " ",fileEncoding = "utf-8")
+score = special_city_rank$V2
+city_rank$score[1:19] = score
+city_rank$score[20:49] = seq(from = 35,to = 25,length.out = 30)
+city_rank$score[50:119] = seq(from = 22,to = 15,length.out = 70)
+city_rank$score[120:209] = seq(from = 13,to = 8,length.out = 90)
+city_rank$score[210:nrow(city_rank)] = seq(from = 6,to = 1,length.out = 129)
+colnames(city_rank)[[1]] = "city_name"
+
+for(i in extra_pv3){
+  print(i)
+  getDaodeGeoData(i)
+}
+
+some_function_that_may_fail <- function() {
+  temp = runif(1)
+  if( temp < 0.000001 ) stop()
+  return(1)
+}
+
+r <- NULL
+attempt <- 1
+while( is.null(r) && attempt <= 3 ) {
+  attempt <- attempt + 1
+  print(attempt)
+  try(
+    r <- some_function_that_may_fail()
+  )
+} 
+
+# redstar_result_mall_name = redstar_result$mall_name
+
+library(plyr)
+redstar_result$mall_name = as.character(redstar_result$mall_name)
+redstar_result1 = join(redstar_result,redstar_location[,c("mall_name","mall_code")],by = "mall_name") 
+# redstar_result = redstar_result1
+
+redstar_result = setcolorder(redstar_result, as.character(colnames(redstar_result_update)))

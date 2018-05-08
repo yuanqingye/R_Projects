@@ -13,17 +13,23 @@ options(baidumap.key = '4SY3dY8GrhfU5ChOeqFMvhcaf9DWo7dc')
 baidu_key = '4SY3dY8GrhfU5ChOeqFMvhcaf9DWo7dc'
 gaode_key = 'de4e66af67591588df24da020bb3d3eb'
 tencent_key = 'IESBZ-JKIRS-XVTOJ-6A2LQ-F2NAT-OABVW'
-
+default_address = '3935C miramar st'
 # Sys.setenv(http_proxy = proxy_url, https_proxy = proxy_url, ftp_proxy = proxy_url)
 
 # get the closest subway station from the coordination of the mall,without input for subway stations
 # The key method google_places need latitude first and longitude next
 find_closest_subways = function(coordinate_df,place_key){
+  coordinate_df = data.frame(coordinate_df) #!!!!!!
   coordinate_df$lat_lon <- do.call(Map, c(f= c, unname(coordinate_df[,c("latitude","longitude")])))
   i = 1
   result_df = data.frame(matrix(,nrow=nrow(coordinate_df), ncol=2))
   for(v in coordinate_df$lat_lon){
-    df = google_places(key = place_key,place_type = "subway_station",location = v,radius = 5000,rankby = "distance")
+    df = NULL
+    attempt = 1
+    while(is.null(df) && attempt<=5){
+    try(df <- google_places(key = place_key,place_type = "subway_station",location = v,radius = 5000,rankby = "distance"))
+    attempt = attempt + 1
+    }
     if(!is.na(df$results$geometry$location$lat) && length(df$results$geometry$location$lat)>0){
       result_df[i,] = c(df$results$geometry$location$lat[1],df$results$geometry$location$lng[1])
     }
@@ -32,7 +38,6 @@ find_closest_subways = function(coordinate_df,place_key){
   return(result_df)
   #apply(DF[, c("height", "weight")], 1, f)
 }
-
 
 getGeoData <- function(location,key = place_key){
   location <- gsub(' ','+',location)
@@ -44,7 +49,12 @@ getGeoData <- function(location,key = place_key){
 # get geocode from google_geocode, some may have more than one geocode
 getSimplifiedGeoData = function(location,key = place_key){
   v = vector(mode = "numeric",length = 0L)
-  raw_data = google_geocode(location,key = place_key)
+  raw_data = NULL
+  attempt = 0
+  while(is.null(raw_data) && attempt <= 5) {
+    attempt = attempt + 1
+    try(raw_data <- google_geocode(location, key = place_key))
+  }
   if(length(raw_data$results) == 0){
     result = data.frame(lat = NA,lng = NA,lat2 = NA,lng2 = NA)
   }
@@ -97,14 +107,22 @@ geocode_like = function(search_string){
 
 getClosestRoadPoint = function(start_location,end_location = start_location,key = place_key){
   result = NA
-  response = google_directions(origin = start_location,destination = end_location,key = place_key)
+  response = NULL
+  attempt = 1
+  while (is.null(response) && attempt <= 5) {
+    try(response <- google_directions(origin = start_location,
+                                     destination = end_location,
+                                     key = place_key))
+    attempt = attempt + 1
+  }
   result = response$routes$legs[[1]]$end_location
   print(result)
   return(result)
 }
 
 getClosestRoadPointFromDF = function(location_df){
-  result_df = data.frame(matrix(,nrow=nrow(location_df), ncol=2))
+  # result_df = data.frame(matrix(,nrow=nrow(location_df), ncol=2))
+  location_df = data.frame(location_df)
   location_df$lat_lon = do.call(Map, c(f= c, unname(location_df[,c("latitude","longitude")])))
   result = lapply(location_df$lat_lon,getClosestRoadPoint)
   return(result)
@@ -138,7 +156,12 @@ getTencentRouteInfo = function(start_location,end_location,key = tencent_key){
 }
 
 getDirectionInfo = function(city,start_location,end_location,start_point = start_location,end_point = end_location,speed_limit = 65,key = place_key){
-  raw_data = google_directions(start_location,end_location,key = key)
+  raw_data = NULL
+  attempt = 1
+  while(is.null(raw_data) && attempt<=5){
+    try(raw_data <- google_directions(start_location,end_location,key = key))
+    attempt = attempt + 1
+  }
   result = raw_data$routes$legs[[1]]$steps[[1]]
   speed = result$distance$value/result$duration$value*3.6
   indexes = which(speed>speed_limit)
@@ -171,6 +194,7 @@ getDirectionInfoFromDF = function(location_df){
   cv = vector(mode = "character",length = 0L)
   result_df = data.frame(city = cv,start_point = cv,end_point = cv,
                          distance = nv,duration = nv,highway_distance = nv)
+  location_df = data.frame(location_df)
   location_df$start_location = do.call(Map, c(f= c, unname(location_df[,c("latitude","longitude")])))
   location_df$end_location = do.call(Map, c(f= c, unname(location_df[,c("lat","lon")])))
   location_df$end_point = paste0(location_df$city,location_df$district)
@@ -210,4 +234,32 @@ makeFourDirectionFromDF = function(shop_location_df){
     result_df = rbind(result_df,temp_df)
   }
   return(result_df)
+}
+
+#need to be improved, more robust method
+geocode_general = function(location){
+  result = NULL
+  attempt = 1
+  while(is.null(result) && attempt<=5){
+    try(result <- geocode(location))
+    attempt = attempt + 1
+  }
+  return(result)
+}
+
+some_function_that_may_fail <- function() {
+  temp = runif(1)
+  if( temp > 0.000001 ) stop()
+  return(1)
+}
+
+retry_wrapper = function(f,...,retrytime = 5){
+  result = NULL
+  attempt = 1
+  while(is.null(result) && attempt<=retrytime){
+    try(result <- f(...))
+    attempt = attempt + 1
+  }
+  if(is.null(result)){stop()}
+  return(result)
 }

@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1524735950532.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "FFEBF441",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1524735950532,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "A52166DF",
+        "caption" : "rent_original[rent_original$DATE_ID == \"201706\", c(\"MALL_NAME\", ",
+        "contentUrl" : "grid_resource/gridviewer.html?env=_rs_no_env&obj=&cache_key=A52166DF",
+        "displayedObservations" : 57,
+        "environment" : "_rs_no_env",
+        "object" : "",
+        "preview" : 0,
+        "totalObservations" : 57,
+        "variables" : 2
+    },
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

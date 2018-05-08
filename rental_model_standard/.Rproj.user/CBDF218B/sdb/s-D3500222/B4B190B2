@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1525769008745.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "B4B190B2",
+    "lastKnownWriteTime" : 31525678432190511,
+    "last_content_update" : 1525769008745,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "C76F1FAC",
+        "caption" : "business_region_update",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=business_region_update&cache_key=C76F1FAC",
+        "displayedObservations" : 124,
+        "environment" : "",
+        "object" : "business_region_update",
+        "preview" : 0,
+        "totalObservations" : 124,
+        "variables" : 5
+    },
+    "relative_order" : 26,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
