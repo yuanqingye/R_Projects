@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1526368699226.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "90D5AE0F",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1526368699226,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "611F507",
+        "caption" : "rentModelData",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=rentModelData&cache_key=611F507",
+        "displayedObservations" : 790,
+        "environment" : "",
+        "object" : "rentModelData",
+        "preview" : 0,
+        "totalObservations" : 790,
+        "variables" : 36
+    },
+    "relative_order" : 35,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

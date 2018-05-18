@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1526444000442.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "E06C6E18",
+    "lastKnownWriteTime" : 31525678432190511,
+    "last_content_update" : 1526444000442,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "3A3AA73B",
+        "caption" : "Importance2",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Importance2&cache_key=3A3AA73B",
+        "displayedObservations" : "33",
+        "environment" : "",
+        "object" : "Importance2",
+        "preview" : "0",
+        "totalObservations" : "33",
+        "variables" : "2"
+    },
+    "relative_order" : 26,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

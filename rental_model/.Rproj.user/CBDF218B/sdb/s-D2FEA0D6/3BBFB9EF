@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "getYearPara = function(v,f){\n  t = vector(mode = \"numeric\",length = 0L)\n  for(i in 1:(length(v)-11)){\n    t[i] = f(v[i:(i+11)])\n  }\n  return(t)\n}\n\ngetYearReal = function(v,f){\n  t = vector(mode = \"numeric\",length = 0L)\n  for(i in 13:(length(v)-11)){\n    t[i-12] = f(v[i:(i+11)])\n  }\n  return(t)\n}\n\n\ngetYearParaV = function(v,f){\n  t = vector(mode = \"numeric\",length = 0L)\n  m = diag(1:(length(v)-12))%*%matrix(rep(1,12*(length(v)-12)),nrow = (length(v)-12),ncol = 12)\n  m = 1:12+\n  apply()\n  return(t)\n}",
+    "created" : 1526525602264.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "248621136",
+    "id" : "3BBFB9EF",
+    "lastKnownWriteTime" : 1513750520,
+    "last_content_update" : 1513750520,
+    "path" : "~/R_Projects/rental_model/Rfile/aid_func.R",
+    "project_path" : "Rfile/aid_func.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 29,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

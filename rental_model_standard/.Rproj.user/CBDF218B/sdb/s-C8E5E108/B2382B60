@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1526608645808.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "B2382B60",
+    "lastKnownWriteTime" : 31525678432190511,
+    "last_content_update" : 1526608645808,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "F5F744CA",
+        "caption" : "MSE.all.MALLS_mixed[, c(\"mall_name\", \"pred_rent\", \"real_rent\", ",
+        "contentUrl" : "grid_resource/gridviewer.html?env=_rs_no_env&obj=&cache_key=F5F744CA",
+        "displayedObservations" : 46,
+        "environment" : "_rs_no_env",
+        "object" : "",
+        "preview" : 0,
+        "totalObservations" : 46,
+        "variables" : 4
+    },
+    "relative_order" : 23,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

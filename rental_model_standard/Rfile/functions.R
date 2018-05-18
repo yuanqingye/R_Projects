@@ -263,3 +263,19 @@ retry_wrapper = function(f,...,retrytime = 5){
   if(is.null(result)){stop()}
   return(result)
 }
+
+getYearPara = function(v,f,k = 12){
+  t = vector(mode = "numeric",length = 0L)
+  for(i in 1:(length(v)-(k-1))){
+    t[i] = f(v[i:(i+k-1)])
+  }
+  return(t)
+}
+
+getYearReal = function(v,f,k = 12){
+  t = vector(mode = "numeric",length = 0L)
+  for(i in (k+1):(length(v)-(k-1))){
+    t[i-k] = f(v[i:(i+(k-1))])
+  }
+  return(t)
+}

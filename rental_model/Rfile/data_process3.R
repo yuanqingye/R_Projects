@@ -13,14 +13,6 @@ return(rent_data_1219)
 
 rentModelData = getModelData(rent_data_1219)
 
-debugSource2 = function (file, start, end, ...) 
-{
-  file.lines <- scan(file, what = character(), skip = start - 
-                       1, nlines = end - start + 1, sep = "\n")
-  file.lines.collapsed <- paste(file.lines, collapse = "\n")
-  debugSource(textConnection(file.lines.collapsed), ...)
-}
-
 getyearModeData = function(){
   rent_data_1219[,.SD[1:(.N-12),],by = "mall_name"]
   rent_data_1219[,seq := 1:.N,by = "mall_name"]
@@ -50,7 +42,6 @@ getyearModeData = function(){
   train_rent = data.frame(train_rent)
   test_rent = data.frame(test_rent)
   dest_rent = data.frame(dest_rent)
-  
   }
 
 #seperate the data into train,test and dest set, along with the name of the malls returned
@@ -84,7 +75,7 @@ print(rentModelHighlyCorrelated)
 
 control <- trainControl(method="repeatedcv", number=10, repeats=3)
 # train the model
-rentModel <- train(rent~., data=train_rent_1219, method="neuralnet", preProcess="scale", trControl=control,
+rentModel <- train(rent~., data = train_rent_1219, method="neuralnet", preProcess="scale", trControl=control,
                importance = T)
 rentModel = gbm(rent ~ . ,data = train_rent_1219,distribution = "gaussian",n.trees = 100000,interaction.depth = 4)
 
@@ -99,3 +90,11 @@ plot(importance)
 train_rent = train_rent_1219
 test_rent = test_rent_1219
 dest_rent = dest_rent_1219
+
+debugSource2 = function (file, start, end, ...) 
+{
+  file.lines <- scan(file, what = character(), skip = start - 
+                       1, nlines = end - start + 1, sep = "\n")
+  file.lines.collapsed <- paste(file.lines, collapse = "\n")
+  debugSource(textConnection(file.lines.collapsed), ...)
+}

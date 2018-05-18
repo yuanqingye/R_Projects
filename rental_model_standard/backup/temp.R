@@ -2,6 +2,7 @@ library(rvest)
 library(magrittr)
 library(tabulizer)
 library(tesseract)
+library(readxl)
 
 temp = list()
 temp1 = list() 
@@ -160,3 +161,45 @@ redstar_result1 = join(redstar_result,redstar_location[,c("mall_name","mall_code
 # redstar_result = redstar_result1
 
 redstar_result = setcolorder(redstar_result, as.character(colnames(redstar_result_update)))
+
+city_revenue_avg = read_xlsx("C:/Users/qingye.yuan/Desktop/工作需要/租金定价/城市收入水平.xlsx")
+
+colnames(city_revenue_avg) = c("city","revenue_all","increase_rate_all","revenue_town","increase_rate_town")
+
+test = read.table(textConnection("54305 52530 48695 46667 咭6与肠 46116 44641 440的 43143 42757 41941 41902 41564 415伪 40154 40118 40012 39601 38529 3日弓肠 37193 37159 36915 35630 34074 34064 339的 32178 32070 30941 30此5 30296 30084 30045 29742 29462 28633 28259 28061 27608 26757 26745 25484 24759 24685 2吸唯63 2咭咯27 23821 23623 23194 22784 22762 22603 22348 22173 22142 21854 21602 21291 21230 21073 20905 20713 20644 20580 19978 195 13 18957 18859 18403 18061 17987 17937 17934 17654 17467 16607 16518 16077 15661"),header = F, sep = " ", stringsAsFactors = F)
+test = t(test)
+test = test[1:81,1]
+test[5] = "46595"
+test[8] = "44009"
+test[14] = "41506"
+test[20] = "38435"
+test[27] = "33909"
+test[31] = "30855"
+test[46] = "24463"
+test[47] = "24427"
+test[67] = "19513"
+
+test3 = c(test[1:67],test[69:81])
+test3 = as.numeric(test3)
+city_revenue_avg$revenue_all = test3
+
+test2 = read.table(textConnection("57692 57275 48695 50941 别3吸l 52185 51560 49997 46254 48628 43120 43096 48423 50305 42537 48926 41613 47785 47之37 45058 45794 46554 47162 43598 37110 41794 弓3(52 41580 40152 39363 31场56 37684 392咭7 37833 38744 36436 35659 35828 33213 36014 35968 36188 33609 32364 34012 304今6 29557 33616 31818 30299 30726 30335 30583 28421 29677 30408 29987 3（旧5, 28340 27853 27818 28164 25121 27708 25907 25855 25281 24086 25267 23323 21787 23642 22389 24887 22944 22160 23277 21888 21817 22122"),header = F, sep = " ", stringsAsFactors = F)
+test2 = t(test2)
+test2 = test2[1:80,1]
+test2[5] = "54341"
+test2[19] = "47237"
+test2[20] = "46058"
+test2[27] = "43052"
+test2[31] = "39656"
+test2[33] = "39247"
+test2[46] = "30496"
+test2[58] = "30859"
+
+test2 = as.numeric(test2)
+city_revenue_avg$revenue_town = test2
+
+library(caret)
+control <- trainControl(method="repeatedcv", number=10, repeats=3)
+rentModel <- train(rent~., data=train_set, method="rf", preProcess="scale", trControl=control,
+                   importance = T)
+Importance <- varImp(rentModel, scale=FALSE)

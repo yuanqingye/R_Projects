@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1526365411395.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "F5F92124",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1526365411395,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "C27B2517",
+        "caption" : "neuralnet_para_m",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=neuralnet_para_m&cache_key=C27B2517",
+        "displayedObservations" : 71,
+        "environment" : "",
+        "object" : "neuralnet_para_m",
+        "preview" : 0,
+        "totalObservations" : 71,
+        "variables" : 4
+    },
+    "relative_order" : 38,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

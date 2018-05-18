@@ -25,7 +25,7 @@ train.scaled = as.data.frame(scale(train_next, center = mins, scale = maxs - min
 test.scaled = as.data.frame(scale(test_next,center = mins,scale = maxs - mins))
 max_rent = maxs["rent"]
 min_rent = mins["rent"]
-nn <- neuralnet(f,data=train.scaled,hidden = rep(15,4),act.fct = 'logistic') 
+nn <- neuralnet(f,data=train.scaled,hidden = rep(9,3),act.fct = 'logistic') 
 rentind = which(names(test.scaled) %in% c("rent"))
 pr.nn <- compute(nn,test.scaled[,-rentind])
 pr.nn_ <- pr.nn$net.result*(max_rent-min_rent)+min_rent
@@ -57,8 +57,11 @@ dataset <- PimaIndiansDiabetes
 
 require(gbm)
 # rent.boost = gbm(rent ~ . ,data = train_next,distribution = "gaussian",n.trees = 10000,nTrain = 100,bag.fraction = 0.8,n.minobsinnode = 10)
-gbm_para_m = boosting_para(train_rent,test_rent)
+source('~/R_Projects/ensemble_method/Rfile/boosting_para.R')
+gbm_para_m = boosting_para(train_rent,test_rent) #takes a lot time
+ptm = proc.time()
 rent.boost = gbm(rent ~ . ,data = train_rent,distribution = "gaussian",n.trees = 100000,interaction.depth = 4)
+ptm = proc.time() - ptm
 rent.boost
 para_rank1 = summary(rent.boost) #Summary gives a table of Variable Importance and a plot of Variable Importance
 n.trees = seq(from=100 ,to=100000, by=100) #num of trees-a vector of 100 values 

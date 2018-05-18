@@ -76,11 +76,11 @@ svm_para_percent = function(trainset,testset){
   c = vector(mode = 'character',length = 0)
   dt = data.table(sigma = v,C = v,e = v,kernel = c,avge = v,maxe = v,sde = v)
   rentind = which(names(trainset)=="rent")
-  for(index in -5:10){
+  for(index in -5:5){
     sigma = 0.125 * 2^index
-    for(i in -1:4){
+    for(i in -1:2){
       C = 1 * 10^i
-      for(kernel in c('polynomial','radial','sigmoid')){
+      for(kernel in c('radial')){
         svm.model = svm(rent~.,data = trainset,gamma = sigma,cost = C,kernel = kernel)
         svm.pred = predict(svm.model,testset[,-rentind])
         e = (svm.pred - unlist(testset[,rentind]))/unlist(testset[,rentind])

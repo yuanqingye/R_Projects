@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1526559262772.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "F44E0C40",
+    "lastKnownWriteTime" : 31525678432190511,
+    "last_content_update" : 1526559262772,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "183E18BE",
+        "caption" : "train_rent",
+        "contentUrl" : "grid_resource/gridviewer.html?env=_rs_no_env&obj=train_rent&cache_key=183E18BE",
+        "displayedObservations" : "898",
+        "environment" : "_rs_no_env",
+        "object" : "train_rent",
+        "preview" : "0",
+        "totalObservations" : "898",
+        "variables" : "36"
+    },
+    "relative_order" : 19,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

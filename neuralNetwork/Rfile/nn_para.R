@@ -17,16 +17,16 @@ neuralnet_para = function(trainset,testset){
   testset = as.data.frame(scale(testset,center = mins,scale = maxs - mins))
   max_rent = maxs["rent"]
   min_rent = mins["rent"]
-  k = 10
+  k = 3
   library(plyr) 
   pbar <- create_progress_bar('text')
-  pbar$init(k)
+  pbar$init(k*7)
   min = Inf
   v = vector(mode = 'numeric',length = 0)
   c = vector(mode = 'character',length = 0)
   dt = data.table(size = v,depth = v,e = v,actfun = c)
   rentind = which(names(trainset)=="rent")
-  for(depth in 1:k){
+  for(depth in seq(from = 5, to = 9, length = k)){
     for(size in seq(3,21,by = 3)){
       # for(actfun in c('logistic','tanh')){
         for(actfun in c('logistic')){
@@ -43,9 +43,9 @@ neuralnet_para = function(trainset,testset){
           bestactfun = actfun
           min = e
         }
-      }
+        }
+      pbar$step()
     }
-    pbar$step()
   }
   min.dt = data.table(size = bestsize,depth = bestdepth,e = min,actfun = bestactfun)
   dt = rbind(dt,min.dt)
